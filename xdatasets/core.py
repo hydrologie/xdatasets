@@ -39,7 +39,7 @@ def shift_tz(ds, timezone):
 class Dataset:
     """"This is the base class for the datasets extension for xarray"""
     def __init__(self,
-                 variables: str | Dict[str, Union[str, List[str]]],
+                 variables: Union[str, Dict[str, Union[str, List[str]]]],
                  space: Dict[str, Union[str, List[str]]],
                  time=None,
                  url_path: str = URL_PATH):
@@ -54,7 +54,7 @@ class Dataset:
                           time=self.time)
 
     def load_dataset(self,
-                     variables: str | Dict[str, Union[str, List[str]]],
+                     variables: Union[str, Dict[str, Union[str, List[str]]]],
                      space: Dict[str, Union[str, List[str]]],
                      time=None):
 
