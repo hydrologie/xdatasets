@@ -1,0 +1,32 @@
+# dev tools and testing
+black
+bump2version
+coverage
+flake8
+flake8-rst-docstrings
+ipython<8.0  # this needed when testing see #1005
+mypy
+nbval
+pre-commit>=2.9
+pydocstyle>=5.1.1
+pylint
+pytest
+pytest-cov
+pytest-runner
+tokenize-rt
+tox
+wheel
+xdoctest
+yamale
+yamllint
+# Documentation and examples
+distributed>=2.0
+ipykernel
+matplotlib
+nbsphinx
+nc-time-axis
+netCDF4
+pooch
+sphinx
+sphinx-rtd-theme
+sphinxcontrib-confluencebuilder
