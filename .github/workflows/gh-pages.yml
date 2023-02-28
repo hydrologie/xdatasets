@@ -15,11 +15,11 @@ jobs:
           mamba-version: "*"
           python-version: 3.9
           auto-activate-base: false
-      - name: Install local package
+      - name: Deploy docs
         shell: bash -l {0}
         run: |
           python -m ipykernel install --user --name=xdatasets
-          make -c doc html
+          make -C doc html
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.7
         with:
