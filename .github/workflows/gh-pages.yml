@@ -10,7 +10,7 @@ jobs:
           persist-credentials: false
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          activate-environment: catalogs
+          activate-environment: xdatasets
           environment-file: environment.yml
           mamba-version: "*"
           python-version: 3.10
@@ -18,7 +18,7 @@ jobs:
       - name: Install local package
         shell: bash -l {0}
         run: |
-          python -m ipykernel install --user --name=catalogs
+          python -m ipykernel install --user --name=xdatasets
           make html
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.7
