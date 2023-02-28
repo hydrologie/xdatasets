@@ -21,6 +21,7 @@ jobs:
         shell: bash -l {0}
         run: |
           python -m ipykernel install --user --name=xdatasets
+          pip install -e .
           make -C doc html
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.2
