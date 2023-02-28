@@ -13,7 +13,7 @@ jobs:
           activate-environment: xdatasets
           environment-file: environment.yml
           mamba-version: "*"
-          python-version: 3.10
+          python-version: 3.9
           auto-activate-base: false
       - name: Install local package
         shell: bash -l {0}
