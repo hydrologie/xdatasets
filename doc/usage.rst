@@ -2,6 +2,8 @@
 Usage
 =====
 
+notebooks/load_data
+
 .. toctree::
    :maxdepth: 1
 
