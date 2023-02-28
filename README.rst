@@ -3,19 +3,12 @@ Xdatasets
 ======
 
 
-.. image:: https://img.shields.io/pypi/v/xhydro.svg
-        :target: https://pypi.python.org/pypi/xhydro
-
-.. image:: https://img.shields.io/travis/sebastienlanglois/xhydro.svg
-        :target: https://travis-ci.com/sebastienlanglois/xhydro
-
-.. image:: https://readthedocs.org/projects/xhydro/badge/?version=latest
-        :target: https://xhydro.readthedocs.io/en/latest/?version=latest
-        :alt: Documentation Status
+.. image:: https://img.shields.io/pypi/v/xdatasets.svg
+        :target: https://pypi.python.org/pypi/xdatasets
 
 
-.. image:: https://pyup.io/repos/github/sebastienlanglois/xhydro/shield.svg
-     :target: https://pyup.io/repos/github/sebastienlanglois/xhydro/
+.. image:: https://pyup.io/repos/github/sebastienlanglois/xdatasets/shield.svg
+     :target: https://pyup.io/repos/github/sebastienlanglois/xdatasets/
      :alt: Updates
 
 
@@ -24,7 +17,7 @@ Xhydro.
 
 
 * Free software: MIT license
-* Documentation: https://xhydro.readthedocs.io.
+* Documentation: https://xdatasets.readthedocs.io.
 
 
 Features
