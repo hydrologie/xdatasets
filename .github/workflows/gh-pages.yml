@@ -21,8 +21,7 @@ jobs:
           python -m ipykernel install --user --name=xdatasets
           make -C doc html
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.7
+        uses: JamesIves/github-pages-deploy-action@4.4.1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: build/html # The folder the action should deploy.
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build/html # The folder the action should deploy.
