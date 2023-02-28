@@ -22,6 +22,8 @@ dependencies:
     - intake-xarray=0.6.1
     - intake-geopandas
     - xesmf
-    - furo
     - nbsphinx
     - sphinx
+    - pip:
+        - sphinx-pangeo-theme
+        - furo
