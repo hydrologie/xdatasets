@@ -135,17 +135,24 @@ class Dataset:
 
                     # res = dask.delayed(average_shape_on_bbox)(idx, ds_copy, geom)
                     # ds_avg = average_shape_on_bbox(idx, ds_copy, geom)
-                arrays.append(da.load())
+                arrays.append(da)
                 # arrays = dask.compute(*arrays, scheduler='single-threaded')
-                data = xr.concat(arrays, dim='geom')
+            data = xr.concat(arrays, dim='geom').load()
 
-                if space['unique_id']:
-                    try:
-                        data = data.swap_dims({"geom": space["unique_id"]})
-                    except:
-                        pass
+
+            if space['unique_id']:
+                try:
+                    data = data.swap_dims({"geom": space["unique_id"]})
+                except:
+                    pass
+            print(data.coords)
+
+            # Verify if unique id exists before
+            if space['unique_id'] not in data.coords:
+                data = data.assign_coords({space['unique_id']: (space['unique_id'],
+                                                                space['geometry'][space['unique_id']])})            
+
                 # replace by error  
-        print(data)      
 
         if "timestep" in time:
             data_new = xr.Dataset(attrs=ds.attrs)

@@ -17,7 +17,7 @@ Xhydro.
 
 
 * Free software: MIT license
-* Documentation: https://xdatasets.readthedocs.io.
+* Documentation: https://xdatasets.github.io/xdatasets
 
 
 Features
