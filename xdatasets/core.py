@@ -20,6 +20,9 @@ URL_PATH = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/c
 __all__ = ["Dataset"]
 
 
+
+
+
 def shift_tz(ds, timezone):
     ds_copy = ds.copy()
 
@@ -41,7 +44,7 @@ class Dataset:
     def __init__(self,
                  variables: Union[str, Dict[str, Union[str, List[str]]]],
                  space: Dict[str, Union[str, List[str]]],
-                 time=None,
+                 time=dict(),
                  url_path: str = URL_PATH):
 
         self.catalog = intake.open_catalog(url_path)
@@ -73,6 +76,7 @@ class Dataset:
 
             #
 
+
             data = self._load_data_from_one_dataset(dataset_name=dataset_name,
                                                     variables=variables_name,
                                                     space=space,
@@ -96,14 +100,14 @@ class Dataset:
         except:
             pass
 
-        if time['start'] and time['end']:
+        if "start" in time and 'end' in time:
             try:
                 ds = subset_time(ds, start_date=time['start'], end_date=time['end'])
             except:
                 pass
             # replace by error
 
-        if time['timezone']:
+        if "timezone" in time:
             try:
                 ds = shift_tz(ds, time['timezone'])
             except:
@@ -113,29 +117,38 @@ class Dataset:
 
         if space['clip'] == 'polygon':
             indexer = shape_bbox_indexer(ds, space['geometry'])
-            ds = ds.isel(indexer)
-            if space['aggregation'] is True:
-                arrays = []
-                for idx, _ in tqdm(space['geometry'].iterrows()):
-                    indexer = shape_bbox_indexer(ds, space['geometry'].iloc[[idx]])
-                    da = ds.isel(indexer)
-                    pr = da.chunk({'latitude':-1, 'longitude':-1})
+            ds_copy = ds.isel(indexer).copy()
 
-                    # Average data array over shape
-                    ds_avg = average_shape(pr, shape=space['geometry'].iloc[[idx]])
-                    arrays.append(ds_avg)
-                ds = xr.concat(arrays, dim='geom')
+            
+            arrays = []
+            for idx, _ in tqdm(space['geometry'].iterrows()):
+                geom = space['geometry'].iloc[[idx]]
+
+                indexer = shape_bbox_indexer(ds_copy, geom)
+                da = ds_copy.isel(indexer)
+                da = da.chunk({'latitude':-1, 'longitude':-1})
+                
+                # Average data array over shape
+                if space['aggregation'] is True:
+                    
+                    da = average_shape(da, shape=geom)
+
+                    # res = dask.delayed(average_shape_on_bbox)(idx, ds_copy, geom)
+                    # ds_avg = average_shape_on_bbox(idx, ds_copy, geom)
+                arrays.append(da.load())
+                # arrays = dask.compute(*arrays, scheduler='single-threaded')
+                data = xr.concat(arrays, dim='geom')
 
                 if space['unique_id']:
                     try:
-                        ds = ds.swap_dims({"geom": space["unique_id"]})
+                        data = data.swap_dims({"geom": space["unique_id"]})
                     except:
                         pass
-                # replace by error
-        
-        data = xr.Dataset(attrs=ds.attrs)
+                # replace by error  
+        print(data)      
 
-        if time['timestep']:
+        if "timestep" in time:
+            data_new = xr.Dataset(attrs=ds.attrs)
             pbar = tqdm(variables)
             for var in pbar:
                 pbar.set_description("Processing %s" % var)
@@ -148,15 +161,18 @@ class Dataset:
                         operation = operation if isinstance(operation, list)  else [operation]
                         for oper in operation:
                             var_name = f"{var}_{oper.__name__}"
-                            data[var_name] = ds[var].resample(time=time['timestep']).reduce(oper, dim='time')
+                            data_new[var_name] = data[var].resample(time=time['timestep']).reduce(oper, dim='time')
                     # if requested timestep is lower
                     # bfill the timestep and add a warning
 
                     # if requested timestep is equal : do nothing
 
+                    
+
 
                 except:
                     pass
+            data = data_new
 
 
 
@@ -175,8 +191,11 @@ class Dataset:
         #                 warnings.simplefilter("ignore", category=RuntimeWarning)
         #                 data[var] = data[var].reduce(operation, dim=['latitude', 'longitude'])
 
-        self.data = data.squeeze().load()
+        self.data = data.squeeze()
         return self
+    
+    def bbox_clip(self, ds):
+        return ds.where(~ds.isnull(), drop=True)
 
     def plot(self,
              variables=None):
