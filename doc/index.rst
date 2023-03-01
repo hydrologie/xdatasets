@@ -13,7 +13,7 @@ This project was born out of a fundamental need to share common data sources whe
 
    readme
    installation
-   usage
+   notebooks/load_data
    modules
    contributing
    authors
