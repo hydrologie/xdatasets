@@ -1,6 +1,6 @@
 from typing import Sequence, Tuple, Union, Dict, List
 
-from clisops.core.subset import subset_shape, subset_time, create_mask, shape_bbox_indexer
+from clisops.core.subset import subset_shape, subset_time, create_mask, shape_bbox_indexer, create_weight_masks
 from clisops.core.average import average_shape
 import intake
 import s3fs
@@ -132,7 +132,11 @@ class Dataset:
                 if space['aggregation'] is True:
                     
                     da = average_shape(da, shape=geom)
-
+                else:
+                    mask = create_weight_masks(da,
+                           poly=geom)
+                    da['weights'] = mask.squeeze()
+                    da = da.where(da.weights>0, drop=True)
                     # res = dask.delayed(average_shape_on_bbox)(idx, ds_copy, geom)
                     # ds_avg = average_shape_on_bbox(idx, ds_copy, geom)
                 arrays.append(da)
@@ -143,9 +147,9 @@ class Dataset:
             if space['unique_id']:
                 try:
                     data = data.swap_dims({"geom": space["unique_id"]})
+                    data = data.drop('geom')
                 except:
                     pass
-            print(data.coords)
 
             # Verify if unique id exists before
             if space['unique_id'] not in data.coords:

@@ -131,8 +131,8 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'xhydro.tex',
-     'Xhydro Documentation',
+    (master_doc, 'xdatasets.tex',
+     'Xdatasets Documentation',
      'Sebastien Langlois', 'manual'),
 ]
 
@@ -143,7 +143,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'xdatasets',
-     'xdatasets Documentation',
+     'Xdatasets Documentation',
      [author], 1)
 ]
 
