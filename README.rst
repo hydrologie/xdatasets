@@ -13,7 +13,7 @@ Xdatasets
 
 
 
-Xhydro.
+Xdatasets.
 
 
 * Free software: MIT license

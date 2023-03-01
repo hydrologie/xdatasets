@@ -50,7 +50,7 @@ clean-test: ## remove test and coverage artifacts
 lint/flake8: ## check style with flake8
 	flake8 xhydro tests
 lint/black: ## check style with black
-	black --check xhydro tests
+	black --check xdatasets tests
 
 lint: lint/flake8 lint/black ## check style
 
@@ -61,7 +61,7 @@ test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source xhydro -m pytest
+	coverage run --source xdatasets -m pytest
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html
@@ -69,7 +69,7 @@ coverage: ## check code coverage quickly with the default Python
 docs: ## generate Sphinx HTML documentation, including API docs
 	rm -f docs/xdatasets.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ xhydro
+	sphinx-apidoc -o docs/ xdatasets
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html

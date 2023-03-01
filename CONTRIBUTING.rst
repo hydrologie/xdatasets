@@ -15,7 +15,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/sebastienlanglois/xhydro/issues.
+Report bugs at https://github.com/sebastienlanglois/xdatasets/issues.
 
 If you are reporting a bug, please include:
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# xhydro documentation build configuration file, created by
+# xdatasets documentation build configuration file, created by
 # sphinx-quickstart on Fri Jun  9 13:47:02 2017.
 #
 # This file is execfile()d with the current directory set to its
@@ -48,7 +48,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Xhydro'
+project = 'Xdatasets'
 copyright = "2023, Sebastien Langlois"
 author = "Sebastien Langlois"
 

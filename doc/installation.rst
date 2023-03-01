@@ -7,26 +7,33 @@ Installation
 
 Stable release
 --------------
+xdatasets requires `conda` dependencies, you must make sure that they are all properly installed.
+The best way to install them is by using `conda`.
 
-To install xdatasets, run this command in your terminal:
+First, install miniconda. Then, we recommend creating a new, clean environment:
 
 .. code-block:: console
 
+    $ conda create -n xdatasets_env
+    $ conda activate xdatasets_env
+
+Getting xdatasets is then as simple as:
+.. code-block:: console
+
+    $ conda install -c conda-forge xdatasets
+
+
+Alternatively, you can first install conda dependencies, and then use pip to install xdatasets:
+
+.. code-block:: console
+    $ conda install -c conda-forge xarray s3fs zarr cartopy geoviews intake intake-xarray=0.6.1 xesfm
     $ pip install xdatasets
-
-This is the preferred method to install xdatasets, as it will always install the most recent stable release.
-
-If you don't have `pip`_ installed, this `Python installation guide`_ can guide
-you through the process.
-
-.. _pip: https://pip.pypa.io
-.. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
 
 
 From sources
 ------------
 
-The sources for Xhydro can be downloaded from the `Github repo`_.
+The sources for Xdatasets can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 

@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=xhydro
+set SPHINXPROJ=xdatasets
 
 if "%1" == "" goto help
 
