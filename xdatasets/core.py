@@ -100,6 +100,13 @@ class Dataset:
         except:
             pass
 
+        if "timezone" in time:
+            try:
+                ds = shift_tz(ds, time['timezone'])
+            except:
+                pass
+          # replace by error
+
         if "start" in time and 'end' in time:
             try:
                 ds = subset_time(ds, start_date=time['start'], end_date=time['end'])
@@ -107,12 +114,6 @@ class Dataset:
                 pass
             # replace by error
 
-        if "timezone" in time:
-            try:
-                ds = shift_tz(ds, time['timezone'])
-            except:
-                pass
-          # replace by error
         
 
         if space['clip'] == 'polygon':

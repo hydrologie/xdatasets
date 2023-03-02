@@ -18,6 +18,7 @@ First, install miniconda. Then, we recommend creating a new, clean environment:
     $ conda activate xdatasets_env
 
 Getting xdatasets is then as simple as:
+
 .. code-block:: console
 
     $ conda install -c conda-forge xdatasets
@@ -26,7 +27,7 @@ Getting xdatasets is then as simple as:
 Alternatively, you can first install conda dependencies, and then use pip to install xdatasets:
 
 .. code-block:: console
-    
+
     $ conda install -c conda-forge xarray s3fs zarr cartopy geoviews intake intake-xarray=0.6.1 xesfm
     $ pip install xdatasets
 
