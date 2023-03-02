@@ -1,11 +1,17 @@
-Welcome to Xdatasets's documentation!
+Xdatasets documentation
 ======================================
 
-Xdataset is a project whose objective is to facilitate access to Earth observation big data by centralizing access via a single catalog.
+**Version**: 0.1.0
 
-This project does not want to reinvent the wheel. We use technologies that are already well established in the field of earth observation to format and organize our datasets (intake, STAC, zarr, netcdf, etc.). When not required, we don't change anything in a dataset, we just point to the original provider's servers. What we do however is that we maintain one single catalog from multiple providers and for each dataset, we document the steps required to access it in multiple programming languages (focusing on Python for now, but eventually Julia and R). For some datasets, we also take extra steps such as rechunking the data, deaggregate or decumulate some variables, all to make life easier for users.
 
-This project was born out of a fundamental need to share common data sources when we were doing research. We collaborate with researchers, engineers, data scientists from academia to industry. In multidisciplinary projects, we have experienced difficulties in sharing and working on large common datasets. Although the centralization of data brought by cloud computing has made this task easier for us, the fact remains that there is still a significant learning curve to interact with these datasets and that the documentation to achieve this via different programming languages is sometimes limited.
+**Useful links**: Coming Soon!
+
+
+The `xdatasets` library enables users to effortlessly access a vast collection of large-scale earth observation datasets that are compatible with `xarray` formats all through a single query.
+
+The library adopts an opinionated approach to data querying and caters to the specific needs of certain user groups, such as hydrologists, climate scientists, and engineers.
+
+The genesis of this project can be traced back to a crucial requirement of effortlessly sharing standard earth observation data sources during inter-organizational collaboration. Although the advent of cloud computing has streamlined the data centralization process, it cannot be denied that there is still a considerable learning curve involved in accessing these datasets and leveraging them for practical engineering computations.
 
 .. toctree::
    :maxdepth: 2
