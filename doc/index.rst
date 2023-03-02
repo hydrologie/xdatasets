@@ -16,6 +16,7 @@ The genesis of this project can be traced back to a crucial requirement of effor
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   :hidden:
 
    readme
    installation
