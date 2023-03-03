@@ -69,6 +69,7 @@ setup(
     python_requires=REQUIRES_PYTHON,
     install_requires=requirements,
     license=LICENSE,
+    long_description=open('README.rst', 'r').read(),
     long_description_content_type="text/x-rst",
     include_package_data=True,
     keywords=KEYWORDS,

@@ -162,6 +162,7 @@ class Dataset:
         elif space['clip'] == 'point':
             lat,lon = zip(*space['geometry'].values())
             data = subset_gridpoint(ds.rename({'latitude':'lat', 'longitude':'lon'}), lon=list(lon), lat=list(lat)).load()
+            data = data.rename({'lat':'latitude', 'lon':'longitude'})
 
             data = data.assign_coords({'site': ('site', list(space['geometry'].keys()))})    
 
