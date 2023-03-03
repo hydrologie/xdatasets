@@ -10,7 +10,7 @@ URL = "https://github.com/hydrologie/xdatasets'"
 AUTHOR = "Sebastien Langlois"
 AUTHOR_EMAIL = "sebastien.langlois62@gmail.com"
 REQUIRES_PYTHON = ">=3.8.0"
-VERSION = "0.1.0-alpha"
+VERSION = "0.1.1-alpha"
 LICENSE = "MIT license"
 
 with open('README.rst') as readme_file:
