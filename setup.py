@@ -20,7 +20,6 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    "boltons>=20.1",
     "bottleneck>=1.3.1",
     "cf-xarray>=0.6.1",
     "cftime>=1.4.1",
