@@ -7,7 +7,7 @@ Xdatasets documentation
 **Useful links**: Coming Soon!
 
 
-The `xdatasets` library enables users to effortlessly access a vast collection of large-scale earth observation datasets that are compatible with `xarray` formats all through a single query.
+The ``xdatasets`` library enables users to effortlessly access a vast collection of large-scale earth observation datasets that are compatible with `xarray` formats all through a single query.
 
 The library adopts an opinionated approach to data querying and caters to the specific needs of certain user groups, such as hydrologists, climate scientists, and engineers.
 
@@ -26,8 +26,8 @@ The genesis of this project can be traced back to a crucial requirement of effor
    authors
    history
 
-Indices and tables
-==================
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. Indices and tables
+.. ==================
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`
