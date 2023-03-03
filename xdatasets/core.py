@@ -1,6 +1,6 @@
 from typing import Sequence, Tuple, Union, Dict, List
 
-from clisops.core.subset import subset_shape, subset_time, create_mask, shape_bbox_indexer, create_weight_masks
+from clisops.core.subset import subset_shape, subset_time, create_mask, shape_bbox_indexer, create_weight_masks, subset_gridpoint
 from clisops.core.average import average_shape
 import intake
 import s3fs
@@ -158,6 +158,14 @@ class Dataset:
                                                                 space['geometry'][space['unique_id']])})            
 
                 # replace by error  
+
+        elif space['clip'] == 'point':
+            lat,lon = zip(*space['geometry'].values())
+            data = subset_gridpoint(ds.rename({'latitude':'lat', 'longitude':'lon'}), lon=list(lon), lat=list(lat)).load()
+
+            data = data.assign_coords({'site': ('site', list(space['geometry'].keys()))})    
+
+
 
         if "timestep" in time:
             data_new = xr.Dataset(attrs=ds.attrs)
