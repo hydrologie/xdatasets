@@ -10,7 +10,7 @@ URL = "https://github.com/hydrologie/xdatasets'"
 AUTHOR = "Sebastien Langlois"
 AUTHOR_EMAIL = "sebastien.langlois62@gmail.com"
 REQUIRES_PYTHON = ">=3.8.0"
-VERSION = "0.1.0-alpha"
+VERSION = "0.1.2-alpha"
 LICENSE = "MIT license"
 
 with open('README.rst') as readme_file:
@@ -20,12 +20,10 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    "boltons>=20.1",
     "bottleneck>=1.3.1",
     "cf-xarray>=0.6.1",
     "cftime>=1.4.1",
-    "Click",
-    "clisops>=0.9.4",
+    "clisops>=0.9.2",
     "dask[array]>=2.6",
     "intake-xarray>=0.6.1",
     "jsonpickle",
@@ -34,9 +32,7 @@ requirements = [
     "pandas>=0.23",
     "pint>=0.10",
     "pyyaml",
-    "rioxarray>=0.11.2",
     "s3fs>=2022.7.0",
-    "scikit-learn>=0.21.3",
     "scipy>=1.2",
     "xarray>=0.17",
     "zarr>=2.11.1"
