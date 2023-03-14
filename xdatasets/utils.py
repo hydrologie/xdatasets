@@ -1,52 +1,48 @@
 import datetime
 import time
+from functools import reduce
 
+catalog_path = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml'
 
-def get_julian_day(month, day, year = None):
+def open_dataset(
+    name,
+    catalog,
+    **kws,
+):
     """
-    Return julian day for a specified date, if year is not specified, uses curent year
-
+    Open a dataset from the online public repository (requires internet).
+    Available datasets:
+    * ``"era5_reanalysis_single_levels"``: ERA5 reanalysis subset (t2m and tp)
+    * ``"cehq"``: CEHQ flow and water levels observations 
     Parameters
     ----------
-    month : int
-        integer of the target month
-        
-    day : int
-        integer of the target day
-        
-    year : int
-        integer of the target year
-
-    Returns
-    -------
-    int
-        julian day (1 - 366)
-        
-    Examples
+    name : str
+        Name of the file containing the dataset.
+        e.g. 'era5_reanalysis_single_levels'
+    **kws : dict, optional
+        Passed to xarray.open_dataset
+    See Also
     --------
-    >>> import xarray as xr
-    >>> cehq_data_path = '/dbfs/mnt/devdlzxxkp01/datasets/xdatasets/tests/cehq/zarr'
-    >>> ds = xr.open_zarr(cehq_data_path, consolidated=True)
-    >>> donnees = Data(ds)
-    >>> jj = donnees.get_julian_day(month = 9, day = 1)
-    >>> jj: 244
-    >>> jj = donnees.get_julian_day(month = 9, day = 1, year = 2000)
-    >>> jj: 245
-    """    
-    if year is None:
-        year = datetime.date.today().year
+    xarray.open_dataset
+    """
+    try:
+        import intake
+    except ImportError as e:
+        raise ImportError(
+            "tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets."
+            " To proceed please install intake and intake-xarray."
+        ) from e
 
-    return datetime.datetime(year, month, day).timetuple().tm_yday
+    cat = catalog
+    dataset_info = [(category, dataset_name)  for category in cat._entries.keys()
+     for dataset_name in cat[category]._entries.keys() if dataset_name == name]
+     
+    data = reduce(lambda array, index : array[index], dataset_info, cat)
 
-
-
-def tic():
-    #Homemade version of matlab tic and toc functions
-    global startTime_for_tictoc
-    startTime_for_tictoc = time.time()
-
-def toc(tag = ""):
-    if 'startTime_for_tictoc' in globals():
-        print(tag + " Elapsed time is " + str(time.time() - startTime_for_tictoc) + " seconds.")
+    if data.describe()['driver'][0] == 'geopandasfile':
+        data =  data.read()
+    elif data.describe()['driver'][0] == 'zarr':
+        data = data.to_dask() 
     else:
-        print("Toc: start time not set")
+        raise NotImplementedError(f'Dataset {name} is not available. Please request further datasets to our github issues pages')
+    return data  

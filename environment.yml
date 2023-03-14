@@ -17,7 +17,7 @@ dependencies:
     - tqdm
     - intake
     - geopandas
-    - clisops
+    - clisops=0.9.4
     - hvplot
     - intake-xarray=0.6.1
     - intake-geopandas
