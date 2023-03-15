@@ -1,4 +1,4 @@
-from typing import Sequence, Tuple, Union, Dict, List, Optional
+from typing import Sequence, Tuple, Union, Dict, List, Optional, Callable, Any
 import warnings
 import logging
 
@@ -61,27 +61,8 @@ class Query:
         A dictionary that maps spatial parameters with their corresponding value.
         More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_space_params` 
 
-
     time : dict-like
         A dictionary that maps temporal parameters with their corresponding value.
-        Currently, accepted key, value pairs include the following:
-            - Optional: {"timestep": timestep (str)} -> timestep refers to the time interval of the data that is retrieved by the query. 
-                        Offset aliases can be any of: 
-                        http://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases 
-
-            - Optional: {"aggregation": {var1_name (str): operation1 (str, List[str]),
-                                         var2_name (str): operation2 (str, List[str])}} -> For each variable var1_name, 
-                        var2_name, etc., which numpy operation(s) (str or list of str) to use for temporal aggregation
-
-            - Optional: {"start": start (str)} -> Start date of the subset. 
-                        Date string format – can be year (“%Y”), year-month (“%Y-%m”) or year-month-day(“%Y-%m-%d”)     
-
-            - Optional: {"end": end (str)} -> End date of the subset. 
-                        Date string format – can be year (“%Y”), year-month (“%Y-%m”) or year-month-day(“%Y-%m-%d”)
-                        
-            - Optional: {"timezone": timezone (str)} -> Which timezone should the query return the data in. Possible values are listed here:
-                        https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
-
 
     catalog_path: str
         URL for the intake catalog which provides access to the datasets. While
@@ -138,15 +119,13 @@ class Query:
                  datasets: Union[str, List[str], Dict[str, Union[str, List[str]]]],
                  space: Dict[str, Union[str, List[str]]],
                  time=dict(),
-                 catalog_path: str = URL_PATH):
-        
-        # assert datasets params
-        # assert time params
+                 catalog_path: str = URL_PATH
+                 )-> None:
 
         self.catalog = intake.open_catalog(catalog_path)
         self.datasets = datasets
         self.space = self._resolve_space_params(**space)
-        self.time = time
+        self.time = self._resolve_time_params(**time)
         
         self.load_query(datasets=self.datasets,
                         space=self.space,
@@ -157,11 +136,12 @@ class Query:
                               clip: str, 
                               geometry: Union[Dict[str, tuple], gpd.GeoDataFrame],
                               averaging: Optional[bool] = False,
-                              unique_id: Optional[str] = None):
+                              unique_id: Optional[str] = None
+                              )-> Dict:
         
         
         """ 
-        Resolves and validates user-provided space params before
+        Resolves and validates user-provided space params
 
         Parameters
         ----------
@@ -196,7 +176,61 @@ class Query:
 
         return args
 
+    def _resolve_time_params(self,
+                             timestep: Optional[str] = None, 
+                             aggregation: Optional[Dict[str, Union[Callable[..., Any], List[Callable[..., Any]]]]] = None,
+                             start: Optional[bool] = False,
+                             end: Optional[str] = None,
+                             timezone: Optional[str] = None,
+                             ) -> Dict:
+        
+        
+        """ 
+        Resolves and validates user-provided time params
 
+        Parameters
+        ----------
+        timestep : str, optional
+            Which kind of clip operation to perform on geometry.
+            Possible values are one of "polygon", "point" or "bbox".
+
+        aggregation : Dict[str, callable], optional
+            Mapping that associates a variable name with the aggregation function
+            to be applied to it. Function which can be called in the form
+            `f(x, axis=axis, **kwargs)` to return the result of reducing an
+            np.ndarray over an integer valued axis. This parameter is required 
+            should the `timestep` argument be passed.
+
+        start : str, optional
+            Start date of the selected time period.
+            String format – can be year (“%Y”), year-month (“%Y-%m”) or
+            year-month-day(“%Y-%m-%d”)
+            
+        end : str, optional
+            End date of the selected time period.
+            String format – can be year (“%Y”), year-month (“%Y-%m”) or
+            year-month-day(“%Y-%m-%d”)
+
+        timezone : str, optional
+            Timezone to be used for the returned datasets
+            Possible values are listed here:
+            https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
+        """
+        
+        space = locals()
+        space.pop('self')
+
+        #assert _validate_time_params(**space)
+        
+        # We created a new dict based on user-provided parameters
+        # TODO : adapt all parameters before requesting any operations on datasets
+        args = {'timestep': timestep,
+                'aggregation': aggregation,
+                'start': start,
+                'end': end,
+                'timezone': timezone}
+
+        return args
     
     def load_query(self,
                    datasets: Union[str, Dict[str, Union[str, List[str]]]],

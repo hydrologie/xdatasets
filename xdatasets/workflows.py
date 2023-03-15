@@ -33,14 +33,14 @@ def climate_request(dataset_name,
         pass
 
     # Ajust timezone and then slice time dimension before moving on with spatiotemporal operations
-    if "timezone" in time:
+    if time["timezone"] != None:
         try:
             # Assume UTC for now, will change when metadata database in up and running
             ds = change_timezone(ds, 'UTC', time['timezone'])
         except:
             pass # replace by error
 
-    if "start" in time or 'end' in time:
+    if time["start"] != None or time["end"] != None:
         try:
             start_time = time['start'] if 'start' in time else None
             end_time = time['end'] if 'end' in time else None
@@ -58,7 +58,7 @@ def climate_request(dataset_name,
     elif space['clip'] == 'bbox':
         ds = clip_by_bbox(ds, space, dataset_name).load()
         
-    if "timestep" in time:
+    if time["timestep"] != None and time['aggregation'] != None:
         ds = temporal_aggregation(ds,
                                   time,
                                   dataset_name)
