@@ -19,6 +19,16 @@ URL_PATH = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/c
 
 __all__ = ["Query"]
 
+logger = logging.getLogger()
+logger.handlers = []
+
+# Start defining and assigning your handlers here
+handler = logging.StreamHandler()
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter("%(message)s")
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
 
 class Query:
 
@@ -49,18 +59,8 @@ class Query:
 
     space : dict-like
         A dictionary that maps spatial parameters with their corresponding value.
-        Currently, accepted key, value pairs include the following:
-            - Required: {"clip": clip_value (str)} -> Which kind of clip operation to perform on geometry.
-                        Possible values for clip_value are : "polygon", "point" or "bbox".
+        More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_space_params` 
 
-            - Required: {"geometry": geom (gdf.DataFrame, Dict[str, Tuple])} -> geon represents the geometry or
-                         geometries on which to perform some spatial operations
-
-            - Optional: {"averaging": averaging (bool)} -> Whether to spatially average the grid within a geometry or not
-                        Possible values for averaging are True or False
-
-            - Optional: {"unique_id": unique_id (str)} -> unique_id is a column name, if gdf.DataFrame is provided, 
-                        to identify each unique geometry
 
     time : dict-like
         A dictionary that maps temporal parameters with their corresponding value.
@@ -141,17 +141,62 @@ class Query:
                  catalog_path: str = URL_PATH):
         
         # assert datasets params
-        assert _validate_space_params(**space)
         # assert time params
 
         self.catalog = intake.open_catalog(catalog_path)
         self.datasets = datasets
-        self.space = space
+        self.space = self._resolve_space_params(**space)
         self.time = time
         
         self.load_query(datasets=self.datasets,
                         space=self.space,
                         time=self.time)
+        
+
+    def _resolve_space_params(self,
+                              clip: str, 
+                              geometry: Union[Dict[str, tuple], gpd.GeoDataFrame],
+                              averaging: Optional[bool] = False,
+                              unique_id: Optional[str] = None):
+        
+        
+        """ 
+        Resolves and validates user-provided space params before
+
+        Parameters
+        ----------
+        clip : str
+            Which kind of clip operation to perform on geometry.
+            Possible values are one of "polygon", "point" or "bbox".
+
+        geometry : gdf.DataFrame, Dict[str, Tuple]
+            Geometry/geometries on which to perform spatial operations  
+
+        averaging : bool, optional
+            Whether to spatially average the arrays within a geometry or not
+
+        unique_id : str, optional
+            a column name, if gdf.DataFrame is provided, to identify each unique geometry
+        """
+        
+        space = locals()
+        space.pop('self')
+
+        assert _validate_space_params(**space)
+        
+        if isinstance(geometry, gpd.GeoDataFrame ):
+            geometry = geometry.reset_index(drop=True)
+
+        # We created a new dict based on user-provided parameters
+        # TODO : adapt all parameters before requesting any operations on datasets
+        args = {'clip': clip,
+                'geometry': geometry,
+                'averaging': averaging,
+                'unique_id': unique_id}
+
+        return args
+
+
     
     def load_query(self,
                    datasets: Union[str, Dict[str, Union[str, List[str]]]],
