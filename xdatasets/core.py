@@ -8,26 +8,17 @@ import xarray as xr
 import hvplot.xarray
 import hvplot.pandas
 
-from .spatial import clip_by_polygon, clip_by_point
-from .temporal import change_timezone, temporal_aggregation
 from .validations import _validate_space_params
-from .utils import open_dataset
 from .workflows import climate_request
+from .scripting import LOGGING_CONFIG
 
+logging.config.dictConfig(LOGGING_CONFIG)
+logger = logging.getLogger(__name__)
 
-URL_PATH = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml'
+url_path = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml'
+
 
 __all__ = ["Query"]
-
-logger = logging.getLogger()
-logger.handlers = []
-
-# Start defining and assigning your handlers here
-handler = logging.StreamHandler()
-handler.setLevel(logging.INFO)
-formatter = logging.Formatter("%(message)s")
-handler.setFormatter(formatter)
-logger.addHandler(handler)
 
 
 class Query:
@@ -119,7 +110,7 @@ class Query:
                  datasets: Union[str, List[str], Dict[str, Union[str, List[str]]]],
                  space: Dict[str, Union[str, List[str]]],
                  time=dict(),
-                 catalog_path: str = URL_PATH
+                 catalog_path: str = url_path
                  )-> None:
 
         self.catalog = intake.open_catalog(catalog_path)
