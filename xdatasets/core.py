@@ -1,27 +1,18 @@
 from typing import Sequence, Tuple, Union, Dict, List, Optional
+import warnings
+import logging
 
-from clisops.core.subset import subset_time, shape_bbox_indexer, subset_gridpoint
-from clisops.core.average import average_shape
 import intake
 import geopandas as gpd
 import xarray as xr
-import numpy as np
-import warnings
-from tqdm import tqdm
-import pandas as pd
-from functools import reduce
 import hvplot.xarray
 import hvplot.pandas
-from dask.distributed import Client
-import logging
-import warnings
 
 from .spatial import clip_by_polygon, clip_by_point
 from .temporal import change_timezone, temporal_aggregation
 from .validations import _validate_space_params
 from .utils import open_dataset
 from .workflows import climate_request
-#client = Client()
 
 
 
@@ -32,10 +23,121 @@ __all__ = ["Query"]
 
 class Query:
 
-    """"This is the base class for the datasets extension for xarray"""
+    """"The Query interface facilitates access to analysis-ready 
+    earth observation datasets and allows for spatiotemporal
+    operations to be performed based on user queries.
+        
+        
+    Parameters
+    ----------
+    datasets : str, list, dict-like
+        A dictionary that maps dataset names to their corresponding requested 
+        content such as some desired variables. If a string representing only the dataset 
+        name is provided, then the object will return all content within that dataset.
+        If a list is provided, then the object will return all content from each dataset
+        from that list.
+
+        The following notations are accepted:
+        - str (first_dataset_name)
+        - list [first_dataset_name, second_dataset_name]
+        - mapping {first_dataset_name: {key: value, key2: value2},
+                   second_dataset_name: {key: value}
+                   }
+          Currently, accepted key, value pairs for a mapping argument include the following:
+            - Optional: {"variables": [var1_name, var2_name]}
+        
+        The list of datasets available in this library can be accessed here:
+        # Coming soon!
+
+    space : dict-like
+        A dictionary that maps spatial parameters with their corresponding value.
+        Currently, accepted key, value pairs include the following:
+            - Required: {"clip": clip_value (str)} -> Which kind of clip operation to perform on geometry.
+                        Possible values for clip_value are : "polygon", "point" or "bbox".
+
+            - Required: {"geometry": geom (gdf.DataFrame, Dict[str, Tuple])} -> geon represents the geometry or
+                         geometries on which to perform some spatial operations
+
+            - Optional: {"averaging": averaging (bool)} -> Whether to spatially average the grid within a geometry or not
+                        Possible values for averaging are True or False
+
+            - Optional: {"unique_id": unique_id (str)} -> unique_id is a column name, if gdf.DataFrame is provided, 
+                        to identify each unique geometry
+
+    time : dict-like
+        A dictionary that maps temporal parameters with their corresponding value.
+        Currently, accepted key, value pairs include the following:
+            - Optional: {"timestep": timestep (str)} -> timestep refers to the time interval of the data that is retrieved by the query. 
+                        Offset aliases can be any of: 
+                        http://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases 
+
+            - Optional: {"aggregation": {var1_name (str): operation1 (str, List[str]),
+                                         var2_name (str): operation2 (str, List[str])}} -> For each variable var1_name, 
+                        var2_name, etc., which numpy operation(s) (str or list of str) to use for temporal aggregation
+
+            - Optional: {"start": start (str)} -> Start date of the subset. 
+                        Date string format – can be year (“%Y”), year-month (“%Y-%m”) or year-month-day(“%Y-%m-%d”)     
+
+            - Optional: {"end": end (str)} -> End date of the subset. 
+                        Date string format – can be year (“%Y”), year-month (“%Y-%m”) or year-month-day(“%Y-%m-%d”)
+                        
+            - Optional: {"timezone": timezone (str)} -> Which timezone should the query return the data in. Possible values are listed here:
+                        https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
+
+
+    catalog_path: str
+        URL for the intake catalog which provides access to the datasets. While
+        this library provides its own intake catalog, users have the option to 
+        provide their own catalog, which can be particularly beneficial for 
+        private datasets or if different configurations are needed.
+
+    Examples
+    --------
+    Create data:
+
+    >>> sites = {
+    ...    'Montreal' : (45.508888, -73.561668),
+    ...    'New York': (40.730610, -73.935242),
+    ...    'Miami': (25.761681, -80.191788)
+    ... }
+
+    >>> query = {
+    ...     "datasets": 'era5_land_reanalysis_dev',
+    ...     "space": {
+    ...         "clip": "point",
+    ...         "geometry": sites
+    ...     },
+    ...     "time": {        
+    ...         "timestep": "D",
+    ...         "aggregation": {"tp": np.nansum,
+    ...                         "t2m": np.nanmean},
+    ...         "start": '1950-01-01',
+    ...         "end": '1955-12-31',
+    ...         "timezone": 'America/Montreal',
+    ...     },
+    ... }
+    >>> xds = xd.Query(**query)
+    >>> xds.data
+    <xarray.Dataset>
+    Dimensions:      (site: 3, time: 2191, source: 1)
+    Coordinates:
+        latitude     (site) float64 45.5 40.7 25.8
+        longitude    (site) float64 -73.6 -73.9 -80.2
+      * site         (site) <U8 'Montreal' 'New York' 'Miami'
+      * time         (time) datetime64[ns] 1950-01-01 1950-01-02 ... 1955-12-31
+      * source       (source) <U24 'era5_land_reanalysis_dev'
+    Data variables:
+        t2m_nanmean  (time, site, source) float32 269.6 273.8 294.3 ... 268.1 292.1
+        tp_nansum    (time, site, source) float32 0.0004192 2.792e-06 ... 0.0001207
+    Attributes:
+        pangeo-forge:inputs_hash:  1622c0abe9326bfa4d6ee6cdf817fccb1ef1661046f30f...
+        pangeo-forge:recipe_hash:  f2b6c75f28693bbae820161d5b71ebdb9d740dcdde0666...
+        pangeo-forge:version:      0.9.4
+        
+    """
 
     def __init__(self,
-                 datasets: Union[str, Dict[str, Union[str, List[str]]]],
+                 datasets: Union[str, List[str], Dict[str, Union[str, List[str]]]],
                  space: Dict[str, Union[str, List[str]]],
                  time=dict(),
                  catalog_path: str = URL_PATH):
@@ -59,15 +161,21 @@ class Query:
                    time):
         
         # Get all datasets in query
-        datasets_name = list(datasets.keys())
+        if isinstance(datasets, str):
+            datasets_name = [datasets]
+
+        elif isinstance(datasets, dict):
+            datasets_name = list(datasets.keys())
 
         # Load data for each dataset
         dsets = []
-        # pbar = tqdm(datasets_name)
         for dataset_name in datasets_name:
-            # pbar.set_description("Dataset %s" % dataset_name, refresh=True)
 
-            variables_name = self.datasets[dataset_name]['variables']
+            try:
+                variables_name = self.datasets[dataset_name]['variables']
+            except:
+                variables_name = None
+                pass
 
             ds_one = self._process_one_dataset(dataset_name=dataset_name,
                                                variables=variables_name,
@@ -80,7 +188,7 @@ class Query:
             ds = xr.merge(dsets)
             ds = ds
         except:
-            # Couldn't merge datasets so we pass a dictionary of datasets. 
+            logging.warn("Couldn't merge datasets so we pass a dictionary of datasets. ")
             # Look into passing a DataTree instead
             ds = dsets
             pass
