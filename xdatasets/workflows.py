@@ -13,7 +13,7 @@ from functools import reduce
 from dask.distributed import Client
 import logging
 
-from .spatial import clip_by_polygon, clip_by_point
+from .spatial import clip_by_polygon, clip_by_point, clip_by_bbox
 from .temporal import change_timezone, temporal_aggregation
 from .validations import _validate_space_params
 from .utils import open_dataset
@@ -35,10 +35,11 @@ def climate_request(dataset_name,
     # Ajust timezone and then slice time dimension before moving on with spatiotemporal operations
     if "timezone" in time:
         try:
-            ds = change_timezone(ds, time['timezone'])
+            # Assume UTC for now, will change when metadata database in up and running
+            ds = change_timezone(ds, 'UTC', time['timezone'])
         except:
             pass # replace by error
-    
+
     if "start" in time or 'end' in time:
         try:
             start_time = time['start'] if 'start' in time else None
@@ -52,7 +53,10 @@ def climate_request(dataset_name,
         ds = clip_by_polygon(ds, space, dataset_name).load()
 
     elif space['clip'] == 'point':
-        ds = clip_by_point(ds, space).load()
+        ds = clip_by_point(ds, space, dataset_name).load()
+
+    elif space['clip'] == 'bbox':
+        ds = clip_by_bbox(ds, space, dataset_name).load()
         
     if "timestep" in time:
         ds = temporal_aggregation(ds,

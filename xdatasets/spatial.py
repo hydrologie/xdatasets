@@ -4,7 +4,7 @@ from clisops.core.subset import subset_shape, subset_time, create_mask, shape_bb
 from clisops.core.average import average_shape
 import xarray as xr
 from tqdm import tqdm
-
+import logging
 
 
 def get_weight_masks(da, geom):
@@ -20,38 +20,40 @@ def bbox_ds(ds_copy, geom):
     da = da.chunk({'latitude':-1, 'longitude':-1})
     return da
 
+
+def clip_by_bbox(ds,
+                 space,
+                 dataset_name
+                 ):
+    logging.info(f"Spatial operations: processing bbox with {dataset_name}")
+    indexer = shape_bbox_indexer(ds, space['geometry'])
+    ds_copy = ds.isel(indexer).copy()
+    return ds_copy
+    
+
 def clip_by_polygon(ds,
                     space,
                     dataset_name
                     ):
     indexer = shape_bbox_indexer(ds, space['geometry'])
     ds_copy = ds.isel(indexer).copy()
-
     
     arrays = []
-    
     pbar = tqdm(space['geometry'].iterrows())
     for idx, row in pbar:
-        if 'unique_id' in space and space['unique_id'] in row:
-            pbar.set_description(f"Spatial operations: processing {row[space['unique_id']]} with {dataset_name}" )
-        else:
-            pbar.set_description(f"Spatial operations: processing polygon {idx} with {dataset_name}")
-        geom = space['geometry'].iloc[[idx]]
+        item = row[space['unique_id']] if space['unique_id'] != None and space['unique_id'] in row else idx
+        pbar.set_description(f"Spatial operations: processing polygon {item} with {dataset_name}")
 
+        geom = space['geometry'].iloc[[idx]]
         da = bbox_ds(ds_copy, geom)
 
-        
         # Average data array over shape
-        if space['averaging'] is True:
-            
+        if space['averaging'] is True:            
             da = average_shape(da, shape=geom)
         else:
             da = get_weight_masks(da, geom)
-
-#                    da = dask.delayed(get_weight_masks)(da, geom)
         arrays.append(da)
-    #  arrays = dask.compute(*arrays, scheduler='processes')
-    data = xr.concat(arrays, dim='geom').persist()
+    data = xr.concat(arrays, dim='geom')
 
     if 'unique_id' in space:
         try:
@@ -66,7 +68,11 @@ def clip_by_polygon(ds,
     return data
 
 
-def clip_by_point(ds, space):
+def clip_by_point(ds, space, dataset_name):
+
+    logger = logging.getLogger()
+    logging.info(f"Spatial operations: processing points with {dataset_name}")
+
     lat,lon = zip(*space['geometry'].values())
     data = subset_gridpoint(ds.rename({'latitude':'lat', 'longitude':'lon'}), lon=list(lon), lat=list(lat))
     data = data.rename({'lat':'latitude', 'lon':'longitude'})
