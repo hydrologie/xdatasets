@@ -15,7 +15,6 @@ from .utils import open_dataset
 from .workflows import climate_request
 
 
-
 URL_PATH = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml'
 
 __all__ = ["Query"]
@@ -26,7 +25,6 @@ class Query:
     """"The Query interface facilitates access to analysis-ready 
     earth observation datasets and allows for spatiotemporal
     operations to be performed based on user queries.
-        
         
     Parameters
     ----------
@@ -170,7 +168,6 @@ class Query:
         # Load data for each dataset
         dsets = []
         for dataset_name in datasets_name:
-
             try:
                 variables_name = self.datasets[dataset_name]['variables']
             except:
