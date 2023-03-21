@@ -1,4 +1,4 @@
-from typing import Sequence, Tuple, Union, Dict, List, Optional
+from typing import Sequence, Tuple, Union, Dict, List, Optional, Callable, Any
 import warnings
 import logging
 
@@ -8,26 +8,17 @@ import xarray as xr
 import hvplot.xarray
 import hvplot.pandas
 
-from .spatial import clip_by_polygon, clip_by_point
-from .temporal import change_timezone, temporal_aggregation
 from .validations import _validate_space_params
-from .utils import open_dataset
-from .workflows import climate_request
+from .workflows import climate_request, hydrometric_request
+from .scripting import LOGGING_CONFIG
 
+logging.config.dictConfig(LOGGING_CONFIG)
+logger = logging.getLogger(__name__)
 
-URL_PATH = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml'
+url_path = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml'
+
 
 __all__ = ["Query"]
-
-logger = logging.getLogger()
-logger.handlers = []
-
-# Start defining and assigning your handlers here
-handler = logging.StreamHandler()
-handler.setLevel(logging.INFO)
-formatter = logging.Formatter("%(message)s")
-handler.setFormatter(formatter)
-logger.addHandler(handler)
 
 
 class Query:
@@ -39,50 +30,28 @@ class Query:
     Parameters
     ----------
     datasets : str, list, dict-like
-        A dictionary that maps dataset names to their corresponding requested 
-        content such as some desired variables. If a string representing only the dataset 
-        name is provided, then the object will return all content within that dataset.
-        If a list is provided, then the object will return all content from each dataset
-        from that list.
-
-        The following notations are accepted:
-        - str (first_dataset_name)
-        - list [first_dataset_name, second_dataset_name]
-        - mapping {first_dataset_name: {key: value, key2: value2},
-                   second_dataset_name: {key: value}
-                   }
-          Currently, accepted key, value pairs for a mapping argument include the following:
-            - Optional: {"variables": [var1_name, var2_name]}
+        - If str, a dataset name, i.e.: era5_land_reanalysis
+        - If list, a list of dataset names, i.e.: [era5_single_levels_reanalysis, era5_land_reanalysis]
+        - If dictionary, it should map dataset names to their corresponding requested 
+          content such as some desired variables. This allows more flexibility in the request.
+              i.e.: {era5_land_reanalysis: {'variables': ['t2m', 'tp]},
+                    era5_single_levels_reanalysis: {'variables': 't2m'}
+                     }
+              Currently, accepted key, value pairs for a mapping argument include the following:
+              ===========  ==============  
+              Key          Variables      
+              ===========  ==============  
+              variables    str, List[str]  
+              ===========  ============== 
         
-        The list of datasets available in this library can be accessed here:
+        The list of available datasets in this library can be accessed here:
         # Coming soon!
-
     space : dict-like
         A dictionary that maps spatial parameters with their corresponding value.
         More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_space_params` 
-
-
     time : dict-like
         A dictionary that maps temporal parameters with their corresponding value.
-        Currently, accepted key, value pairs include the following:
-            - Optional: {"timestep": timestep (str)} -> timestep refers to the time interval of the data that is retrieved by the query. 
-                        Offset aliases can be any of: 
-                        http://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases 
-
-            - Optional: {"aggregation": {var1_name (str): operation1 (str, List[str]),
-                                         var2_name (str): operation2 (str, List[str])}} -> For each variable var1_name, 
-                        var2_name, etc., which numpy operation(s) (str or list of str) to use for temporal aggregation
-
-            - Optional: {"start": start (str)} -> Start date of the subset. 
-                        Date string format – can be year (“%Y”), year-month (“%Y-%m”) or year-month-day(“%Y-%m-%d”)     
-
-            - Optional: {"end": end (str)} -> End date of the subset. 
-                        Date string format – can be year (“%Y”), year-month (“%Y-%m”) or year-month-day(“%Y-%m-%d”)
-                        
-            - Optional: {"timezone": timezone (str)} -> Which timezone should the query return the data in. Possible values are listed here:
-                        https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
-
-
+        More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_time_params` 
     catalog_path: str
         URL for the intake catalog which provides access to the datasets. While
         this library provides its own intake catalog, users have the option to 
@@ -138,15 +107,13 @@ class Query:
                  datasets: Union[str, List[str], Dict[str, Union[str, List[str]]]],
                  space: Dict[str, Union[str, List[str]]],
                  time=dict(),
-                 catalog_path: str = URL_PATH):
-        
-        # assert datasets params
-        # assert time params
+                 catalog_path: str = url_path
+                 )-> None:
 
         self.catalog = intake.open_catalog(catalog_path)
         self.datasets = datasets
         self.space = self._resolve_space_params(**space)
-        self.time = time
+        self.time = self._resolve_time_params(**time)
         
         self.load_query(datasets=self.datasets,
                         space=self.space,
@@ -157,24 +124,22 @@ class Query:
                               clip: str, 
                               geometry: Union[Dict[str, tuple], gpd.GeoDataFrame],
                               averaging: Optional[bool] = False,
-                              unique_id: Optional[str] = None):
+                              unique_id: Optional[str] = None
+                              )-> Dict:
         
         
         """ 
-        Resolves and validates user-provided space params before
+        Resolves and validates user-provided space params
 
         Parameters
         ----------
         clip : str
             Which kind of clip operation to perform on geometry.
             Possible values are one of "polygon", "point" or "bbox".
-
         geometry : gdf.DataFrame, Dict[str, Tuple]
             Geometry/geometries on which to perform spatial operations  
-
         averaging : bool, optional
             Whether to spatially average the arrays within a geometry or not
-
         unique_id : str, optional
             a column name, if gdf.DataFrame is provided, to identify each unique geometry
         """
@@ -196,7 +161,57 @@ class Query:
 
         return args
 
+    def _resolve_time_params(self,
+                             timestep: Optional[str] = None, 
+                             aggregation: Optional[Dict[str, Union[Callable[..., Any], List[Callable[..., Any]]]]] = None,
+                             start: Optional[bool] = False,
+                             end: Optional[str] = None,
+                             timezone: Optional[str] = None,
+                             ) -> Dict:
+        
+        
+        """ 
+        Resolves and validates user-provided time params
 
+        Parameters
+        ----------
+        timestep : str, optional
+            In which time step should the data be returned
+            Possible values : http://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases
+        aggregation : Dict[str, callable], optional
+            Mapping that associates a variable name with the aggregation function
+            to be applied to it. Function which can be called in the form
+            `f(x, axis=axis, **kwargs)` to return the result of reducing an
+            np.ndarray over an integer valued axis. This parameter is required 
+            should the `timestep` argument be passed.
+        start : str, optional
+            Start date of the selected time period.
+            String format – can be year (“%Y”), year-month (“%Y-%m”) or
+            year-month-day(“%Y-%m-%d”)
+        end : str, optional
+            End date of the selected time period.
+            String format – can be year (“%Y”), year-month (“%Y-%m”) or
+            year-month-day(“%Y-%m-%d”)
+        timezone : str, optional
+            Timezone to be used for the returned datasets
+            Possible values are listed here:
+            https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
+        """
+        
+        space = locals()
+        space.pop('self')
+
+        #assert _validate_time_params(**space)
+        
+        # We created a new dict based on user-provided parameters
+        # TODO : adapt all parameters before requesting any operations on datasets
+        args = {'timestep': timestep,
+                'aggregation': aggregation,
+                'start': start,
+                'end': end,
+                'timezone': timezone}
+
+        return args
     
     def load_query(self,
                    datasets: Union[str, Dict[str, Union[str, List[str]]]],
@@ -248,7 +263,7 @@ class Query:
         dataset_category = [category for category in self.catalog._entries.keys()
                                      for name in self.catalog[category]._entries.keys() 
                                      if name == dataset_name][0]
-        
+                
         if dataset_category in ['atmosphere']:
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", category=RuntimeWarning)
@@ -257,6 +272,15 @@ class Query:
                                     space,
                                     time,
                                     self.catalog)
+                
+        elif dataset_category in ['hydrology']:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", category=RuntimeWarning)
+                ds = hydrometric_request(dataset_name,
+                                         variables,
+                                         space,
+                                         time,
+                                         self.catalog)
         
         return ds
     
