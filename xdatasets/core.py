@@ -9,7 +9,7 @@ import hvplot.xarray
 import hvplot.pandas
 
 from .validations import _validate_space_params
-from .workflows import climate_request, hydrometric_request
+from .workflows import climate_request, hydrometric_request, user_provided_dataset
 from .scripting import LOGGING_CONFIG
 
 logging.config.dictConfig(LOGGING_CONFIG)
@@ -228,16 +228,23 @@ class Query:
         # Load data for each dataset
         dsets = []
         for dataset_name in datasets_name:
+            data = None
             try:
                 variables_name = self.datasets[dataset_name]['variables']
             except:
                 variables_name = None
                 pass
+            try:
+                data = self.datasets[dataset_name]['data']
+            except:
+                pass
 
             ds_one = self._process_one_dataset(dataset_name=dataset_name,
                                                variables=variables_name,
                                                space=space,
-                                               time=time)
+                                               time=time,
+                                               data=data
+                                               )
             dsets.append(ds_one)
             
         try:
@@ -258,20 +265,31 @@ class Query:
                              dataset_name,
                              variables,
                              space,
-                             time):
+                             time,
+                             **kwargs):
         
-        dataset_category = [category for category in self.catalog._entries.keys()
-                                     for name in self.catalog[category]._entries.keys() 
-                                     if name == dataset_name][0]
-                
+        data = None
+        if 'data' in kwargs:
+            data = kwargs['data']
+
+
+        if data != None and isinstance(data, xr.Dataset):
+            dataset_category = 'user-provided'
+
+        elif isinstance(dataset_name, str):
+            dataset_category = [category for category in self.catalog._entries.keys()
+                                        for name in self.catalog[category]._entries.keys() 
+                                        if name == dataset_name][0]
+
+                    
         if dataset_category in ['atmosphere']:
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", category=RuntimeWarning)
                 ds = climate_request(dataset_name,
-                                    variables,
-                                    space,
-                                    time,
-                                    self.catalog)
+                                     variables,
+                                     space,
+                                     time,
+                                     self.catalog)
                 
         elif dataset_category in ['hydrology']:
             with warnings.catch_warnings():
@@ -281,6 +299,16 @@ class Query:
                                          space,
                                          time,
                                          self.catalog)
+                
+        elif dataset_category in ['user-provided']:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", category=RuntimeWarning)
+                ds = user_provided_dataset(dataset_name,
+                                          variables,
+                                          space,
+                                          time,
+                                          data)
+        
         
         return ds
     
