@@ -9,10 +9,10 @@ import hvplot.xarray
 import hvplot.pandas
 
 from .validations import _validate_space_params
-from .workflows import climate_request
+from .workflows import climate_request, hydrometric_request
 from .scripting import LOGGING_CONFIG
 
-#logging.config.dictConfig(LOGGING_CONFIG)
+logging.config.dictConfig(LOGGING_CONFIG)
 logger = logging.getLogger(__name__)
 
 url_path = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml'
@@ -263,7 +263,7 @@ class Query:
         dataset_category = [category for category in self.catalog._entries.keys()
                                      for name in self.catalog[category]._entries.keys() 
                                      if name == dataset_name][0]
-        
+                
         if dataset_category in ['atmosphere']:
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", category=RuntimeWarning)
@@ -272,6 +272,15 @@ class Query:
                                     space,
                                     time,
                                     self.catalog)
+                
+        elif dataset_category in ['hydrology']:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", category=RuntimeWarning)
+                ds = hydrometric_request(dataset_name,
+                                         variables,
+                                         space,
+                                         time,
+                                         self.catalog)
         
         return ds
     
