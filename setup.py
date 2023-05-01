@@ -76,6 +76,10 @@ setup(
     packages=find_packages(),
     extras_require={"dev": dev_requirements},
     url=URL,
+<<<<<<< HEAD
     version="0.2.0",
+=======
+    version='0.2.0',
+>>>>>>> 19ffecd94a7416cae6eeb0e78553759004410eb1
     zip_safe=False,
 )
