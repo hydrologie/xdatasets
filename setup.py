@@ -32,9 +32,12 @@ requirements = [
     "pint>=0.10",
     "pyyaml",
     "s3fs>=2022.7.0",
+    "geopandas",
+    "tqdm",
     "scipy>=1.2",
     "xarray>=0.17",
-    "zarr>=2.11.1"
+    "zarr>=2.11.1",
+    "xagg-no-xesmf-deps @ git+https://github.com/hydrologie/xagg-no-xesmf-deps.git@main"
 ]
 
 
