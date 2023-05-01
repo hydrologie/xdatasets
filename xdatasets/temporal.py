@@ -24,7 +24,6 @@ def temporal_aggregation(ds,
     
     ds_new = xr.Dataset(attrs=ds.attrs)
     ds_list = []
-    
 
     pbar = tqdm(ds.keys())
     for var in pbar:
