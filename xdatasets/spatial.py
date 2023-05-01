@@ -10,12 +10,6 @@ import pandas as pd
 
 from .utils import HiddenPrints
 
-# def get_weight_masks(da, geom):
-#     mask = create_weight_masks(da,
-#             poly=geom)
-#     da['weights'] = mask.squeeze()
-#     da = da.where(da.weights>0, drop=True)
-#     return da
 
 def bbox_ds(ds_copy, geom):
     indexer = shape_bbox_indexer(ds_copy, geom)
