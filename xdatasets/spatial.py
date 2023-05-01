@@ -1,18 +1,21 @@
 from typing import Sequence, Tuple, Union, Dict, List, Optional
 
-from clisops.core.subset import subset_shape, subset_time, create_mask, shape_bbox_indexer, create_weight_masks, subset_gridpoint
+from clisops.core.subset import subset_shape, subset_time, create_mask, shape_bbox_indexer, subset_gridpoint
 from clisops.core.average import average_shape
 import xarray as xr
 from tqdm import tqdm
 import logging
+import xagg as xa
+import pandas as pd
 
+from .utils import HiddenPrints
 
-def get_weight_masks(da, geom):
-    mask = create_weight_masks(da,
-            poly=geom)
-    da['weights'] = mask.squeeze()
-    da = da.where(da.weights>0, drop=True)
-    return da
+# def get_weight_masks(da, geom):
+#     mask = create_weight_masks(da,
+#             poly=geom)
+#     da['weights'] = mask.squeeze()
+#     da = da.where(da.weights>0, drop=True)
+#     return da
 
 def bbox_ds(ds_copy, geom):
     indexer = shape_bbox_indexer(ds_copy, geom)
@@ -30,6 +33,27 @@ def clip_by_bbox(ds,
     ds_copy = ds.isel(indexer).copy()
     return ds_copy
     
+def create_weights_mask(da, poly):
+    
+    weightmap = xa.pixel_overlaps(da, poly, subset_bbox=True)
+
+    pixels = pd.DataFrame(index=weightmap.agg['pix_idxs'][0],
+                          data=list(map(list, weightmap.agg['coords'][0])),
+                          columns=['latitude','longitude']
+                         )
+
+    weights = pd.DataFrame(index=weightmap.agg['pix_idxs'][0],
+                 data=weightmap.agg['rel_area'][0][0].tolist(),
+                 columns=['weights'])
+
+
+    df = pd.merge(pixels, weights, left_index=True, right_index=True)
+    return df.set_index(['latitude', 'longitude']).to_xarray()
+
+def aggregate(ds_in, ds_weights):
+    return (ds_in*ds_weights.weights).sum(['latitude','longitude'], min_count=1)
+
+
 
 def clip_by_polygon(ds,
                     space,
@@ -48,11 +72,17 @@ def clip_by_polygon(ds,
         da = bbox_ds(ds_copy, geom)
 
         # Average data array over shape
-        if space['averaging'] is True:            
-            da = average_shape(da, shape=geom)
+            #da = average_shape(da, shape=geom)
+        with HiddenPrints():
+            ds_weights  = create_weights_mask(da.isel(time=0), geom)
+        if space['averaging'] is True:   
+            da = aggregate(da, ds_weights)
         else:
-            da = get_weight_masks(da, geom)
+            da = xr.merge([da, ds_weights])
+            da = da.where(da.weights.notnull(), drop=True)
+        da = da.expand_dims({"geom": geom.index.values})
         arrays.append(da)
+
     data = xr.concat(arrays, dim='geom')
 
     if 'unique_id' in space:

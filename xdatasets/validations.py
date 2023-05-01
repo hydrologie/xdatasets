@@ -9,7 +9,7 @@ def _validate_space_params(clip: str,
                             averaging: bool = False,
                             unique_id: Optional[str] = None):
 
-    _clip_available_methods = ['bbox', 'point', 'polygon']
+    _clip_available_methods = ['bbox', 'point', 'polygon', None]
     
     if clip not in _clip_available_methods:
         raise ValueError(f"clip value '{clip}' is not one of {_clip_available_methods}")

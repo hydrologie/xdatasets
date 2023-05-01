@@ -1,6 +1,7 @@
 import datetime
 import time
 from functools import reduce
+import os, sys
 
 catalog_path = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml'
 
@@ -46,3 +47,13 @@ def open_dataset(
     else:
         raise NotImplementedError(f'Dataset {name} is not available. Please request further datasets to our github issues pages')
     return data  
+
+
+class HiddenPrints:
+    def __enter__(self):
+        self._original_stdout = sys.stdout
+        sys.stdout = open(os.devnull, 'w')
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        sys.stdout.close()
+        sys.stdout = self._original_stdout
