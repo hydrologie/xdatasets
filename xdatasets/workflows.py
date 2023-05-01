@@ -11,7 +11,9 @@ from tqdm import tqdm
 import pandas as pd
 from functools import reduce
 from dask.distributed import Client
+import fnmatch
 import logging
+import itertools
 
 from .spatial import clip_by_polygon, clip_by_point, clip_by_bbox
 from .temporal import change_timezone, temporal_aggregation
@@ -26,6 +28,19 @@ def climate_request(dataset_name,
                     catalog):
 
     ds = open_dataset(dataset_name, catalog)
+
+    rename_dict = {
+        # dim labels (order represents the priority when checking for the dim labels)
+
+        "longitude": ["lon", "long", "x"],
+        "latitude": ["lat", "y"],
+    }
+
+    dims = list(ds.dims) 
+    for key, values in rename_dict.items():
+        for value in values:
+            if value in dims:
+                ds = ds.rename({value: key})
 
     try:
         ds = ds[variables]
@@ -50,18 +65,22 @@ def climate_request(dataset_name,
 
     # Spatial operations
     if space['clip'] == 'polygon':
+        spatial_agg = 'polygon'
         ds = clip_by_polygon(ds, space, dataset_name).load()
 
     elif space['clip'] == 'point':
+        spatial_agg = 'point'
         ds = clip_by_point(ds, space, dataset_name).load()
 
     elif space['clip'] == 'bbox':
+        spatial_agg = 'polygon'
         ds = clip_by_bbox(ds, space, dataset_name).load()
         
     if time["timestep"] != None and time['aggregation'] != None:
         ds = temporal_aggregation(ds,
                                   time,
-                                  dataset_name)
+                                  dataset_name,
+                                  spatial_agg)
     # Add source name to dataset
     #np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
     ds = ds.assign_coords(source=("source", [dataset_name]))
@@ -74,7 +93,8 @@ def hydrometric_request(dataset_name,
                         variables,
                         space,
                         time,
-                        catalog):
+                        catalog,
+                        **kwargs):
 
     ds = open_dataset(dataset_name, catalog)
 
@@ -82,6 +102,22 @@ def hydrometric_request(dataset_name,
         ds = ds[variables]
     except:
         pass
+
+    for key, value in kwargs.items():
+        try:
+            if isinstance(value, str):
+                value = [value]
+            
+            # If user provided a wilfcard to match a pattern for a specific dimension
+            if any('*' in pattern for pattern in value):
+                #value = fnmatch.filter(ds[key].data, value) # this becomes a list
+                value = list(itertools.chain.from_iterable([fnmatch.filter(ds[key].data, val) for val in value]))            
+            
+            ds = ds.where(ds[key].isin(value), drop=True)
+        except:
+            # Add warning
+            pass
+            
 
     # TODO: to implement this feature, We will need the timezone as a coords for each id 
 

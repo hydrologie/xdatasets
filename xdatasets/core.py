@@ -105,8 +105,8 @@ class Query:
 
     def __init__(self,
                  datasets: Union[str, List[str], Dict[str, Union[str, List[str]]]],
-                 space: Dict[str, Union[str, List[str]]],
-                 time=dict(),
+                 space: Dict[str, Union[str, List[str]]] = dict(),
+                 time: Dict[str, Union[str, List[str]]] = dict(),
                  catalog_path: str = url_path
                  )-> None:
 
@@ -121,8 +121,8 @@ class Query:
         
 
     def _resolve_space_params(self,
-                              clip: str, 
-                              geometry: Union[Dict[str, tuple], gpd.GeoDataFrame],
+                              clip: str = None, 
+                              geometry: Union[Dict[str, tuple], gpd.GeoDataFrame] = None,
                               averaging: Optional[bool] = False,
                               unique_id: Optional[str] = None
                               )-> Dict:
@@ -164,7 +164,7 @@ class Query:
     def _resolve_time_params(self,
                              timestep: Optional[str] = None, 
                              aggregation: Optional[Dict[str, Union[Callable[..., Any], List[Callable[..., Any]]]]] = None,
-                             start: Optional[bool] = False,
+                             start: Optional[bool] = None,
                              end: Optional[str] = None,
                              timezone: Optional[str] = None,
                              ) -> Dict:
@@ -229,13 +229,16 @@ class Query:
         dsets = []
         for dataset_name in datasets_name:
             data = None
+            kwargs = {}
             try:
                 variables_name = self.datasets[dataset_name]['variables']
+                if isinstance(variables_name, str):
+                    variables_name = [variables_name]
             except:
                 variables_name = None
                 pass
             try:
-                data = self.datasets[dataset_name]['data']
+                kwargs = {k:v for k,v in self.datasets[dataset_name].items() if k not in ['variables']}
             except:
                 pass
 
@@ -243,7 +246,7 @@ class Query:
                                                variables=variables_name,
                                                space=space,
                                                time=time,
-                                               data=data
+                                               **kwargs
                                                )
             dsets.append(ds_one)
             
@@ -298,7 +301,8 @@ class Query:
                                          variables,
                                          space,
                                          time,
-                                         self.catalog)
+                                         self.catalog,
+                                         **kwargs)
                 
         elif dataset_category in ['user-provided']:
             with warnings.catch_warnings():
@@ -314,13 +318,6 @@ class Query:
     
     def bbox_clip(self, ds):
         return ds.where(~ds.isnull(), drop=True)
-
-    def plot(self,
-             variables=None):
-
-        variables = ['t2m', 'tp']
-
-        return self.data[variables].hvplot(x='time', grid=True, subplots=True, shared_axes=False, by='geom', legend=True).cols(1)
     
 
 
