@@ -317,8 +317,6 @@ class Query:
         return ds
     
     def bbox_clip(self, ds):
-        """
-        """
         return ds.where(~ds.isnull(), drop=True)
     
 
