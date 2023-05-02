@@ -37,7 +37,7 @@ requirements = [
     "scipy>=1.2",
     "xarray>=0.17",
     "zarr>=2.11.1",
-    "xagg-no-xesmf-deps"
+    "xagg-no-xesmf-deps @ git+https://github.com/hydrologie/xagg-no-xesmf-deps.git@main"
 ]
 
 
