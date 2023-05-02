@@ -5,7 +5,7 @@ from clisops.core.average import average_shape
 import xarray as xr
 from tqdm import tqdm
 import logging
-import xagg as xa
+import xagg_no_xesmf_deps as xa
 import pandas as pd
 
 from .utils import HiddenPrints
