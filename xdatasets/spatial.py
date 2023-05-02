@@ -53,6 +53,10 @@ def clip_by_polygon(ds,
                     space,
                     dataset_name
                     ):
+    # We are not using clisops for weighted averages because it is too unstable for now and requires conda environment.
+    # We use a modified version of the xagg package from which we have removed the xesmf/esmpy dependency
+
+
     indexer = shape_bbox_indexer(ds, space['geometry'])
     ds_copy = ds.isel(indexer).copy()
     
