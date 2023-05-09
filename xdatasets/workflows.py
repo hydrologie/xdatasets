@@ -155,11 +155,6 @@ def hydrometric_request(dataset_name,
             ds = temporal_aggregation(ds,
                                     time,
                                     dataset_name)
-    # Add source name to dataset
-    #np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
-    ds = ds.assign_coords(source=("source", [dataset_name]))
-    for var in ds.keys():
-        ds[var] = ds[var].expand_dims("source", axis=-1)
 
     return ds
 
