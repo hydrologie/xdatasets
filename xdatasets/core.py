@@ -11,6 +11,7 @@ import hvplot.pandas
 from .validations import _validate_space_params
 from .workflows import climate_request, hydrometric_request, user_provided_dataset
 from .scripting import LOGGING_CONFIG
+from .utils import cache_catalog
 
 logging.config.dictConfig(LOGGING_CONFIG)
 logger = logging.getLogger(__name__)
@@ -109,6 +110,8 @@ class Query:
                  time: Dict[str, Union[str, List[str]]] = dict(),
                  catalog_path: str = url_path
                  )-> None:
+
+        catalog_path = cache_catalog(catalog_path)
 
         self.catalog = intake.open_catalog(catalog_path)
         self.datasets = datasets
