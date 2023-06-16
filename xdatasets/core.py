@@ -111,6 +111,7 @@ class Query:
                  catalog_path: str = url_path
                  )-> None:
 
+        # We cache the catalog's yaml files for easier access behind corporate firewalls
         catalog_path = cache_catalog(catalog_path)
 
         self.catalog = intake.open_catalog(catalog_path)
@@ -170,6 +171,7 @@ class Query:
                              start: Optional[bool] = None,
                              end: Optional[str] = None,
                              timezone: Optional[str] = None,
+                             minimum_duration: Optional[str] = None, 
                              ) -> Dict:
         
         
@@ -199,6 +201,9 @@ class Query:
             Timezone to be used for the returned datasets
             Possible values are listed here:
             https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
+        minimum_duration : str, optional
+            Minimum duration of a time series (id) in order to be kept 
+            Possible values : http://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases
         """
         
         space = locals()
@@ -212,7 +217,8 @@ class Query:
                 'aggregation': aggregation,
                 'start': start,
                 'end': end,
-                'timezone': timezone}
+                'timezone': timezone,
+                'minimum_duration': minimum_duration}
 
         return args
     
