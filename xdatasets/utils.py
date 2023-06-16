@@ -69,24 +69,44 @@ class HiddenPrints:
 
 
 def cache_catalog(url):
-
+    """"Cache the catalog in the system's temporary folder for easier access.
+    This is espacially useful when working behind firewalls or if the remote server
+    containing the yaml files is down. Looks for http_proxy/https_proxy environment variable 
+    if the request goes through a proxy.
+        
+    Parameters
+    ----------
+    url: str
+        URL for the intake catalog which provides access to the datasets. While
+        this library provides its own intake catalog, users have the option to 
+        provide their own catalog, which can be particularly beneficial for 
+        private datasets or if different configurations are needed.
+    """
     proxies=urllib.request.getproxies()
-    #create the object, assign it to a variable
     proxy = urllib.request.ProxyHandler(proxies)
-    # construct a new opener using your proxy settings
     opener = urllib.request.build_opener(proxy)
-    # install the openen on the module-level
     urllib.request.install_opener(opener)
-    #response = urllib.request.urlopen(req)
  
     tmp_dir = os.path.join(tempfile.gettempdir(), 'catalogs')
     Path(tmp_dir).mkdir(parents=True, exist_ok=True)
     main_catalog_path = os.path.join(tmp_dir,os.path.basename(url))
-    urllib.request.urlretrieve(url, main_catalog_path)
 
-    for key, value in intake.open_catalog(os.path.join(tmp_dir,os.path.basename(url)))._entries.items():
+    try:
+        urllib.request.urlretrieve(url, main_catalog_path)
+    except urllib.error.URLError as e:
+        raise urllib.error.URLError(
+            "Could not reach the catalog, perhaps due to the presence of a proxy."
+            "Try adding proxy information to the environment variables as follows before"
+            "running xdatasets :"
+            "import os"
+            "proxy = 'http://<proxy>:<port>'"
+            "os.environ['http_proxy'] = proxy"
+            "os.environ['https_proxy'] = proxy"
+        ) from e    
+
+    for _, value in intake.open_catalog(os.path.join(tmp_dir, os.path.basename(url)))._entries.items():
         path = f"{os.path.dirname(url)}/{os.path.basename(value.describe()['args']['path'])}"
-        urllib.request.urlretrieve(path, os.path.join(tmp_dir,os.path.basename(path)))
+        urllib.request.urlretrieve(path, os.path.join(tmp_dir, os.path.basename(path)))
 
     return main_catalog_path
 

@@ -16,7 +16,7 @@ import logging
 import itertools
 
 from .spatial import clip_by_polygon, clip_by_point, clip_by_bbox
-from .temporal import change_timezone, temporal_aggregation
+from .temporal import change_timezone, temporal_aggregation, ajust_dates, minimum_duration
 from .validations import _validate_space_params
 from .utils import open_dataset
 
@@ -108,9 +108,8 @@ def hydrometric_request(dataset_name,
             if isinstance(value, str):
                 value = [value]
             
-            # If user provided a wilfcard to match a pattern for a specific dimension
-            if any('*' in pattern for pattern in value):
-                #value = fnmatch.filter(ds[key].data, value) # this becomes a list
+            # If user provided a wildcard to match a pattern for a specific dimension
+            if any('*' in pattern or '?' in pattern for pattern in value):
                 value = list(itertools.chain.from_iterable([fnmatch.filter(ds[key].data, val) for val in value]))            
             
             ds = ds.where(ds[key].isin(value), drop=True)
@@ -149,12 +148,24 @@ def hydrometric_request(dataset_name,
     # TODO : Convert gdf's mask to bbox, find all stations within that bbox and apply function below
     # elif space['clip'] == 'bbox':
     #     ds = clip_by_bbox(ds, space, dataset_name).load()
+
+    if time["start"] != None or time["end"] != None:
+        ds = ajust_dates(ds,
+                        time)
         
+    if time["minimum_duration"] != None:
+        ds = minimum_duration(ds,
+                        time) 
+               
     if time["timestep"] != None and time['aggregation'] != None:
         if pd.Timedelta(1, unit=time["timestep"]) > pd.Timedelta(1, unit=xr.infer_freq(ds.time)):
             ds = temporal_aggregation(ds,
                                     time,
                                     dataset_name)
+            
+    # Remove all dimension values that are not required anymore after previous filetring 
+    for dim in ds.dims:
+        ds = ds.dropna(dim, 'all') 
 
     return ds
 
