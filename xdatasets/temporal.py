@@ -1,5 +1,7 @@
 import xarray as xr
 from tqdm import tqdm
+import numpy as np
+import pandas as pd
 
 
 def change_timezone(ds, 
@@ -68,4 +70,43 @@ def temporal_aggregation(ds,
     return ds_new
 
 
+def ajust_dates(ds,
+                time):
+    """
     
+    """
+
+    start = time['start']
+    end = time['end']
+
+
+    if start != None:
+        ds["start_date"] = xr.where(
+        ds.start_date < pd.Timestamp(start),
+        np.datetime64(start),
+        ds.start_date,
+    )
+        
+    if end != None:
+        ds["end_date"] = xr.where(
+        ds.end_date > pd.Timestamp(end),
+        np.datetime64(end),
+        ds.end_date,
+    )
+        
+    return ds
+
+# Only keep ids where at least 15 years of data is available
+
+
+
+def minimum_duration(ds,
+                     time):
+
+    minimum_duration_value, unit = time['minimum_duration']
+
+
+    return ds.where(
+    (ds.end_date - ds.start_date) > pd.to_timedelta(minimum_duration_value, unit=unit), 
+    drop=True
+    )
