@@ -105,8 +105,11 @@ def minimum_duration(ds,
 
     minimum_duration_value, unit = time['minimum_duration']
 
+    indexer = (ds.end_date - ds.start_date) > pd.to_timedelta(minimum_duration_value, unit=unit)
+    
+    if indexer.chunks is not None:
+        indexer = indexer.compute()
 
-    return ds.where(
-    (ds.end_date - ds.start_date) > pd.to_timedelta(minimum_duration_value, unit=unit), 
-    drop=True
-    )
+    return ds.where(indexer,
+                    drop=True
+                    )
