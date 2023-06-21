@@ -99,6 +99,7 @@ def hydrometric_request(dataset_name,
     ds = open_dataset(dataset_name, catalog)
 
     try:
+        ds = ds.sel(variable=variables)
         ds = ds[variables]
     except:
         pass
@@ -164,8 +165,20 @@ def hydrometric_request(dataset_name,
                                     dataset_name)
             
     # Remove all dimension values that are not required anymore after previous filetring 
-    for dim in ds.dims:
-        ds = ds.dropna(dim, 'all') 
+    # This returns a cleaner dataset at the cost of a compute
+    # _to_stack = []
+    # for dim in ds.dims:
+    #     if len(ds[dim]) >1:
+    #         _to_stack.append(dim)
+    # print('stack')
+    # ds = ds.stack(stacked=_to_stack)
+
+    ## Drop the pixels that only have NA values.
+    # print('dropna')
+    # ds = ds.dropna("stacked", how="all")
+
+    # print('unstack')
+    # ds = ds.unstack('stacked')
 
     return ds
 
