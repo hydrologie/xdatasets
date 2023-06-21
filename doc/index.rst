@@ -1,9 +1,6 @@
 Xdatasets documentation
 ======================================
 
-**Version**: 0.1.0
-
-
 **Useful links**: Coming Soon!
 
 
