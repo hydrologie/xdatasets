@@ -36,8 +36,10 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.extlinks",
-    "sphinx.ext.viewcode" "sphinx.ext.todo",
-    "nbsphinx" "sphinx_codeautolink",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.todo",
+    "nbsphinx",
+    "sphinx_codeautolink",
     "sphinx_copybutton",
     "sphinxcontrib.confluencebuilder",
 ]
