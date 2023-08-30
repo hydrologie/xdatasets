@@ -2,26 +2,24 @@ name: xdatasets
 channels:
     - conda-forge
 dependencies:
-    - python=3.9
+    - python >=3.9,<3.12
     - IPyKernel
-    - xarray
-    - dask
-    - netCDF4
     - bottleneck
-    - s3fs
-    - zarr
     - cartopy
-    - geoviews
-    - rioxarray
-    - matplotlib
-    - tqdm
-    - intake
+    - dask
+    - furo
     - geopandas
+    - geoviews
     - hvplot
-    - intake-xarray=0.6.1
+    - intake
     - intake-geopandas
+    - intake-xarray >=0.6.1
+    - matplotlib
     - nbsphinx
+    - netCDF4
+    - rioxarray
+    - s3fs
     - sphinx
-    - pip:
-        - sphinx-pangeo-theme
-        - furo
+    - tqdm
+    - xarray
+    - zarr

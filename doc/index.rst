@@ -1,5 +1,5 @@
 Xdatasets documentation
-======================================
+=======================
 
 **Useful links**: Coming Soon!
 
@@ -17,6 +17,7 @@ The genesis of this project can be traced back to a crucial requirement of effor
 
    readme
    installation
+   usage
    notebooks/getting_started
    modules
    contributing

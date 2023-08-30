@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 """The setup script."""
-import re
-
 from setuptools import find_packages, setup
 
 NAME = "xdatasets"
-DESCRIPTION = "Easy acess to earth observation datasets with xarray."
+DESCRIPTION = "Easy access to Earth observation datasets with xarray."
 URL = "https://github.com/hydrologie/xdatasets'"
 AUTHOR = "Sebastien Langlois"
 AUTHOR_EMAIL = "sebastien.langlois62@gmail.com"
@@ -40,13 +38,17 @@ requirements = [
     "xagg-no-xesmf-deps"
 ]
 
+docs_requirements = []
+with open("requirements_docs.txt") as dev:
+    for dependency in dev.readlines():
+        docs_requirements.append(dependency)
 
 dev_requirements = []
 with open("requirements_dev.txt") as dev:
     for dependency in dev.readlines():
         dev_requirements.append(dependency)
 
-KEYWORDS = "xdatasets hydrology meteorology climate climatology netcdf gridded analysis"
+KEYWORDS = ["xdatasets", "hydrology", "meteorology", "climate", "climatology", "netcdf", "gridded analysis"]
 
 setup(
     author=AUTHOR,
@@ -62,6 +64,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Topic :: Scientific/Engineering :: Hydrology",
     ],
     description=DESCRIPTION,
@@ -74,7 +77,10 @@ setup(
     keywords=KEYWORDS,
     name=NAME,
     packages=find_packages(),
-    extras_require={"dev": dev_requirements},
+    extras_require={
+        "docs": docs_requirements,
+        "dev": dev_requirements
+    },
     url=URL,
     version='0.2.10',
     zip_safe=False,

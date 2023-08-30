@@ -1,0 +1,23 @@
+name: xdatasets
+channels:
+- conda-forge
+- defaults
+dependencies:
+  - python >=3.8,<3.9
+  - distributed >=2.0
+  - furo
+  - ipykernel
+  - ipython
+  - jupyter_client
+  - matplotlib
+  - nbsphinx
+  - nc-time-axis
+  - netCDF4
+  - pandoc
+  - pooch
+  - sphinx
+  - sphinx-click
+  - sphinx-codeautolink
+  - sphinx-copybutton
+  - sphinx >=7.0.0
+  - sphinxcontrib-confluencebuilder

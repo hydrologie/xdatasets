@@ -1,5 +1,5 @@
 # dev tools and testing
-black
+black>=23.7.0
 bump2version
 coverage
 flake8
@@ -27,6 +27,7 @@ nbsphinx
 nc-time-axis
 netCDF4
 pooch
-sphinx
-sphinx-rtd-theme
+pre-commit
+sphinx>=7.0.0
+sphinx-rtd-theme>=1.0.0
 sphinxcontrib-confluencebuilder
