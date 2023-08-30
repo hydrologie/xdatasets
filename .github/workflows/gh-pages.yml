@@ -1,4 +1,5 @@
 name: Docs
+
 on:
   push:
     branches:
@@ -6,8 +7,10 @@ on:
   pull_request:
     branches:
       - master
+
 permissions:
   contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -27,7 +30,7 @@ jobs:
         shell: bash -l {0}
         run: |
           python -m ipykernel install --user --name=xdatasets
-          pip install -e .
+          pip install -e ".[docs]"
           make -C docs html
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.2
