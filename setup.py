@@ -10,10 +10,10 @@ AUTHOR_EMAIL = "sebastien.langlois62@gmail.com"
 REQUIRES_PYTHON = ">=3.8.0"
 LICENSE = "MIT license"
 
-with open('README.rst') as readme_file:
+with open("README.rst") as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
+with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
 requirements = [
@@ -35,7 +35,7 @@ requirements = [
     "scipy>=1.2",
     "xarray>=0.17",
     "zarr>=2.11.1",
-    "xagg-no-xesmf-deps"
+    "xagg-no-xesmf-deps",
 ]
 
 docs_requirements = []
@@ -48,7 +48,15 @@ with open("requirements_dev.txt") as dev:
     for dependency in dev.readlines():
         dev_requirements.append(dependency)
 
-KEYWORDS = ["xdatasets", "hydrology", "meteorology", "climate", "climatology", "netcdf", "gridded analysis"]
+KEYWORDS = [
+    "xdatasets",
+    "hydrology",
+    "meteorology",
+    "climate",
+    "climatology",
+    "netcdf",
+    "gridded analysis",
+]
 
 setup(
     author=AUTHOR,
@@ -77,11 +85,8 @@ setup(
     keywords=KEYWORDS,
     name=NAME,
     packages=find_packages(),
-    extras_require={
-        "docs": docs_requirements,
-        "dev": dev_requirements
-    },
+    extras_require={"docs": docs_requirements, "dev": dev_requirements},
     url=URL,
-    version='0.2.10',
+    version="0.2.10",
     zip_safe=False,
 )

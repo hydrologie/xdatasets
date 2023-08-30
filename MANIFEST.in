@@ -6,17 +6,22 @@ include README.rst
 include requirements_dev.txt
 include requirements_docs.txt
 include .zenodo.json
+
 recursive-include tests *
 recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif
+recursive-include docs notebooks *.ipynb
 
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 
 exclude .coveralls.yml
+exclude .cruft.json
 exclude .editorconfig
+exclude .nojekyll
 exclude .pre-commit-config.yaml
 exclude .readthedocs.yml
 exclude .yamllint.yaml
+exclude docs/.nojekyll
 exclude Makefile
-exclude environment-docs.yml
+exclude environment*.yml
 exclude tox.ini
