@@ -2,6 +2,7 @@ distributed>=2.0
 ipykernel
 ipython
 furo
+ipykernel
 jupyter_client
 matplotlib
 nbsphinx

@@ -68,16 +68,16 @@ jobs:
           COVERALLS_PARALLEL: true
           COVERALLS_SERVICE_NAME: github
 
-  finish:
-    needs:
-      - test
-    runs-on: ubuntu-latest
-    container: python:3-slim
-    steps:
-      - name: Coveralls Finished
-        run: |
-          pip install --upgrade coveralls
-          coveralls --finish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_SERVICE_NAME: github
+#  finish:
+#    needs:
+#      - test
+#    runs-on: ubuntu-latest
+#    container: python:3-slim
+#    steps:
+#      - name: Coveralls Finished
+#        run: |
+#          pip install --upgrade coveralls
+#          coveralls --finish
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          COVERALLS_SERVICE_NAME: github
