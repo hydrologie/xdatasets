@@ -1,12 +1,18 @@
 import logging
+import warnings
 
 import pandas as pd
-import xagg as xa
 import xarray as xr
 from clisops.core.subset import shape_bbox_indexer, subset_gridpoint
 from tqdm import tqdm
 
 from .utils import HiddenPrints
+
+try:
+    import xagg as xa
+except ImportError:
+    warnings.warn("xagg is not installed. Please install it with `pip install xagg`")
+    xa = None
 
 
 def bbox_ds(ds_copy, geom):
@@ -24,6 +30,11 @@ def clip_by_bbox(ds, space, dataset_name):
 
 
 def create_weights_mask(da, poly):
+    if xa is None:
+        raise ImportError(
+            "xagg is not installed. Please install it with `pip install xagg`"
+        )
+
     weightmap = xa.pixel_overlaps(da, poly, subset_bbox=True)
 
     pixels = pd.DataFrame(

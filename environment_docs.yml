@@ -7,6 +7,9 @@ dependencies:
   - distributed >=2.0
   - furo
   - hvplot
+  - intake
+  - intake-geopandas
+  - intake-xarray >=0.6.1
   - ipykernel
   - ipython
   - jupyter_client
@@ -19,9 +22,9 @@ dependencies:
   - pooch
   - s3fs
   - sphinx
+  - sphinx >=7.0.0
   - sphinx-click
   - sphinx-codeautolink
   - sphinx-copybutton
-  - sphinx >=7.0.0
   - sphinxcontrib-confluencebuilder
-  - xesmf  # Needed for xagg
+  - xagg
