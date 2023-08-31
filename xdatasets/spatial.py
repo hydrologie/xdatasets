@@ -1,14 +1,10 @@
 import logging
 
 import pandas as pd
+import xagg as xa
 import xarray as xr
 from clisops.core.subset import shape_bbox_indexer, subset_gridpoint
 from tqdm import tqdm
-
-try:
-    import xagg as xa
-except ImportError:
-    import xagg_no_xesmf_deps as xa
 
 from .utils import HiddenPrints
 

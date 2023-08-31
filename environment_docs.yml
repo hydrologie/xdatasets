@@ -24,3 +24,4 @@ dependencies:
   - sphinx-copybutton
   - sphinx >=7.0.0
   - sphinxcontrib-confluencebuilder
+  - xesmf  # Needed for xagg
