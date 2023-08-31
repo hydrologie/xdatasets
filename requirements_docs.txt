@@ -11,6 +11,7 @@ netCDF4
 pandoc
 panel
 pooch
+s3fs
 sphinx
 sphinx-click
 sphinx-codeautolink
