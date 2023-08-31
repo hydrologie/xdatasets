@@ -21,6 +21,10 @@ for line in sys.stdin:
 endef
 export PRINT_HELP_PYSCRIPT
 
+ifdef READTHEDOCS
+	export CI=true
+endif
+
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
 help:
@@ -80,7 +84,7 @@ linkcheck: autodoc ## run checks over all external links found throughout the do
 
 docs: autodoc ## generate Sphinx HTML documentation, including API docs
 	$(MAKE) -C docs html
-ifndef READTHEDOCS
+ifndef CI
 	$(BROWSER) docs/_build/html/index.html
 endif
 

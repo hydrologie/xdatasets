@@ -23,6 +23,8 @@ exclude .pre-commit-config.yaml
 exclude .readthedocs.yml
 exclude .yamllint.yaml
 exclude docs/.nojekyll
+exclude docs/apidoc/modules.rst
+exclude docs/apidoc/xdatasets.rst
 exclude Makefile
 exclude environment*.yml
 exclude tox.ini

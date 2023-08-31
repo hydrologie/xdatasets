@@ -38,7 +38,7 @@ jobs:
       - name: Build docs
         shell: bash -l {0}
         run: |
-          make -C docs html
+          make docs
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.2
         with:
