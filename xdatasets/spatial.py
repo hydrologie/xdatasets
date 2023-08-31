@@ -96,7 +96,7 @@ def clip_by_polygon(ds, space, dataset_name):
     if "unique_id" in space:
         try:
             data = data.swap_dims({"geom": space["unique_id"]})
-            data = data.drop_dims(["geom"])
+            data = data.drop_vars("geom")
 
             if space["unique_id"] not in data.coords:
                 data = data.assign_coords(
