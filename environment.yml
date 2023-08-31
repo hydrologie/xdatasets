@@ -10,6 +10,7 @@ dependencies:
     - intake
     - intake-geopandas
     - intake-xarray >=0.6.1
+    - ipykernel
     - ipython
     - jsonpickle
     - matplotlib-base
