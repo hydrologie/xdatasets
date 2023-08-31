@@ -1,19 +1,9 @@
 import fnmatch
 import itertools
-import logging
-import warnings
-from functools import reduce
-from typing import Dict, List, Optional, Sequence, Tuple, Union
 
-import geopandas as gpd
-import intake
-import numpy as np
 import pandas as pd
 import xarray as xr
-from clisops.core.average import average_shape
-from clisops.core.subset import shape_bbox_indexer, subset_gridpoint, subset_time
-from dask.distributed import Client
-from tqdm import tqdm
+from clisops.core.subset import subset_time
 
 from .spatial import clip_by_bbox, clip_by_point, clip_by_polygon
 from .temporal import (
@@ -23,7 +13,6 @@ from .temporal import (
     temporal_aggregation,
 )
 from .utils import open_dataset
-from .validations import _validate_space_params
 
 
 def climate_request(dataset_name, variables, space, time, catalog):

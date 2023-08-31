@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 
 def change_timezone(ds, input_timezone, output_timezone=None):
-    if output_timezone == None:
+    if output_timezone is None:
         output_timezone = input_timezone
 
     time = ds["time"].to_index()
@@ -60,7 +60,7 @@ def temporal_aggregation(ds, time, dataset_name, spatial_agg):
                 ds_new = ds_new.merge(ds[var])
             except:
                 pass
-            # TODO: return error if cannot merge for inconstitant query
+            # TODO: return error if cannot merge for inconstant query
 
     if ds_list:
         ds_new = xr.merge(ds_list)

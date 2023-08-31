@@ -1,8 +1,6 @@
-import datetime
 import os
 import sys
 import tempfile
-import time
 import urllib
 from functools import reduce
 from pathlib import Path

@@ -17,17 +17,3 @@ tokenize-rt
 tox
 wheel
 xdoctest
-yamale
-yamllint
-# Documentation and examples
-distributed>=2.0
-ipykernel
-matplotlib
-nbsphinx
-nc-time-axis
-netCDF4
-pooch
-pre-commit
-sphinx>=7.0.0
-sphinx-rtd-theme>=1.0.0
-sphinxcontrib-confluencebuilder

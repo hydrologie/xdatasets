@@ -1,4 +1,3 @@
-import itertools
 import uuid
 from functools import reduce
 from html import escape
@@ -16,21 +15,23 @@ catalog_path = "https://raw.githubusercontent.com/hydrocloudservices/catalogs/ma
 
 
 def open_dataset(
-    name,
+    name: str,
     **kws,
 ):
-    """
-    Open a dataset from the online public repository (requires internet).
+    r"""Open a dataset from the online public repository (requires internet).
+
     Available datasets:
     * ``"era5_reanalysis_single_levels"``: ERA5 reanalysis subset (t2m and tp)
     * ``"cehq"``: CEHQ flow and water levels observations
+
     Parameters
     ----------
     name : str
         Name of the file containing the dataset.
         e.g. 'era5_reanalysis_single_levels'
-    **kws : dict, optional
+    \*\*kws : dict, optional
         Passed to xarray.open_dataset
+
     See Also
     --------
     xarray.open_dataset
@@ -98,9 +99,8 @@ def summarize_variable(name, is_index=False, dtype=None):
 
 
 def list_available_datasets():
-    """
-    Open, load lazily, and close a dataset from the public online repository
-    (requires internet).
+    """Open, load lazily, and close a dataset from the public online repository (requires internet).
+
     See Also
     --------
     open_dataset
@@ -145,12 +145,10 @@ def list_available_datasets():
 
 
 def load_dataset(*args, **kwargs):
-    """
-    Open, load lazily, and close a dataset from the online repository
-    (requires internet).
+    """Open, load lazily, and close a dataset from the online repository (requires internet).
+
     See Also
     --------
     open_dataset
     """
-
     return open_dataset(*args, **kwargs)

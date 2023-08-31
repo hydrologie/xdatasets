@@ -3,23 +3,18 @@ channels:
     - conda-forge
 dependencies:
     - python >=3.9,<3.12
-    - IPyKernel
     - bottleneck
-    - cartopy
+    - clisops
     - dask
-    - furo
     - geopandas
-    - geoviews
-    - hvplot
     - intake
     - intake-geopandas
     - intake-xarray >=0.6.1
-    - matplotlib
-    - nbsphinx
-    - netCDF4
-    - rioxarray
-    - s3fs
-    - sphinx
+    - ipython
+    - jsonpickle
+    - matplotlib-base
+    - pint>=0.10
     - tqdm
+    - xagg
     - xarray
     - zarr

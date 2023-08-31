@@ -1,7 +1,3 @@
-import pathlib
-import sys
-from datetime import datetime as dt
-
 MiB = int(pow(2, 20))
 
 _CONSOLE_FORMAT = "%(message)s"

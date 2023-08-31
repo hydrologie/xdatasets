@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, List, Optional, Sequence, Tuple, Union
+from typing import Dict, Optional, Union
 
 import geopandas as gpd
 

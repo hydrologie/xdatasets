@@ -1,18 +1,14 @@
 import logging
-from typing import Dict, List, Optional, Sequence, Tuple, Union
 
 import pandas as pd
-import xagg_no_xesmf_deps as xa
 import xarray as xr
-from clisops.core.average import average_shape
-from clisops.core.subset import (
-    create_mask,
-    shape_bbox_indexer,
-    subset_gridpoint,
-    subset_shape,
-    subset_time,
-)
+from clisops.core.subset import shape_bbox_indexer, subset_gridpoint
 from tqdm import tqdm
+
+try:
+    import xagg as xa
+except ImportError:
+    import xagg_no_xesmf_deps as xa
 
 from .utils import HiddenPrints
 
@@ -66,7 +62,7 @@ def clip_by_polygon(ds, space, dataset_name):
     for idx, row in pbar:
         item = (
             row[space["unique_id"]]
-            if space["unique_id"] != None and space["unique_id"] in row
+            if space["unique_id"] is not None and space["unique_id"] in row
             else idx
         )
         pbar.set_description(
@@ -93,7 +89,7 @@ def clip_by_polygon(ds, space, dataset_name):
     if "unique_id" in space:
         try:
             data = data.swap_dims({"geom": space["unique_id"]})
-            data = data.drop("geom")
+            data = data.drop_sel("geom")
 
             if space["unique_id"] not in data.coords:
                 data = data.assign_coords(
@@ -104,7 +100,7 @@ def clip_by_polygon(ds, space, dataset_name):
                         )
                     }
                 )
-        except:
+        except KeyError:
             pass
     return data
 

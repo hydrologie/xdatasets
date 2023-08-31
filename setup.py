@@ -22,20 +22,21 @@ requirements = [
     "cftime>=1.4.1",
     "clisops>=0.9.2",
     "dask[array]>=2.6",
+    "geopandas",
+    "intake",
     "intake-xarray>=0.6.1",
+    "ipython",
     "jsonpickle",
     "numba",
     "numpy>=1.16",
     "pandas>=0.23",
     "pint>=0.10",
-    "pyyaml",
-    "s3fs>=2022.7.0",
-    "geopandas",
-    "tqdm",
     "scipy>=1.2",
+    "tqdm",
+    # FIXME: This needs to be revisited. `xagg` should be an optional dependency, reliant on Anaconda.
+    "xagg-no-xesmf-deps",
     "xarray>=0.17",
     "zarr>=2.11.1",
-    "xagg-no-xesmf-deps",
 ]
 
 docs_requirements = []

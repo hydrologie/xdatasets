@@ -1,11 +1,11 @@
 import logging
+import logging.config
 import warnings
 from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import geopandas as gpd
-import hvplot.pandas
-import hvplot.xarray
 import intake
+import numpy as np
 import xarray as xr
 
 from .scripting import LOGGING_CONFIG
