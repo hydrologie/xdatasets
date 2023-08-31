@@ -22,7 +22,7 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: xdatasets
-          environment-file: environment.yml
+          environment-file: environment_docs.yml
           mamba-version: "*"
           python-version: 3.9
           auto-activate-base: false
