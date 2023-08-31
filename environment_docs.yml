@@ -4,8 +4,10 @@ channels:
 - defaults
 dependencies:
   - python >=3.9,<3.10
+  - cartopy
   - distributed >=2.0
   - furo
+  - geoviews
   - hvplot
   - intake
   - intake-geopandas

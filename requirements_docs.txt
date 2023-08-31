@@ -1,5 +1,7 @@
+cartopy
 distributed>=2.0
 furo
+geoviews
 hvplot
 ipykernel
 ipython
