@@ -17,5 +17,5 @@ dependencies:
     - pint>=0.10
     - tqdm
     - xagg
-    - xarray
+    - xarray >=2023.1
     - zarr

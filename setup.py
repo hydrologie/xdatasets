@@ -36,7 +36,7 @@ requirements = [
     # FIXME: This needs to be revisited. `xagg` should be an optional dependency, reliant on Anaconda.
     # "xagg-no-xesmf-deps",
     "xagg",
-    "xarray>=2023.3",
+    "xarray>=2023.1",
     "zarr>=2.11.1",
 ]
 
