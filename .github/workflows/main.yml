@@ -13,6 +13,10 @@ on:
       - xdatasets/__init__.py
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
 # Temporarily bypass checks until code passes linting
 #  black:
