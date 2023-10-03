@@ -1,8 +1,5 @@
 Xdatasets documentation
-======================================
-
-**Version**: 0.1.0
-
+=======================
 
 **Useful links**: Coming Soon!
 
@@ -20,8 +17,9 @@ The genesis of this project can be traced back to a crucial requirement of effor
 
    readme
    installation
+   usage
    notebooks/getting_started
-   modules
+   apidoc/modules
    contributing
    authors
    history

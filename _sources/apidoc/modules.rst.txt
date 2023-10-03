@@ -1,0 +1,7 @@
+xdatasets
+=========
+
+.. toctree::
+   :maxdepth: 4
+
+   xdatasets
