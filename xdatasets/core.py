@@ -23,41 +23,41 @@ __all__ = ["Query"]
 
 
 class Query:
+    """The Query class.
 
-    """ "The Query interface facilitates access to analysis-ready
-    earth observation datasets and allows for spatiotemporal
-    operations to be performed based on user queries.
+    The Query interface facilitates access to analysis-ready earth observation datasets and allows for
+    spatiotemporal operations to be performed based on user queries.
 
-    Parameters
+    Attributes
     ----------
     datasets : str, list, dict-like
-        - If str, a dataset name, i.e.: era5_land_reanalysis
-        - If list, a list of dataset names, i.e.: [era5_single_levels_reanalysis, era5_land_reanalysis]
-        - If dictionary, it should map dataset names to their corresponding requested
-          content such as some desired variables. This allows more flexibility in the request.
-              i.e.: {era5_land_reanalysis: {'variables': ['t2m', 'tp]},
-                    era5_single_levels_reanalysis: {'variables': 't2m'}
-                     }
-              Currently, accepted key, value pairs for a mapping argument include the following:
-              ===========  ==============
-              Key          Variables
-              ===========  ==============
-              variables    str, List[str]
-              ===========  ==============
-
-        The list of available datasets in this library can be accessed here:
-        # Coming soon!
+        If a str, a dataset name, i.e.: era5_land_reanalysis.
+        If a list, a list of dataset names, i.e.: [era5_single_levels_reanalysis, era5_land_reanalysis].
+        If a dictionary, it should map dataset names to their corresponding requested
+        content such as some desired variables. The list of available datasets in this library is coming soon!
     space : dict-like
         A dictionary that maps spatial parameters with their corresponding value.
         More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_space_params`
     time : dict-like
         A dictionary that maps temporal parameters with their corresponding value.
         More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_time_params`
-    catalog_path: str
-        URL for the intake catalog which provides access to the datasets. While
-        this library provides its own intake catalog, users have the option to
-        provide their own catalog, which can be particularly beneficial for
+    catalog_path : str
+        URL for the intake catalog which provides access to the datasets. While this library provides its own
+        intake catalog, users have the option to provide their own catalog, which can be particularly beneficial for
         private datasets or if different configurations are needed.
+
+    Notes
+    -----
+    The dictionary approach allows more flexibility in the request. i.e.:
+
+        >>> query = {
+        ...     era5_land_reanalysis: {"variables": ["t2m", "tp"]},
+        ...     era5_single_levels_reanalysis: {"variables": "t2m"},
+        ... }
+
+    Currently, accepted key, value pairs for a mapping argument include the following:
+
+        >>> {"variables": Union[str, List[str]]}
 
     Examples
     --------

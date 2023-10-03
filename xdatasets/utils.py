@@ -1,7 +1,7 @@
 import os
 import sys
 import tempfile
-import urllib
+import urllib.request
 from functools import reduce
 from pathlib import Path
 
@@ -11,22 +11,26 @@ catalog_path = "https://raw.githubusercontent.com/hydrocloudservices/catalogs/ma
 
 
 def open_dataset(
-    name,
+    name: str,
     catalog,
     **kws,
 ):
-    """
-    Open a dataset from the online public repository (requires internet).
+    r"""Open a dataset from the online public repository (requires internet).
+
+    Notes
+    -----
     Available datasets:
-    * ``"era5_reanalysis_single_levels"``: ERA5 reanalysis subset (t2m and tp)
-    * ``"cehq"``: CEHQ flow and water levels observations
+        `"era5_reanalysis_single_levels"`: ERA5 reanalysis subset (t2m and tp)
+        `"cehq"`: CEHQ flow and water levels observations
+
     Parameters
     ----------
     name : str
         Name of the file containing the dataset.
         e.g. 'era5_reanalysis_single_levels'
-    **kws : dict, optional
+    \*\*kws : dict, optional
         Passed to xarray.open_dataset
+
     See Also
     --------
     xarray.open_dataset
@@ -76,14 +80,15 @@ class HiddenPrints:
 
 
 def cache_catalog(url):
-    """ "Cache the catalog in the system's temporary folder for easier access.
-    This is espacially useful when working behind firewalls or if the remote server
+    """Cache the catalog in the system's temporary folder for easier access.
+
+    This is especially useful when working behind firewalls or if the remote server
     containing the yaml files is down. Looks for http_proxy/https_proxy environment variable
     if the request goes through a proxy.
 
     Parameters
     ----------
-    url: str
+    url : str
         URL for the intake catalog which provides access to the datasets. While
         this library provides its own intake catalog, users have the option to
         provide their own catalog, which can be particularly beneficial for

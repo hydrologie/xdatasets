@@ -19,7 +19,7 @@ The genesis of this project can be traced back to a crucial requirement of effor
    installation
    usage
    notebooks/getting_started
-   modules
+   apidoc/modules
    contributing
    authors
    history
