@@ -65,7 +65,7 @@ jobs:
       - name: Package Install
         run: |
           sudo apt-get -y update
-          sudo apt install libnetcdf-dev
+          sudo apt install libnetcdf-dev libnetcdff-dev
       - name: Install ESMF
         uses: esmf-org/install-esmf-action@v1
         env:
