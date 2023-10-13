@@ -68,6 +68,7 @@ jobs:
           ESMF_NETCDF: nc-config
         with:
           cache: true
+          version: develop
       - name: Set up Python${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
