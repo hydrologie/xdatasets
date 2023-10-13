@@ -66,6 +66,8 @@ jobs:
         uses: esmf-org/install-esmf-action@v1
         env:
           ESMF_NETCDF: nc-config
+        with:
+          cache: true
       - name: Set up Python${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
