@@ -45,6 +45,8 @@ jobs:
     name: test-${{ matrix.tox-env }} (Python${{ matrix.python-version }})
 #    needs: black
     runs-on: ubuntu-latest
+    env:
+      ESMF_VERSION: "v8.5.0"
     strategy:
       matrix:
         include:
@@ -62,13 +64,19 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt install libnetcdf-dev libnetcdff-dev
+      - name: Cache ESMF
+        id: cache-libraries
+        uses: actions/cache@v3
+        with:
+          path: $HOME/.esmf-cache
+          key: esmf-ubuntu-latest-${{ env.ESMF_VERSION }}
       - name: Install ESMF
         uses: esmf-org/install-esmf-action@v1
         env:
           ESMF_NETCDF: nc-config
         with:
           cache: true
-          version: develop
+          version: ${{ env.ESMF_VERSION }}
       - name: Set up Python${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
@@ -78,6 +86,7 @@ jobs:
       - name: Test with tox
         run: tox -e ${{ matrix.tox-env }}
         env:
+          ESMF_VERSION: ${{ env.ESMF_VERSION }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_FLAG_NAME: run-${{ matrix.tox-env }}
           COVERALLS_PARALLEL: true
