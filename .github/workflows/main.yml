@@ -64,12 +64,6 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt install libnetcdf-dev libnetcdff-dev
-      - name: Cache ESMF
-        id: cache-libraries
-        uses: actions/cache@v3
-        with:
-          path: $HOME/.esmf-cache
-          key: esmf-ubuntu-latest-${{ env.ESMF_VERSION }}
       - name: Install ESMF
         uses: esmf-org/install-esmf-action@v1
         env:
