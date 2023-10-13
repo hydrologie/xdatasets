@@ -57,11 +57,19 @@ jobs:
           - tox-env: "py311"
             python-version: "3.11"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Package Install
+        run: |
+          sudo apt-get -y update
+          sudo apt install libnetcdf-dev
+      - name: Install ESMF
+        uses: esmf-org/install-esmf-action@v1
+        env:
+          ESMF_NETCDF: nc-config
       - name: Install tox
         run: pip install tox
       - name: Test with tox

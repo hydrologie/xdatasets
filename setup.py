@@ -33,9 +33,8 @@ requirements = [
     "pint>=0.10",
     "scipy>=1.2",
     "tqdm",
-    # FIXME: This needs to be revisited. `xagg` should be an optional dependency, reliant on Anaconda.
     # "xagg-no-xesmf-deps",
-    # "xagg",
+    "xagg",
     "xarray>=2023.1",
     "zarr>=2.11.1",
 ]
