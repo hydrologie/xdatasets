@@ -59,18 +59,18 @@ Get Started!
 
 Ready to contribute? Here's how to set up `xdatasets` for local development.
 
-1. Fork the `xdatasets` repo on GitHub.
-2. Clone your fork locally::
+#. Fork the `xdatasets` repo on GitHub.
+#. Clone your fork locally::
 
     $ git clone git@github.com:your_name_here/xdatasets.git
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+#. Install your local copy into a development environment. Using `mamba`, you can create a new development environment with::
 
-    $ mkvirtualenv xdatasets
-    $ cd xdatasets/
-    $ pip install -e .
+    $ mamba env create -f environment-dev.yml
+    $ conda activate xdatasets
+    $ flit install --symlink .
 
-4. To ensure a consistent style, please install the pre-commit hooks to your repo::
+#. To ensure a consistent style, please install the pre-commit hooks to your repo::
 
     $ pre-commit install
 
@@ -79,36 +79,37 @@ Ready to contribute? Here's how to set up `xdatasets` for local development.
 
     $ pre-commit run -a
 
-5. Create a branch for local development::
+#. Create a branch for local development::
 
     $ git checkout -b name-of-your-bugfix-or-feature
 
    Now you can make your changes locally.
 
-6. When you're done making changes, check that your changes pass flake8, black, and the
+#. When you're done making changes, check that your changes pass black, flake8, isort, and the
    tests, including testing other Python versions with tox::
 
-    $ flake8 xdatasets tests
     $ black --check xdatasets tests
-    $ python setup.py test or pytest
+    $ flake8 xdatasets tests
+    $ isort --check-only --diff xdatasets tests
+    $ python -m pytest
     $ tox
 
    To get flake8, black, and tox, just pip install them into your virtualenv.
 
-6. Commit your changes and push your branch to GitHub::
+#. Commit your changes and push your branch to GitHub::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. If you are editing the docs, compile and open them with::
+#. If you are editing the docs, compile and open them with::
 
     $ make docs
     # or to simply generate the html
     $ cd docs/
     $ make html
 
-7. Submit a pull request through the GitHub website.
+#. Submit a pull request through the GitHub website.
 
 Pull Request Guidelines
 -----------------------
@@ -127,7 +128,6 @@ Tips
 To run a subset of tests::
 
 $ pytest tests.test_xdatasets
-
 
 Versioning/Tagging
 ------------------
@@ -182,8 +182,7 @@ Before updating the main conda-forge recipe, we echo the conda-forge documentati
 Subsequent releases
 ^^^^^^^^^^^^^^^^^^^
 
-If the conda-forge feedstock recipe is built from PyPI, then when a new release is published on PyPI, `regro-cf-autotick-bot` will open Pull Requests automatically on the conda-forge feedstock.
-It is up to the conda-forge feedstock maintainers to verify that the package is building properly before merging the Pull Request to the main branch.
+If the conda-forge feedstock recipe is built from PyPI, then when a new release is published on PyPI, `regro-cf-autotick-bot` will open Pull Requests automatically on the conda-forge feedstock. It is up to the conda-forge feedstock maintainers to verify that the package is building properly before merging the Pull Request to the main branch.
 
 Building sources for wide support with `manylinux` image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -205,7 +204,7 @@ From the xdatasets source folder we can enter into the docker container, providi
 
 Finally, to build the wheel, we run it against the provided Python3.8 binary::
 
-    $ /opt/python/cp38-cp38m/bin/python setup.py sdist bdist_wheel
+    $ /opt/python/cp38-cp38m/bin/python -m build --sdist --wheel
 
 This will then place two files in `xdatasets/dist/` ("xdatasets-1.2.3-py3-none-any.whl" and "xdatasets-1.2.3.tar.gz").
 We can now leave our docker container (`$ exit`) and continue with uploading the files to PyPI::

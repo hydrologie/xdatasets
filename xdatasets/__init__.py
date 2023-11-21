@@ -1,3 +1,5 @@
+"""Easy access to Earth observation datasets with xarray."""
+
 from .core import Query
 from .tutorial import list_available_datasets, load_dataset
 
