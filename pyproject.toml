@@ -145,11 +145,11 @@ include = [
   "LICENSE",
   "Makefile",
   "README.rst",
-  "docs/**/*.rst",
+  "docs/**/*.gif",
   "docs/**/*.ipynb",
   "docs/**/*.jpg",
   "docs/**/*.png",
-  "docs/**/*.gif",
+  "docs/**/*.rst",
   "docs/Makefile",
   "docs/conf.py",
   "docs/make.bat",
@@ -167,13 +167,14 @@ exclude = [
   ".gitignore",
   ".nojekyll",
   ".pre-commit-config.yaml",
+  ".readthedocs.yml",
   ".yamllint.yaml",
   "Makefile",
   "docs/_*",
   "docs/modules.rst",
   "docs/xdatasets*.rst",
-  "environment-dev.yml",
-  "environment-docs.yml"
+  "environment-docs.yml",
+  "environment-dev.yml"
 ]
 
 [tool.isort]

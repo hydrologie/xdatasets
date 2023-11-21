@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/Ouranosinc/cookiecutter-pypackage",
-  "commit": "04e4e20634c3a90cd796b4e7acfe92ae817a2b75",
+  "commit": "31d78c6bc26d641561e498defe5d383b68d1afc8",
   "checkout": null,
   "context": {
     "cookiecutter": {
