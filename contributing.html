@@ -2,7 +2,7 @@
 <html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Credits" href="authors.html" /><link rel="prev" title="xdatasets package" href="apidoc/xdatasets.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
@@ -168,7 +168,7 @@
 </li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changelog</a></li>
 </ul>
 
 </div>
@@ -258,10 +258,10 @@ are welcome :)</p></li>
 </pre></div>
 </div>
 </li>
-<li><p>Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mkvirtualenv<span class="w"> </span>xdatasets
-$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>xdatasets/
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<li><p>Install your local copy into a development environment. Using <cite>mamba</cite>, you can create a new development environment with:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment-dev.yml
+$<span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>xdatasets
+$<span class="w"> </span>flit<span class="w"> </span>install<span class="w"> </span>--symlink<span class="w"> </span>.
 </pre></div>
 </div>
 </li>
@@ -281,18 +281,17 @@ can always run the hooks on their own with:</p>
 </div>
 <p>Now you can make your changes locally.</p>
 </li>
-<li><p>When you’re done making changes, check that your changes pass flake8, black, and the
+<li><p>When you’re done making changes, check that your changes pass black, flake8, isort, and the
 tests, including testing other Python versions with tox:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>flake8<span class="w"> </span>xdatasets<span class="w"> </span>tests
-$<span class="w"> </span>black<span class="w"> </span>--check<span class="w"> </span>xdatasets<span class="w"> </span>tests
-$<span class="w"> </span>python<span class="w"> </span>setup.py<span class="w"> </span><span class="nb">test</span><span class="w"> </span>or<span class="w"> </span>pytest
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>black<span class="w"> </span>--check<span class="w"> </span>xdatasets<span class="w"> </span>tests
+$<span class="w"> </span>flake8<span class="w"> </span>xdatasets<span class="w"> </span>tests
+$<span class="w"> </span>isort<span class="w"> </span>--check-only<span class="w"> </span>--diff<span class="w"> </span>xdatasets<span class="w"> </span>tests
+$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>pytest
 $<span class="w"> </span>tox
 </pre></div>
 </div>
 <p>To get flake8, black, and tox, just pip install them into your virtualenv.</p>
 </li>
-</ol>
-<ol class="arabic" start="6">
 <li><p>Commit your changes and push your branch to GitHub:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>.
 $<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Your detailed description of your changes.&quot;</span>
@@ -308,8 +307,6 @@ $<span class="w"> </span>make<span class="w"> </span>html
 </pre></div>
 </div>
 </li>
-</ol>
-<ol class="arabic simple" start="7">
 <li><p>Submit a pull request through the GitHub website.</p></li>
 </ol>
 </section>
@@ -386,8 +383,7 @@ $<span class="w"> </span>twine<span class="w"> </span>upload<span class="w"> </s
 </section>
 <section id="subsequent-releases">
 <h4>Subsequent releases<a class="headerlink" href="#subsequent-releases" title="Link to this heading">#</a></h4>
-<p>If the conda-forge feedstock recipe is built from PyPI, then when a new release is published on PyPI, <cite>regro-cf-autotick-bot</cite> will open Pull Requests automatically on the conda-forge feedstock.
-It is up to the conda-forge feedstock maintainers to verify that the package is building properly before merging the Pull Request to the main branch.</p>
+<p>If the conda-forge feedstock recipe is built from PyPI, then when a new release is published on PyPI, <cite>regro-cf-autotick-bot</cite> will open Pull Requests automatically on the conda-forge feedstock. It is up to the conda-forge feedstock maintainers to verify that the package is building properly before merging the Pull Request to the main branch.</p>
 </section>
 </section>
 <section id="building-sources-for-wide-support-with-manylinux-image">
@@ -408,7 +404,7 @@ docker images (at time of writing, we endorse using <cite>manylinux_2_24_x86_64<
 </pre></div>
 </div>
 <p>Finally, to build the wheel, we run it against the provided Python3.8 binary:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>/opt/python/cp38-cp38m/bin/python<span class="w"> </span>setup.py<span class="w"> </span>sdist<span class="w"> </span>bdist_wheel
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>/opt/python/cp38-cp38m/bin/python<span class="w"> </span>-m<span class="w"> </span>build<span class="w"> </span>--sdist<span class="w"> </span>--wheel
 </pre></div>
 </div>
 <p>This will then place two files in <cite>xdatasets/dist/</cite> (“xdatasets-1.2.3-py3-none-any.whl” and “xdatasets-1.2.3.tar.gz”).

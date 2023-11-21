@@ -22,7 +22,7 @@ The genesis of this project can be traced back to a crucial requirement of effor
    apidoc/modules
    contributing
    authors
-   history
+   changes
 
 .. Indices and tables
 .. ==================

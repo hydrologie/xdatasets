@@ -167,7 +167,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changes.html">Changelog</a></li>
 </ul>
 
 </div>
@@ -242,14 +242,14 @@
         <span class="k">pass</span>
 
     <span class="c1"># Ajust timezone and then slice time dimension before moving on with spatiotemporal operations</span>
-    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;timezone&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;timezone&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Assume UTC for now, will change when metadata database in up and running</span>
             <span class="n">ds</span> <span class="o">=</span> <span class="n">change_timezone</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s2">&quot;UTC&quot;</span><span class="p">,</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;timezone&quot;</span><span class="p">])</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">pass</span>  <span class="c1"># replace by error</span>
 
-    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;start&quot;</span> <span class="ow">in</span> <span class="n">time</span> <span class="k">else</span> <span class="kc">None</span>
             <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;end&quot;</span> <span class="ow">in</span> <span class="n">time</span> <span class="k">else</span> <span class="kc">None</span>
@@ -270,7 +270,7 @@
         <span class="n">spatial_agg</span> <span class="o">=</span> <span class="s2">&quot;polygon&quot;</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">clip_by_bbox</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;aggregation&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;aggregation&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">temporal_aggregation</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">spatial_agg</span><span class="p">)</span>
     <span class="c1"># Add source name to dataset</span>
     <span class="c1"># np.warnings.filterwarnings(&#39;ignore&#39;, category=np.VisibleDeprecationWarning)</span>
@@ -320,7 +320,7 @@
     <span class="c1">#     except:</span>
     <span class="c1">#         pass # replace by error</span>
 
-    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;start&quot;</span> <span class="ow">in</span> <span class="n">time</span> <span class="k">else</span> <span class="kc">None</span>
             <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;end&quot;</span> <span class="ow">in</span> <span class="n">time</span> <span class="k">else</span> <span class="kc">None</span>
@@ -341,13 +341,13 @@
     <span class="c1"># elif space[&#39;clip&#39;] == &#39;bbox&#39;:</span>
     <span class="c1">#     ds = clip_by_bbox(ds, space, dataset_name).load()</span>
 
-    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">ajust_dates</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;minimum_duration&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;minimum_duration&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">minimum_duration</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;aggregation&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;aggregation&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span>
             <span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">xr</span><span class="o">.</span><span class="n">infer_freq</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
         <span class="p">):</span>
@@ -391,7 +391,7 @@
     <span class="c1">#     except:</span>
     <span class="c1">#         pass # replace by error</span>
 
-    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;start&quot;</span> <span class="ow">in</span> <span class="n">time</span> <span class="k">else</span> <span class="kc">None</span>
             <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;end&quot;</span> <span class="ow">in</span> <span class="n">time</span> <span class="k">else</span> <span class="kc">None</span>
@@ -409,7 +409,7 @@
     <span class="k">elif</span> <span class="n">space</span><span class="p">[</span><span class="s2">&quot;clip&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;bbox&quot;</span><span class="p">:</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">clip_by_bbox</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;aggregation&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;aggregation&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span>
             <span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">xr</span><span class="o">.</span><span class="n">infer_freq</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
         <span class="p">):</span>
