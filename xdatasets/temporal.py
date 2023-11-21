@@ -36,7 +36,7 @@ def temporal_aggregation(ds, time, dataset_name, spatial_agg):
             operation = operation if isinstance(operation, list) else [operation]
             oper_list = []
             for oper in operation:
-                var_name = f"{var}_{oper.__name__}"
+                # var_name = f"{var}_{oper.__name__}"
                 da = (
                     ds[var]
                     .resample(time=time["timestep"])
@@ -75,19 +75,17 @@ def temporal_aggregation(ds, time, dataset_name, spatial_agg):
 
 
 def ajust_dates(ds, time):
-    """ """
-
     start = time["start"]
     end = time["end"]
 
-    if start != None:
+    if start is not None:
         ds["start_date"] = xr.where(
             ds.start_date < pd.Timestamp(start),
             np.datetime64(start),
             ds.start_date,
         )
 
-    if end != None:
+    if end is not None:
         ds["end_date"] = xr.where(
             ds.end_date > pd.Timestamp(end),
             np.datetime64(end),

@@ -1,11 +1,10 @@
 import logging
 import logging.config
 import warnings
-from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 
 import geopandas as gpd
 import intake
-import numpy as np
 import xarray as xr
 
 from .scripting import LOGGING_CONFIG
@@ -124,8 +123,7 @@ class Query:
         averaging: Optional[bool] = False,
         unique_id: Optional[str] = None,
     ) -> Dict:
-        """
-        Resolves and validates user-provided space params
+        """Resolves and validates user-provided space params.
 
         Parameters
         ----------
@@ -139,7 +137,6 @@ class Query:
         unique_id : str, optional
             a column name, if gdf.DataFrame is provided, to identify each unique geometry
         """
-
         space = locals()
         space.pop("self")
 
@@ -170,14 +167,13 @@ class Query:
         timezone: Optional[str] = None,
         minimum_duration: Optional[str] = None,
     ) -> Dict:
-        """
-        Resolves and validates user-provided time params
+        """Resolves and validates user-provided time params.
 
         Parameters
         ----------
         timestep : str, optional
             In which time step should the data be returned
-            Possible values : http://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases
+            Possible values: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases
         aggregation : Dict[str, callable], optional
             Mapping that associates a variable name with the aggregation function
             to be applied to it. Function which can be called in the form
@@ -198,9 +194,8 @@ class Query:
             https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
         minimum_duration : str, optional
             Minimum duration of a time series (id) in order to be kept
-            Possible values : http://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases
+            Possible values: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases
         """
-
         space = locals()
         space.pop("self")
 
@@ -235,7 +230,7 @@ class Query:
         # Load data for each dataset
         dsets = []
         for dataset_name in datasets_name:
-            data = None
+            # data = None
             kwargs = {}
             try:
                 variables_name = self.datasets[dataset_name]["variables"]
@@ -283,7 +278,7 @@ class Query:
         if "data" in kwargs:
             data = kwargs["data"]
 
-        if data != None and isinstance(data, xr.Dataset):
+        if data is not None and isinstance(data, xr.Dataset):
             dataset_category = "user-provided"
 
         elif isinstance(dataset_name, str):
@@ -314,5 +309,4 @@ class Query:
         return ds
 
     def bbox_clip(self, ds):
-        """ """
         return ds.where(~ds.isnull(), drop=True)

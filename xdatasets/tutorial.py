@@ -3,13 +3,7 @@ from functools import reduce
 from html import escape
 
 from IPython.core.display import HTML
-from xarray.core.formatting_html import (
-    _icon,
-    _load_static_files,
-    _mapping_section,
-    _obj_repr,
-    format_dims,
-)
+from xarray.core.formatting_html import _icon, _mapping_section, _obj_repr
 
 catalog_path = "https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml"
 

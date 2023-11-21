@@ -36,14 +36,14 @@ def climate_request(dataset_name, variables, space, time, catalog):
         pass
 
     # Ajust timezone and then slice time dimension before moving on with spatiotemporal operations
-    if time["timezone"] != None:
+    if time["timezone"] is not None:
         try:
             # Assume UTC for now, will change when metadata database in up and running
             ds = change_timezone(ds, "UTC", time["timezone"])
         except:
             pass  # replace by error
 
-    if time["start"] != None or time["end"] != None:
+    if time["start"] is not None or time["end"] is not None:
         try:
             start_time = time["start"] if "start" in time else None
             end_time = time["end"] if "end" in time else None
@@ -64,7 +64,7 @@ def climate_request(dataset_name, variables, space, time, catalog):
         spatial_agg = "polygon"
         ds = clip_by_bbox(ds, space, dataset_name).load()
 
-    if time["timestep"] != None and time["aggregation"] != None:
+    if time["timestep"] is not None and time["aggregation"] is not None:
         ds = temporal_aggregation(ds, time, dataset_name, spatial_agg)
     # Add source name to dataset
     # np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
@@ -111,7 +111,7 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
     #     except:
     #         pass # replace by error
 
-    if time["start"] != None or time["end"] != None:
+    if time["start"] is not None or time["end"] is not None:
         try:
             start_time = time["start"] if "start" in time else None
             end_time = time["end"] if "end" in time else None
@@ -132,13 +132,13 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
     # elif space['clip'] == 'bbox':
     #     ds = clip_by_bbox(ds, space, dataset_name).load()
 
-    if time["start"] != None or time["end"] != None:
+    if time["start"] is not None or time["end"] is not None:
         ds = ajust_dates(ds, time)
 
-    if time["minimum_duration"] != None:
+    if time["minimum_duration"] is not None:
         ds = minimum_duration(ds, time)
 
-    if time["timestep"] != None and time["aggregation"] != None:
+    if time["timestep"] is not None and time["aggregation"] is not None:
         if pd.Timedelta(1, unit=time["timestep"]) > pd.Timedelta(
             1, unit=xr.infer_freq(ds.time)
         ):
@@ -179,7 +179,7 @@ def user_provided_dataset(dataset_name, variables, space, time, ds):
     #     except:
     #         pass # replace by error
 
-    if time["start"] != None or time["end"] != None:
+    if time["start"] is not None or time["end"] is not None:
         try:
             start_time = time["start"] if "start" in time else None
             end_time = time["end"] if "end" in time else None
@@ -197,7 +197,7 @@ def user_provided_dataset(dataset_name, variables, space, time, ds):
     elif space["clip"] == "bbox":
         ds = clip_by_bbox(ds, space, dataset_name).load()
 
-    if time["timestep"] != None and time["aggregation"] != None:
+    if time["timestep"] is not None and time["aggregation"] is not None:
         if pd.Timedelta(1, unit=time["timestep"]) > pd.Timedelta(
             1, unit=xr.infer_freq(ds.time)
         ):
