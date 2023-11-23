@@ -195,8 +195,8 @@ exclude = [
   ".readthedocs.yml",
   ".yamllint.yaml",
   "docs/_*",
-  "docs/modules.rst",
-  "docs/xdatasets*.rst"
+  "docs/apidoc/modules.rst",
+  "docs/apidoc/xdatasets*.rst"
 ]
 
 [tool.isort]
