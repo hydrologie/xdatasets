@@ -27,7 +27,7 @@ jobs:
         uses: mamba-org/setup-micromamba@v1
         with:
           cache-downloads: true
-          environment-file: environment_docs.yml
+          environment-file: environment-docs.yml
       - name: Install xdatasets (docs)
         run: |
           python -m ipykernel install --user --name=xdatasets
