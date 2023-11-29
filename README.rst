@@ -20,10 +20,8 @@ Xdatasets
 
 Easy access to Earth observation datasets with xarray.
 
-
 * Free software: MIT license
 * Documentation: https://xdatasets.github.io/xdatasets
-
 
 Features
 --------

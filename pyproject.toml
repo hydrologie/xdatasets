@@ -72,6 +72,7 @@ dev = [
   "coverage",
   "coverage>=6.2.2,<7.0.0",
   "coveralls>=3.3.1",
+  "flake8-alphabetize>=0.0.21",
   "flake8-rst-docstrings>=0.3.0",
   "flake8>=6.1.0",
   "flit",
@@ -134,7 +135,7 @@ target-version = [
 [tool.bumpversion]
 current_version = "0.3.0"
 commit = true
-tag = true
+tag = false
 tag_name = "{new_version}"
 allow_dirty = false
 serialize = ["{major}.{minor}.{patch}"]
@@ -169,22 +170,23 @@ include = [
   "LICENSE",
   "Makefile",
   "README.rst",
-  "docs/**/*.gif",
-  "docs/**/*.ipynb",
-  "docs/**/*.jpg",
-  "docs/**/*.png",
-  "docs/**/*.rst",
+  "docs/notebooks/*.ipynb",
+  "environment-dev.yml",
+  "environment-docs.yml",
+  "docs/_static/_images/*.gif",
+  "docs/_static/_images/*.jpg",
+  "docs/_static/_images/*.png",
+  "docs/_static/_images/*.rst",
   "docs/Makefile",
   "docs/conf.py",
   "docs/make.bat",
-  "setup.cfg",
   "tests/*.py",
   "tox.ini",
-  "xdatasets/**/*.py"
+  "xdatasets"
 ]
 exclude = [
-  "**/*.py[co]",
-  "**/__pycache__",
+  "*.py[co]",
+  "__pycache__",
   ".coveralls.yml",
   ".cruft.json",
   ".editorconfig",
@@ -194,12 +196,9 @@ exclude = [
   ".pre-commit-config.yaml",
   ".readthedocs.yml",
   ".yamllint.yaml",
-  "Makefile",
   "docs/_*",
-  "docs/modules.rst",
-  "docs/xdatasets*.rst",
-  "environment-docs.yml",
-  "environment-dev.yml"
+  "docs/apidoc/modules.rst",
+  "docs/apidoc/xdatasets*.rst"
 ]
 
 [tool.isort]
