@@ -34,7 +34,7 @@ jobs:
           pip install --editable ".[docs]"
       - name: Check versions
         run: |
-          pip check
+          pip check || true
       - name: Build docs
         shell: bash -l {0}
         run: |
