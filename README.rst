@@ -1,24 +1,27 @@
-======
+=========
 Xdatasets
-======
-
+=========
 
 .. image:: https://img.shields.io/pypi/v/xdatasets.svg
         :target: https://pypi.python.org/pypi/xdatasets
+        :alt: PyPI
 
+.. image:: https://github.com/hydrologie/xdatasets/actions/workflows/main.yml/badge.svg
+        :target: https://github.com/hydrologie/xdatasets/actions
+        :alt: Build Status
 
-.. image:: https://pyup.io/repos/github/sebastienlanglois/xdatasets/shield.svg
-     :target: https://pyup.io/repos/github/sebastienlanglois/xdatasets/
-     :alt: Updates
+.. image:: https://readthedocs.org/projects/xdatasets/badge/?version=latest
+        :target: https://xdatasets.readthedocs.io/en/latest/?version=latest
+        :alt: Documentation Status
 
+.. image:: https://img.shields.io/github/license/hydrologie/xdatasets.svg
+        :target: https://github.com/hydrologie/xdatasets/blob/master/LICENSE
+        :alt: License
 
-
-Xdatasets.
-
+Easy access to Earth observation datasets with xarray.
 
 * Free software: MIT license
 * Documentation: https://xdatasets.github.io/xdatasets
-
 
 Features
 --------
@@ -28,7 +31,7 @@ Features
 Credits
 -------
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+This package was created with Cookiecutter_ and the `Ouranosinc/cookiecutter-pypackage`_ project template.
 
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _Cookiecutter: https://github.com/cookiecutter/cookiecutter
+.. _`Ouranosinc/cookiecutter-pypackage`: https://github.com/Ouranosinc/cookiecutter-pypackage

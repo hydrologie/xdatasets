@@ -1,6 +1,8 @@
-from .tutorial import load_dataset, list_available_datasets
+"""Easy access to Earth observation datasets with xarray."""
+
 from .core import Query
+from .tutorial import list_available_datasets, load_dataset
 
 __author__ = """Sebastien Langlois"""
 __email__ = "sebastien.langlois62@gmail.com"
-__version__ = '0.2.10'
+__version__ = "0.3.0"

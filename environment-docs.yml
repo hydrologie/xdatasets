@@ -1,0 +1,32 @@
+name: xdatasets
+channels:
+- conda-forge
+- defaults
+dependencies:
+  - python >=3.9,<3.10
+  - cartopy
+  - distributed >=2.0
+  - furo
+  - geoviews
+  - hvplot
+  - intake
+  - intake-geopandas
+  - intake-xarray >=0.6.1
+  - ipykernel
+  - ipython
+  - jupyter_client
+  - matplotlib
+  - nbsphinx
+  - nc-time-axis
+  - netCDF4
+  - pandoc
+  - panel
+  - pooch
+  - s3fs
+  - sphinx
+  - sphinx >=7.0.0
+  - sphinx-click
+  - sphinx-codeautolink
+  - sphinx-copybutton
+  - sphinxcontrib-confluencebuilder
+  - xagg

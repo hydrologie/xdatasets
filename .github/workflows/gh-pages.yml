@@ -1,4 +1,5 @@
 name: Docs
+
 on:
   push:
     branches:
@@ -6,31 +7,40 @@ on:
   pull_request:
     branches:
       - master
+
 permissions:
   contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    name: Build and deploy
+    defaults:
+      run:
+        shell: bash -l {0}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        uses: actions/checkout@v3
         with:
           persist-credentials: false
-      - uses: conda-incubator/setup-miniconda@v2
+      - name: Setup Conda (Micromamba)
+        uses: mamba-org/setup-micromamba@v1
         with:
-          activate-environment: xdatasets
-          environment-file: environment.yml
-          mamba-version: "*"
-          python-version: 3.9
-          auto-activate-base: false
-      - name: Deploy docs
-        shell: bash -l {0}
+          cache-downloads: true
+          environment-file: environment-docs.yml
+      - name: Install xdatasets (docs)
         run: |
           python -m ipykernel install --user --name=xdatasets
-          pip install -e .
-          make -C doc html
+          pip install --editable ".[docs]"
+      - name: Check versions
+        run: |
+          pip check || true
+      - name: Build docs
+        shell: bash -l {0}
+        run: |
+          make docs
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.2
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: doc/_build/html # The folder the action should deploy.
+          folder: docs/_build/html # The folder the action should deploy.

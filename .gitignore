@@ -9,7 +9,6 @@ docs/source/packages
 docs/bin
 docs/source/readme.rst
 
-
 ##---------------------------------------------------
 # Continuous Integration .gitignore files
 ##---------------------------------------------------
@@ -17,7 +16,6 @@ docs/source/readme.rst
 # Ignore test result XML files
 testresults.xml
 coverage.xml
-
 
 ##---------------------------------------------------
 # Python default .gitignore
@@ -150,6 +148,11 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
+# IDE settings
+.vscode/
+.idea/
+.vs/
+*.sublime-workspace
 
 ##---------------------------------------------------
 # Windows default .gitignore
@@ -179,7 +182,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
 ##---------------------------------------------------
 # Linux default .gitignore
 ##---------------------------------------------------
@@ -198,7 +200,6 @@ $RECYCLE.BIN/
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
-
 
 ##---------------------------------------------------
 # Mac OSX default .gitignore

@@ -1,0 +1,28 @@
+{
+  "template": "https://github.com/Ouranosinc/cookiecutter-pypackage",
+  "commit": "64eceda7d95aeb8937fa9961989d3d617a525c04",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "full_name": "Sebastien Langlois",
+      "email": "sebastien.langlois62@gmail.com",
+      "github_username": "sebastienlanglois",
+      "project_name": "xdatasets",
+      "project_slug": "xdatasets",
+      "project_short_description": "Easy access to Earth observation datasets with xarray.",
+      "pypi_username": "sebastienlanglois",
+      "version": "0.3.0",
+      "use_pytest": "y",
+      "use_black": "y",
+      "use_conda": "y",
+      "add_pyup_badge": "n",
+      "make_docs": "y",
+      "command_line_interface": "No command-line interface",
+      "create_author_file": "y",
+      "open_source_license": "MIT license",
+      "generated_with_cruft": "y",
+      "_template": "https://github.com/Ouranosinc/cookiecutter-pypackage"
+    }
+  },
+  "directory": null
+}

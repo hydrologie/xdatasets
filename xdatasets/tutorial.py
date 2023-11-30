@@ -1,30 +1,31 @@
-import itertools
-from functools import reduce
-from xarray.core.formatting_html import _mapping_section, _load_static_files, format_dims, _obj_repr, _icon
-from html import escape
 import uuid
+from functools import reduce
+from html import escape
+
 from IPython.core.display import HTML
+from xarray.core.formatting_html import _icon, _mapping_section, _obj_repr
 
-
-catalog_path = 'https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml'
+catalog_path = "https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml"
 
 
 def open_dataset(
-    name,
+    name: str,
     **kws,
 ):
-    """
-    Open a dataset from the online public repository (requires internet).
+    r"""Open a dataset from the online public repository (requires internet).
+
     Available datasets:
     * ``"era5_reanalysis_single_levels"``: ERA5 reanalysis subset (t2m and tp)
-    * ``"cehq"``: CEHQ flow and water levels observations 
+    * ``"cehq"``: CEHQ flow and water levels observations
+
     Parameters
     ----------
     name : str
         Name of the file containing the dataset.
         e.g. 'era5_reanalysis_single_levels'
-    **kws : dict, optional
+    \*\*kws : dict, optional
         Passed to xarray.open_dataset
+
     See Also
     --------
     xarray.open_dataset
@@ -38,17 +39,23 @@ def open_dataset(
         ) from e
 
     cat = intake.open_catalog(catalog_path)
-    dataset_info = [(category, dataset_name)  for category in cat._entries.keys()
-     for dataset_name in cat[category]._entries.keys() if dataset_name == name]
-     
-    data = reduce(lambda array, index : array[index], dataset_info, cat)
+    dataset_info = [
+        (category, dataset_name)
+        for category in cat._entries.keys()
+        for dataset_name in cat[category]._entries.keys()
+        if dataset_name == name
+    ]
 
-    if data.describe()['driver'][0] == 'geopandasfile':
-        data =  data.read()
-    elif data.describe()['driver'][0] == 'zarr':
-        data = data.to_dask() 
+    data = reduce(lambda array, index: array[index], dataset_info, cat)
+
+    if data.describe()["driver"][0] == "geopandasfile":
+        data = data.read()
+    elif data.describe()["driver"][0] == "zarr":
+        data = data.to_dask()
     else:
-        raise NotImplementedError(f'Dataset {name} is not available. Please request further datasets to our github issues pages')
+        raise NotImplementedError(
+            f"Dataset {name} is not available. Please request further datasets to our github issues pages"
+        )
     return data
 
 
@@ -64,7 +71,6 @@ def summarize_coords(variables):
 
 
 def summarize_variable(name, is_index=False, dtype=None):
-
     cssclass_idx = " class='xr-has-index'" if is_index else ""
     name = escape(str(name))
 
@@ -85,10 +91,10 @@ def summarize_variable(name, is_index=False, dtype=None):
         f"{data_icon}</label>"
     )
 
+
 def list_available_datasets():
-    """
-    Open, load lazily, and close a dataset from the public online repository
-    (requires internet).
+    """Open, load lazily, and close a dataset from the public online repository (requires internet).
+
     See Also
     --------
     open_dataset
@@ -106,29 +112,37 @@ def list_available_datasets():
     # This will need refactor if the catalog has more than 2 levels
     # list(itertools.chain.from_iterable([list(cat[name].keys()) for name in cat._entries.keys()]))
 
-    datasets_catalog = \
-    {field: list(sorted(cat[field]._entries.keys())) for field in sorted(cat._entries.keys())}
+    datasets_catalog = {
+        field: list(sorted(cat[field]._entries.keys()))
+        for field in sorted(cat._entries.keys())
+    }
 
     def add_section(datasets_catalog):
-        return [_mapping_section(datasets, name=field.capitalize(),
-                        details_func=summarize_coords,
-                        max_items_collapse=25,
-                        expand_option_name="display_expand_coords") for field, datasets in datasets_catalog.items()]
+        return [
+            _mapping_section(
+                datasets,
+                name=field.capitalize(),
+                details_func=summarize_coords,
+                max_items_collapse=25,
+                expand_option_name="display_expand_coords",
+            )
+            for field, datasets in datasets_catalog.items()
+        ]
 
-    a = _obj_repr('', [f"<div class='xr-obj-type'>{escape('xdatasets.Catalog')}</div>"],
-              add_section(datasets_catalog))
+    a = _obj_repr(
+        "",
+        [f"<div class='xr-obj-type'>{escape('xdatasets.Catalog')}</div>"],
+        add_section(datasets_catalog),
+    )
 
     return HTML(a)
 
 
 def load_dataset(*args, **kwargs):
-    """
-    Open, load lazily, and close a dataset from the online repository
-    (requires internet).
+    """Open, load lazily, and close a dataset from the online repository (requires internet).
+
     See Also
     --------
     open_dataset
     """
-
     return open_dataset(*args, **kwargs)
-

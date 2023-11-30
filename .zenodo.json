@@ -1,0 +1,22 @@
+{
+  "title": "xdatasets",
+  "creators": [
+    {
+      "name": "Langlois, Sebastien"
+    },
+    {
+      "name": "Smith, Trevor James",
+      "affiliation": "Ouranos, Montréal, Québec, Canada",
+      "orcid": "0000-0001-5393-8359"
+    }
+  ],
+  "keywords": [
+    "datasets",
+    "xarray"
+  ],
+  "license": "MIT",
+  "language": "eng",
+  "communities": [],
+  "upload_type": "software",
+  "access_right": "open"
+}
