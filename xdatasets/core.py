@@ -33,7 +33,7 @@ class Query:
         If a str, a dataset name, i.e.: era5_land_reanalysis.
         If a list, a list of dataset names, i.e.: [era5_single_levels_reanalysis, era5_land_reanalysis].
         If a dictionary, it should map dataset names to their corresponding requested
-        content such as some desired variables. The list of available datasets in this library is coming soon!
+        content such as some desired variables. See the notes below for more details. The list of available datasets in this library is coming soon!
     space : dict-like
         A dictionary that maps spatial parameters with their corresponding value.
         More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_space_params`
@@ -230,7 +230,7 @@ class Query:
         # Load data for each dataset
         dsets = []
         for dataset_name in datasets_name:
-            # data = None
+            # data = None  # FIXME: This is never used.
             kwargs = {}
             try:
                 variables_name = self.datasets[dataset_name]["variables"]
