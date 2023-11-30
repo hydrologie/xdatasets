@@ -239,7 +239,7 @@
 <span class="sd">        If a str, a dataset name, i.e.: era5_land_reanalysis.</span>
 <span class="sd">        If a list, a list of dataset names, i.e.: [era5_single_levels_reanalysis, era5_land_reanalysis].</span>
 <span class="sd">        If a dictionary, it should map dataset names to their corresponding requested</span>
-<span class="sd">        content such as some desired variables. The list of available datasets in this library is coming soon!</span>
+<span class="sd">        content such as some desired variables. See the notes below for more details. The list of available datasets in this library is coming soon!</span>
 <span class="sd">    space : dict-like</span>
 <span class="sd">        A dictionary that maps spatial parameters with their corresponding value.</span>
 <span class="sd">        More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_space_params`</span>
@@ -438,7 +438,7 @@
         <span class="c1"># Load data for each dataset</span>
         <span class="n">dsets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="n">datasets_name</span><span class="p">:</span>
-            <span class="c1"># data = None</span>
+            <span class="c1"># data = None  # FIXME: This is never used.</span>
             <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">variables_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">][</span><span class="s2">&quot;variables&quot;</span><span class="p">]</span>
