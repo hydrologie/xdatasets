@@ -23,6 +23,7 @@ on:
       - HISTORY.rst
       - Makefile
       - MANIFEST.in
+      - pyproject.toml
       - requirements_upstream.txt
       - setup.cfg
       - setup.py
@@ -56,5 +57,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           force: false
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.BUMPVERSION_TOKEN }}
           branch: ${{ github.ref }}
