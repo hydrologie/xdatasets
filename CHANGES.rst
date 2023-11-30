@@ -14,7 +14,7 @@ Changelog
     * `bump-version.yml` has been added to automate patch versioning of the package.
     * `pre-commit` hooks have been updated to the latest versions; `check-toml` and `toml-sort` have been added to cleanup the `pyproject.toml` file.
     * `ruff` has been added to the linting tools to replace most `flake8` and `pydocstyle` verifications.
-    
+
 0.1.2-alpha (2023-01-13)
 ---------------------------
 First release on PyPI.
