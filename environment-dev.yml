@@ -15,6 +15,7 @@ dependencies:
   - jsonpickle
   - matplotlib-base
   - pint >=0.10
+  - s3fs
   - tqdm
   - xagg
   - xarray >=2023.1
