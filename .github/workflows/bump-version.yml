@@ -25,7 +25,6 @@ on:
       - MANIFEST.in
       - pyproject.toml
       - requirements_upstream.txt
-      - setup.cfg
       - setup.py
       - tests/**.py
       - tox.ini

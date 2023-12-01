@@ -57,9 +57,6 @@ dependencies = [
   "s3fs",
   "scipy>=1.2",
   "tqdm",
-  # FIXME: This needs to be revisited. `xagg` should be an optional dependency, reliant on Anaconda.
-  # "xagg-no-xesmf-deps",
-  # "xagg",
   "xarray>=2023.1",
   "zarr>=2.11.1"
 ]
@@ -115,6 +112,9 @@ docs = [
   "sphinx-rtd-theme>=1.0",
   "sphinx>=7.0",
   "sphinxcontrib-confluencebuilder"
+]
+extra = [
+  "xagg"
 ]
 
 [project.urls]
