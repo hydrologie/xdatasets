@@ -57,9 +57,6 @@ dependencies = [
   "s3fs",
   "scipy>=1.2",
   "tqdm",
-  # FIXME: This needs to be revisited. `xagg` should be an optional dependency, reliant on Anaconda.
-  # "xagg-no-xesmf-deps",
-  # "xagg",
   "xarray>=2023.1",
   "zarr>=2.11.1"
 ]
@@ -116,6 +113,9 @@ docs = [
   "sphinx>=7.0",
   "sphinxcontrib-confluencebuilder"
 ]
+extra = [
+  "xagg"
+]
 
 [project.urls]
 "Homepage" = "https://hydrologie.github.io/xdatasets/"
@@ -134,7 +134,7 @@ target-version = [
 ]
 
 [tool.bumpversion]
-current_version = "0.3.0"
+current_version = "0.3.1"
 commit = true
 tag = false
 tag_name = "v{new_version}"
