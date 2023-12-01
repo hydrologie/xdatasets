@@ -115,7 +115,6 @@ def clip_by_polygon(ds, space, dataset_name):
 def clip_by_point(ds, space, dataset_name):
     # TODO : adapt logic for coordinate names
 
-    logger = logging.getLogger()
     logging.info(f"Spatial operations: processing points with {dataset_name}")
 
     lat, lon = zip(*space["geometry"].values())

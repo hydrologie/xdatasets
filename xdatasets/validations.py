@@ -21,7 +21,7 @@ def _validate_space_params(
     if not (isinstance(unique_id, type(None)) or isinstance(unique_id, str)):
         raise ValueError(f"unique_id value '{unique_id}' should be a string")
 
-    if unique_id != None:
+    if unique_id is not None:
         if isinstance(geometry, gpd.GeoDataFrame) and unique_id not in geometry.columns:
             message = (
                 f"\nunique_id value '{unique_id}' was not found in gpd.GeoDataFrame \n"

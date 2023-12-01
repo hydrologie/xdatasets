@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/Ouranosinc/cookiecutter-pypackage",
-  "commit": "240a2c784f89cb1e2c5952869413c5582e590345",
+  "commit": "64eceda7d95aeb8937fa9961989d3d617a525c04",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -14,6 +14,7 @@
       "version": "0.3.0",
       "use_pytest": "y",
       "use_black": "y",
+      "use_conda": "y",
       "add_pyup_badge": "n",
       "make_docs": "y",
       "command_line_interface": "No command-line interface",

@@ -36,7 +36,7 @@ def open_dataset(
     xarray.open_dataset
     """
     try:
-        import intake
+        import intake  # noqa: F401
     except ImportError as e:
         raise ImportError(
             "tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets."

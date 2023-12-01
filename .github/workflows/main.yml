@@ -5,10 +5,9 @@ on:
     branches:
       - main
     paths-ignore:
-      - HISTORY.rst
-      - MANIFEST.in
+      - CHANGES.rst
       - README.rst
-      - setup.py
+      - pyproject.toml
       - setup.cfg
       - xdatasets/__init__.py
   pull_request:
@@ -18,32 +17,33 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-# Temporarily bypass checks until code passes linting
-#  black:
-#    name: Black (Python${{ matrix.python-version }})
-#    runs-on: ubuntu-latest
-#    strategy:
-#      matrix:
-#        python-version:
-#          - "3.8"
-#    steps:
-#      - name: Cancel previous runs
-#        uses: styfle/cancel-workflow-action@0.11.0
-#        with:
-#          access_token: ${{ secrets.GITHUB_TOKEN }}
-#      - uses: actions/checkout@v3
-#      - name: Set up Python${{ matrix.python-version }}
-#        uses: actions/setup-python@v4
-#        with:
-#          python-version: ${{ matrix.python-version }}
-#      - name: Install tox
-#        run: pip install tox
-#      - name: Run linting suite
-#        run: tox -e black
+  lint:
+    name: Lint (Python${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+          - "3.x"
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.12.0
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4.1.1
+      - name: Set up Python${{ matrix.python-version }}
+        uses: actions/setup-python@v4.7.1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install tox
+        run: |
+          python -m pip install tox
+      - name: Run linting suite
+        run: |
+          python -m tox -e lint
 
   test:
     name: test-${{ matrix.tox-env }} (Python${{ matrix.python-version }})
-#    needs: black
+    needs: lint
     runs-on: ubuntu-latest
     env:
       ESMF_VERSION: "v8.5.0"
@@ -59,7 +59,7 @@ jobs:
           - tox-env: "py311"
             python-version: "3.11"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - name: Install NetCDF
         run: |
           sudo apt-get -y update
@@ -72,13 +72,15 @@ jobs:
           cache: true
           version: ${{ env.ESMF_VERSION }}
       - name: Set up Python${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v4.7.1
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install tox
-        run: pip install tox
+        run: |
+          pip install tox
       - name: Test with tox
-        run: tox -e ${{ matrix.tox-env }}
+        run: |
+          tox -e ${{ matrix.tox-env }}
         env:
           ESMF_VERSION: ${{ env.ESMF_VERSION }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -86,9 +88,53 @@ jobs:
           COVERALLS_PARALLEL: true
           COVERALLS_SERVICE_NAME: github
 
+#  test-conda:
+#    name: Test with Python${{ matrix.python-version }} (Anaconda)
+#    needs: lint
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        python-version: ["3.9", "3.10", "3.11"]
+#    defaults:
+#      run:
+#        shell: bash -l {0}
+#    steps:
+#      - uses: actions/checkout@v4.1.1
+#      - name: Setup Conda (Micromamba) with Python${{ matrix.python-version }}
+#        uses: mamba-org/setup-micromamba@v1
+#        with:
+#          cache-downloads: true
+#          environment-file: environment-dev.yml
+#          create-args: >-
+#            mamba
+#            python=${{ matrix.python-version }}
+#      - name: Conda and Mamba versions
+#        run: |
+#          mamba --version
+#          echo "micromamba $(micromamba --version)"
+#      - name: Install xdatasets
+#        run: |
+#          python -m pip install --no-deps .
+#      - name: Check versions
+#        run: |
+#          conda list
+#          python -m pip check || true
+#      - name: Test with pytest
+#        run: |
+#          python -m pytest --cov xdatasets
+#      - name: Report coverage
+#        run: |
+#          python -m coveralls
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          COVERALLS_FLAG_NAME: run-Python${{ matrix.python-version }}-conda
+#          COVERALLS_PARALLEL: true
+#          COVERALLS_SERVICE_NAME: github
+
 #  finish:
 #    needs:
-#      - test
+#      - test-pypi
+#      - test-conda
 #    runs-on: ubuntu-latest
 #    container: python:3-slim
 #    steps:

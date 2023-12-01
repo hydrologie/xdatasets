@@ -20,27 +20,27 @@ jobs:
         shell: bash -l {0}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
         with:
           persist-credentials: false
       - name: Setup Conda (Micromamba)
-        uses: mamba-org/setup-micromamba@v1
+        uses: mamba-org/setup-micromamba@v1.6.0
         with:
           cache-downloads: true
-          environment-file: environment_docs.yml
+          environment-file: environment-docs.yml
       - name: Install xdatasets (docs)
         run: |
           python -m ipykernel install --user --name=xdatasets
           pip install --editable ".[docs]"
       - name: Check versions
         run: |
-          pip check
+          pip check || true
       - name: Build docs
         shell: bash -l {0}
         run: |
           make docs
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.2.2
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: docs/_build/html # The folder the action should deploy.
