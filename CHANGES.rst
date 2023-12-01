@@ -2,7 +2,12 @@
 Changelog
 =========
 
-0.3.0 (unreleased)
+v0.3.1 (2023-12-01)
+-------------------
+
+* Patch update to address a missing dependency (`s3fs`). (:pull:`36`)
+
+v0.3.0 (2023-11-30)
 -------------------
 
 * `xdatasets` now adheres to PEPs 517/518/621 using the `flit` backend for building and packaging.
@@ -15,6 +20,6 @@ Changelog
     * `pre-commit` hooks have been updated to the latest versions; `check-toml` and `toml-sort` have been added to cleanup the `pyproject.toml` file.
     * `ruff` has been added to the linting tools to replace most `flake8` and `pydocstyle` verifications.
 
-0.1.2-alpha (2023-01-13)
----------------------------
+v0.1.2-alpha (2023-01-13)
+-------------------------
 First release on PyPI.
