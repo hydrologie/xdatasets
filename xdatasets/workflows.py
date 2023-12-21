@@ -1,5 +1,6 @@
 import fnmatch
 import itertools
+import warnings
 
 import pandas as pd
 import xarray as xr
@@ -69,9 +70,42 @@ def climate_request(dataset_name, variables, space, time, catalog):
     # Add source name to dataset
     # np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
     ds = ds.assign_coords(source=("source", [dataset_name]))
-    for var in ds.keys():
-        ds[var] = ds[var].expand_dims("source", axis=-1)
+
+    # This is painfully slow if the dataset is large enough and will be commented for now
+    # for var in ds.keys():
+    #     ds[var] = ds[var].expand_dims("source", axis=-1)
     return ds
+
+
+def gis_request(dataset_name, variables, space, time, catalog, **kwargs):
+    # This parameter should be set in the catalog
+    unique_id = catalog["geography"][dataset_name].metadata["unique_id"]
+
+    if any(kwargs):
+        ds = hydrometric_request(
+            dataset_name.replace("_polygons", ""),
+            variables,
+            space,
+            time,
+            catalog,
+            **kwargs,
+        )
+        filters = {"filters": [(unique_id, "in", tuple(ds.id.values.tolist()))]}
+    else:
+        filters = None
+        warnings.warn(
+            "No filters fetches the complete dataset (few minutes). Use filters to expedite data retrieval."
+        )
+
+    gdf = (
+        catalog["geography"][dataset_name](geopandas_kwargs=filters)
+        .read()
+        .infer_objects()
+        .set_index(unique_id)
+    )
+    gdf.index = gdf.index.astype("str")
+
+    return gdf
 
 
 def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs):

@@ -43,17 +43,17 @@ def temporal_aggregation(ds, time, dataset_name, spatial_agg):
                     .reduce(oper, dim="time")
                     .expand_dims(
                         {
-                            "time_agg": [oper.__name__],
+                            # "time_agg": [oper.__name__],
                             "spatial_agg": [spatial_agg],
                             "timestep": [time["timestep"]],
                         }
                     )
                 )
                 # da = da.transpose('id','time', 'timestep','time_agg','spatial_agg')
-                oper_list.append(da)
+                oper_list.append(da.rename(f"{var}_{oper.__name__}"))
 
             # ds_new = ds_new.merge(xr.concat(oper_list, dim='time_agg'))
-            ds_list.append(xr.concat(oper_list, dim="time_agg"))
+            ds_list.append(xr.merge(oper_list))
 
         else:
             try:
@@ -64,6 +64,8 @@ def temporal_aggregation(ds, time, dataset_name, spatial_agg):
 
     if ds_list:
         ds_new = xr.merge(ds_list)
+        # for var in ds_new:
+        #     ds_new[var].attrs = ds[var].attrs
 
         # if requested timestep is lower
         # bfill the timestep and add a warning

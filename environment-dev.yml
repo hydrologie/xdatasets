@@ -6,6 +6,7 @@ dependencies:
   - bottleneck
   - clisops
   - dask
+  - dask-geopandas
   - geopandas
   - intake
   - intake-geopandas

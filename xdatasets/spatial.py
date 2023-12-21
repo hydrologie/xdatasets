@@ -58,8 +58,8 @@ def aggregate(ds_in, ds_weights):
 
 
 def clip_by_polygon(ds, space, dataset_name):
-    # We are not using clisops for weighted averages because it is too unstable for now and requires conda environment.
-    # We use a modified version of the xagg package from which we have removed the xesmf/esmpy dependency
+    # We are not using clisops for weighted averages because it is too unstable for now.
+    # We use the xagg package instead.
 
     indexer = shape_bbox_indexer(ds, space["geometry"])
     ds_copy = ds.isel(indexer).copy()
@@ -84,7 +84,10 @@ def clip_by_polygon(ds, space, dataset_name):
         with HiddenPrints():
             ds_weights = create_weights_mask(da.isel(time=0), geom)
         if space["averaging"] is True:
-            da = aggregate(da, ds_weights)
+            da_tmp = aggregate(da, ds_weights)
+            for var in da_tmp.variables:
+                da_tmp[var].attrs = da[var].attrs
+            da = da_tmp
         else:
             da = xr.merge([da, ds_weights])
             da = da.where(da.weights.notnull(), drop=True)
@@ -97,6 +100,7 @@ def clip_by_polygon(ds, space, dataset_name):
         try:
             data = data.swap_dims({"geom": space["unique_id"]})
             data = data.drop_vars("geom")
+            data[space["unique_id"]].attrs["cf_role"] = "timeseries_id"
 
             if space["unique_id"] not in data.coords:
                 data = data.assign_coords(
