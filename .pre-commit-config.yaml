@@ -28,7 +28,7 @@ repos:
     rev: v1.10.0
     hooks:
       - id: rst-inline-touching-normal
-  - repo: https://github.com/psf/black
+  - repo: https://github.com/psf/black-pre-commit-mirror
     rev: 23.12.1
     hooks:
       - id: black
@@ -53,14 +53,14 @@ repos:
         args: [ '--py38-plus' ]
         additional_dependencies: [ 'pyupgrade==3.14.0' ]
       - id: nbqa-black
-        additional_dependencies: [ 'black==23.11.0' ]
+        additional_dependencies: [ 'black==23.12.1' ]
       - id: nbqa-isort
         additional_dependencies: [ 'isort==5.12.0' ]
   - repo: https://github.com/keewis/blackdoc
     rev: v0.3.9
     hooks:
       - id: blackdoc
-        additional_dependencies: [ 'black==23.11.0' ]
+        additional_dependencies: [ 'black==23.12.1' ]
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.33.0
     hooks:
