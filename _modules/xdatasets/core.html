@@ -214,7 +214,12 @@
 <span class="kn">from</span> <span class="nn">.scripting</span> <span class="kn">import</span> <span class="n">LOGGING_CONFIG</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">cache_catalog</span>
 <span class="kn">from</span> <span class="nn">.validations</span> <span class="kn">import</span> <span class="n">_validate_space_params</span>
-<span class="kn">from</span> <span class="nn">.workflows</span> <span class="kn">import</span> <span class="n">climate_request</span><span class="p">,</span> <span class="n">hydrometric_request</span><span class="p">,</span> <span class="n">user_provided_dataset</span>
+<span class="kn">from</span> <span class="nn">.workflows</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">climate_request</span><span class="p">,</span>
+    <span class="n">gis_request</span><span class="p">,</span>
+    <span class="n">hydrometric_request</span><span class="p">,</span>
+    <span class="n">user_provided_dataset</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">LOGGING_CONFIG</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -467,12 +472,20 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Try naively merging datasets into single dataset</span>
-            <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dsets</span><span class="p">)</span>
-            <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">dsets</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+                <span class="c1"># if more than one dataset, then we add source as a dimension</span>
+                <span class="c1"># so we can merge two or more datasets together</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dsets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">dset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dsets</span><span class="p">):</span>
+                        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">dset</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                            <span class="n">dset</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">dset</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+                        <span class="n">dsets</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">dset</span>
+                <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dsets</span><span class="p">)</span>
+                <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">dsets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">ds</span> <span class="o">=</span> <span class="n">dsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s2">&quot;Couldn&#39;t merge datasets so we pass a dictionary of datasets. &quot;</span>
-            <span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t merge datasets so we pass a list of datasets. &quot;</span><span class="p">)</span>
             <span class="c1"># Look into passing a DataTree instead</span>
             <span class="n">ds</span> <span class="o">=</span> <span class="n">dsets</span>
             <span class="k">pass</span>
@@ -509,6 +522,12 @@
                 <span class="n">ds</span> <span class="o">=</span> <span class="n">hydrometric_request</span><span class="p">(</span>
                     <span class="n">dataset_name</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
                 <span class="p">)</span>
+        <span class="k">if</span> <span class="n">dataset_category</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;geography&quot;</span><span class="p">]:</span>
+            <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
+                <span class="n">ds</span> <span class="o">=</span> <span class="n">gis_request</span><span class="p">(</span>
+                    <span class="n">dataset_name</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+                <span class="p">)</span>
 
         <span class="k">elif</span> <span class="n">dataset_category</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;user-provided&quot;</span><span class="p">]:</span>
             <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
@@ -519,8 +538,8 @@
 
 <div class="viewcode-block" id="Query.bbox_clip">
 <a class="viewcode-back" href="../../apidoc/xdatasets.html#xdatasets.core.Query.bbox_clip">[docs]</a>
-    <span class="k">def</span> <span class="nf">bbox_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ds</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">ds</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">ds</span><span class="o">.</span><span class="n">isnull</span><span class="p">(),</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">bbox_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="s2">&quot;weights&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ds</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">ds</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">(),</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

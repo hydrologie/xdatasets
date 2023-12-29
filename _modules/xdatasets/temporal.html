@@ -252,17 +252,17 @@
                     <span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">oper</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
                     <span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span>
                         <span class="p">{</span>
-                            <span class="s2">&quot;time_agg&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">oper</span><span class="o">.</span><span class="vm">__name__</span><span class="p">],</span>
+                            <span class="c1"># &quot;time_agg&quot;: [oper.__name__],</span>
                             <span class="s2">&quot;spatial_agg&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">spatial_agg</span><span class="p">],</span>
                             <span class="s2">&quot;timestep&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]],</span>
                         <span class="p">}</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
                 <span class="c1"># da = da.transpose(&#39;id&#39;,&#39;time&#39;, &#39;timestep&#39;,&#39;time_agg&#39;,&#39;spatial_agg&#39;)</span>
-                <span class="n">oper_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+                <span class="n">oper_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">oper</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
 
             <span class="c1"># ds_new = ds_new.merge(xr.concat(oper_list, dim=&#39;time_agg&#39;))</span>
-            <span class="n">ds_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">oper_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time_agg&quot;</span><span class="p">))</span>
+            <span class="n">ds_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">oper_list</span><span class="p">))</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -273,6 +273,8 @@
 
     <span class="k">if</span> <span class="n">ds_list</span><span class="p">:</span>
         <span class="n">ds_new</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">ds_list</span><span class="p">)</span>
+        <span class="c1"># for var in ds_new:</span>
+        <span class="c1">#     ds_new[var].attrs = ds[var].attrs</span>
 
         <span class="c1"># if requested timestep is lower</span>
         <span class="c1"># bfill the timestep and add a warning</span>

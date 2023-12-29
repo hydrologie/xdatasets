@@ -276,8 +276,8 @@
 <div class="viewcode-block" id="clip_by_polygon">
 <a class="viewcode-back" href="../../apidoc/xdatasets.html#xdatasets.spatial.clip_by_polygon">[docs]</a>
 <span class="k">def</span> <span class="nf">clip_by_polygon</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">):</span>
-    <span class="c1"># We are not using clisops for weighted averages because it is too unstable for now and requires conda environment.</span>
-    <span class="c1"># We use a modified version of the xagg package from which we have removed the xesmf/esmpy dependency</span>
+    <span class="c1"># We are not using clisops for weighted averages because it is too unstable for now.</span>
+    <span class="c1"># We use the xagg package instead.</span>
 
     <span class="n">indexer</span> <span class="o">=</span> <span class="n">shape_bbox_indexer</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">space</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">])</span>
     <span class="n">ds_copy</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">indexer</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -302,7 +302,10 @@
         <span class="k">with</span> <span class="n">HiddenPrints</span><span class="p">():</span>
             <span class="n">ds_weights</span> <span class="o">=</span> <span class="n">create_weights_mask</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">geom</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">space</span><span class="p">[</span><span class="s2">&quot;averaging&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">da</span> <span class="o">=</span> <span class="n">aggregate</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">ds_weights</span><span class="p">)</span>
+            <span class="n">da_tmp</span> <span class="o">=</span> <span class="n">aggregate</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">ds_weights</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">da_tmp</span><span class="o">.</span><span class="n">variables</span><span class="p">:</span>
+                <span class="n">da_tmp</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">da</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span>
+            <span class="n">da</span> <span class="o">=</span> <span class="n">da_tmp</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">da</span><span class="p">,</span> <span class="n">ds_weights</span><span class="p">])</span>
             <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">notnull</span><span class="p">(),</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -315,6 +318,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">swap_dims</span><span class="p">({</span><span class="s2">&quot;geom&quot;</span><span class="p">:</span> <span class="n">space</span><span class="p">[</span><span class="s2">&quot;unique_id&quot;</span><span class="p">]})</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop_vars</span><span class="p">(</span><span class="s2">&quot;geom&quot;</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">space</span><span class="p">[</span><span class="s2">&quot;unique_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;cf_role&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;timeseries_id&quot;</span>
 
             <span class="k">if</span> <span class="n">space</span><span class="p">[</span><span class="s2">&quot;unique_id&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">coords</span><span class="p">:</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span>
