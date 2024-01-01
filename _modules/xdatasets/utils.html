@@ -206,7 +206,6 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">urllib.request</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
@@ -242,40 +241,37 @@
 <span class="sd">    --------</span>
 <span class="sd">    xarray.open_dataset</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">intake</span>  <span class="c1"># noqa: F401</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+            <span class="s2">&quot;tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets.&quot;</span>
+            <span class="s2">&quot; To proceed please install intake and intake-xarray.&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
 
-        <span class="k">try</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">intake</span>  <span class="c1"># noqa: F401</span>
-        <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-                <span class="s2">&quot;tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets.&quot;</span>
-                <span class="s2">&quot; To proceed please install intake and intake-xarray.&quot;</span>
-            <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+    <span class="n">cat</span> <span class="o">=</span> <span class="n">catalog</span>
+    <span class="n">dataset_info</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">cat</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="n">cat</span><span class="p">[</span><span class="n">category</span><span class="p">]</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dataset_name</span> <span class="o">==</span> <span class="n">name</span>
+    <span class="p">]</span>
 
-        <span class="n">cat</span> <span class="o">=</span> <span class="n">catalog</span>
-        <span class="n">dataset_info</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">cat</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="n">cat</span><span class="p">[</span><span class="n">category</span><span class="p">]</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">dataset_name</span> <span class="o">==</span> <span class="n">name</span>
-        <span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">array</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">dataset_info</span><span class="p">,</span> <span class="n">cat</span><span class="p">)</span>
 
-        <span class="n">data</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">array</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">dataset_info</span><span class="p">,</span> <span class="n">cat</span><span class="p">)</span>
+    <span class="c1"># add proxy infos</span>
+    <span class="n">proxies</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">getproxies</span><span class="p">()</span>
+    <span class="n">storage_options</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">storage_options</span>
+    <span class="n">storage_options</span><span class="p">[</span><span class="s2">&quot;config_kwargs&quot;</span><span class="p">][</span><span class="s2">&quot;proxies&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">proxies</span>
 
-        <span class="c1"># add proxy infos</span>
-        <span class="n">proxies</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">getproxies</span><span class="p">()</span>
-        <span class="n">storage_options</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">storage_options</span>
-        <span class="n">storage_options</span><span class="p">[</span><span class="s2">&quot;config_kwargs&quot;</span><span class="p">][</span><span class="s2">&quot;proxies&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">proxies</span>
-
-        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()[</span><span class="s2">&quot;driver&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;geopandasfile&quot;</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()[</span><span class="s2">&quot;driver&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;zarr&quot;</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span><span class="o">.</span><span class="n">to_dask</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Dataset </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not available. Please request further datasets to our github issues pages&quot;</span>
-            <span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()[</span><span class="s2">&quot;driver&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;geopandasfile&quot;</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()[</span><span class="s2">&quot;driver&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;zarr&quot;</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span><span class="o">.</span><span class="n">to_dask</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Dataset </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not available. Please request further datasets to our github issues pages&quot;</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">data</span></div>
 
 
