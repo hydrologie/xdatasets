@@ -24,7 +24,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Setup Conda (Micromamba)
-        uses: mamba-org/setup-micromamba@v1.6.0
+        uses: mamba-org/setup-micromamba@v1.7.3
         with:
           cache-downloads: true
           environment-file: environment-docs.yml
