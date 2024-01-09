@@ -454,8 +454,8 @@
     <span class="c1"># Add source name to dataset</span>
     <span class="c1"># np.warnings.filterwarnings(&#39;ignore&#39;, category=np.VisibleDeprecationWarning)</span>
     <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">dataset_name</span><span class="p">]))</span>
-    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">ds</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># for var in ds.keys():</span>
+    <span class="c1">#     ds[var] = ds[var].expand_dims(&quot;source&quot;, axis=-1)</span>
 
     <span class="k">return</span> <span class="n">ds</span></div>
 

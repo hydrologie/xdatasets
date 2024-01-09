@@ -61,7 +61,7 @@
     "    \"datasets\": {\"era5_reanalysis_single_levels\": {'variables': [\"t2m\", \"tp\"]}},\n",
     "    \"space\": {\n",
     "        \"clip\": \"polygon\", # bbox, point or polygon\n",
-    "        \"aggregation\": True, # spatial average of the variables within each polygon\n",
+    "        \"averaging\": True, # spatial average of the variables within each polygon\n",
     "        \"geometry\": gdf,\n",
     "        \"unique_id\": \"Station\" # unique column name in geodataframe\n",
     "    },\n",
@@ -92,21 +92,6 @@
    "metadata": {},
    "source": [
     "In order to use `xdatasets`, you must import at least `xdatasets`, `pandas`, `geopandas`, and `numpy`. Additionally, we import `pathlib` to interact with files."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {
-    "ExecuteTime": {
-     "end_time": "2023-10-03T18:40:37.823425184Z",
-     "start_time": "2023-10-03T18:40:37.809132786Z"
-    }
-   },
-   "outputs": [],
-   "source": [
-    "%load_ext autoreload\n",
-    "%autoreload 2"
    ]
   },
   {
