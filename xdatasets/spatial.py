@@ -100,7 +100,6 @@ def clip_by_polygon(ds, space, dataset_name):
         try:
             data = data.swap_dims({"geom": space["unique_id"]})
             data = data.drop_vars("geom")
-            data[space["unique_id"]].attrs["cf_role"] = "timeseries_id"
 
             if space["unique_id"] not in data.coords:
                 data = data.assign_coords(
@@ -111,6 +110,7 @@ def clip_by_polygon(ds, space, dataset_name):
                         )
                     }
                 )
+            data[space["unique_id"]].attrs["cf_role"] = "timeseries_id"
         except KeyError:
             pass
     return data
