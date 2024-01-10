@@ -4,7 +4,7 @@ import warnings
 import pandas as pd
 import xarray as xr
 from clisops.core.subset import shape_bbox_indexer, subset_gridpoint
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 from .utils import HiddenPrints
 
@@ -65,7 +65,7 @@ def clip_by_polygon(ds, space, dataset_name):
     ds_copy = ds.isel(indexer).copy()
 
     arrays = []
-    pbar = tqdm(space["geometry"].iterrows())
+    pbar = tqdm(space["geometry"].iterrows(), position=0, leave=True)
     for idx, row in pbar:
         item = (
             row[space["unique_id"]]

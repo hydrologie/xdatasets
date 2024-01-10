@@ -78,7 +78,7 @@ class Query:
     ...     "space": {"clip": "point", "geometry": sites},
     ...     "time": {
     ...         "timestep": "D",
-    ...         "aggregation": {"tp": np.nansum, "t2m": np.nanmean},
+    ...         "averaging": {"tp": np.nansum, "t2m": np.nanmean},
     ...         "start": "1950-01-01",
     ...         "end": "1955-12-31",
     ...         "timezone": "America/Montreal",
@@ -264,6 +264,8 @@ class Query:
 
         try:
             # Try naively merging datasets into single dataset
+            ds = None
+
             if type(dsets[0]) == xr.Dataset:
                 # if more than one dataset, then we add source as a dimension
                 # so we can merge two or more datasets together
@@ -273,7 +275,6 @@ class Query:
                             dset[var] = dset[var].expand_dims("source", axis=-1)
                         dsets[idx] = dset
                 ds = xr.merge(dsets)
-                ds = ds
             elif len(dsets) == 1:
                 ds = dsets[0]
         except:
