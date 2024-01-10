@@ -128,4 +128,7 @@ def clip_by_point(ds, space, dataset_name):
     data = data.rename({"lat": "latitude", "lon": "longitude"})
 
     data = data.assign_coords({"site": ("site", list(space["geometry"].keys()))})
+
+    data["site"].attrs["cf_role"] = "timeseries_id"
+
     return data
