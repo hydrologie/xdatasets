@@ -437,7 +437,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "The two plots depicted above show the 2m temperature for each pixel that intersects with the polygon from Station `042102` and the corresponding weights to be applied to each pixel. In the lower plot, it is apparent that the majority of the polygon is situated in the central pixels, which results in those pixelx having a weight of approximately 80%. It is evident that the two lower and the upper pixels have much less intersection with the polygon, which results in their respective weights being smaller (hover on the plot to verify the weights).\n",
+    "The two plots depicted above show the 2m temperature for each pixel that intersects with the polygon from Station `042102` and the corresponding weights to be applied to each pixel. In the lower plot, it is apparent that the majority of the polygon is situated in the central pixels, which results in those pixels having a weight of approximately 80%. It is evident that the two lower and the upper pixels have much less intersection with the polygon, which results in their respective weights being smaller (hover on the plot to verify the weights).\n",
     "\n",
     "In various libraries, either all pixels that intersect with the geometries are kept, or only pixels with centers within the polygon are retained. However, as shown in the previous example, utilizing such methods can introduce significant biases in the final calculations."
    ]

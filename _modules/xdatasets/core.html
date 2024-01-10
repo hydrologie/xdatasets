@@ -284,7 +284,7 @@
 <span class="sd">    ...     &quot;space&quot;: {&quot;clip&quot;: &quot;point&quot;, &quot;geometry&quot;: sites},</span>
 <span class="sd">    ...     &quot;time&quot;: {</span>
 <span class="sd">    ...         &quot;timestep&quot;: &quot;D&quot;,</span>
-<span class="sd">    ...         &quot;aggregation&quot;: {&quot;tp&quot;: np.nansum, &quot;t2m&quot;: np.nanmean},</span>
+<span class="sd">    ...         &quot;averaging&quot;: {&quot;tp&quot;: np.nansum, &quot;t2m&quot;: np.nanmean},</span>
 <span class="sd">    ...         &quot;start&quot;: &quot;1950-01-01&quot;,</span>
 <span class="sd">    ...         &quot;end&quot;: &quot;1955-12-31&quot;,</span>
 <span class="sd">    ...         &quot;timezone&quot;: &quot;America/Montreal&quot;,</span>
@@ -472,6 +472,8 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Try naively merging datasets into single dataset</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="kc">None</span>
+
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">dsets</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
                 <span class="c1"># if more than one dataset, then we add source as a dimension</span>
                 <span class="c1"># so we can merge two or more datasets together</span>
@@ -481,7 +483,6 @@
                             <span class="n">dset</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">dset</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
                         <span class="n">dsets</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">dset</span>
                 <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dsets</span><span class="p">)</span>
-                <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">dsets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">ds</span> <span class="o">=</span> <span class="n">dsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">except</span><span class="p">:</span>
