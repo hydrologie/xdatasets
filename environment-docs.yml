@@ -17,6 +17,7 @@ dependencies:
   - ipython
   - jupyter_client
   - matplotlib
+  - nbconvert<7.14
   - nbsphinx
   - nc-time-axis
   - netCDF4
