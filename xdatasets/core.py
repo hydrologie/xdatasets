@@ -10,7 +10,12 @@ import xarray as xr
 from .scripting import LOGGING_CONFIG
 from .utils import cache_catalog
 from .validations import _validate_space_params
-from .workflows import climate_request, hydrometric_request, user_provided_dataset
+from .workflows import (
+    climate_request,
+    gis_request,
+    hydrometric_request,
+    user_provided_dataset,
+)
 
 logging.config.dictConfig(LOGGING_CONFIG)
 logger = logging.getLogger(__name__)
@@ -73,7 +78,7 @@ class Query:
     ...     "space": {"clip": "point", "geometry": sites},
     ...     "time": {
     ...         "timestep": "D",
-    ...         "aggregation": {"tp": np.nansum, "t2m": np.nanmean},
+    ...         "averaging": {"tp": np.nansum, "t2m": np.nanmean},
     ...         "start": "1950-01-01",
     ...         "end": "1955-12-31",
     ...         "timezone": "America/Montreal",
@@ -259,12 +264,21 @@ class Query:
 
         try:
             # Try naively merging datasets into single dataset
-            ds = xr.merge(dsets)
-            ds = ds
+            ds = None
+
+            if type(dsets[0]) == xr.Dataset:
+                # if more than one dataset, then we add source as a dimension
+                # so we can merge two or more datasets together
+                if len(dsets) > 1:
+                    for idx, dset in enumerate(dsets):
+                        for var in dset.keys():
+                            dset[var] = dset[var].expand_dims("source", axis=-1)
+                        dsets[idx] = dset
+                ds = xr.merge(dsets)
+            elif len(dsets) == 1:
+                ds = dsets[0]
         except:
-            logging.warn(
-                "Couldn't merge datasets so we pass a dictionary of datasets. "
-            )
+            logging.warn("Couldn't merge datasets so we pass a list of datasets. ")
             # Look into passing a DataTree instead
             ds = dsets
             pass
@@ -300,6 +314,12 @@ class Query:
                 ds = hydrometric_request(
                     dataset_name, variables, space, time, self.catalog, **kwargs
                 )
+        if dataset_category in ["geography"]:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", category=RuntimeWarning)
+                ds = gis_request(
+                    dataset_name, variables, space, time, self.catalog, **kwargs
+                )
 
         elif dataset_category in ["user-provided"]:
             with warnings.catch_warnings():
@@ -308,5 +328,5 @@ class Query:
 
         return ds
 
-    def bbox_clip(self, ds):
-        return ds.where(~ds.isnull(), drop=True)
+    def bbox_clip(self, ds, variable="weights"):
+        return ds.where(~ds[variable].isnull(), drop=True)
