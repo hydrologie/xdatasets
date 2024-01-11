@@ -96,7 +96,7 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
                     )
                 )
 
-            ds = ds.where(ds[key].isin(value), drop=True)
+            ds = ds.where(ds[key].isin(value).load(), drop=True)
         except:
             # Add warning
             pass
