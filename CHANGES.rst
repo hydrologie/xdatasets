@@ -2,6 +2,11 @@
 Changelog
 =========
 
+v0.3.3 (2024-01-11)
+-------------------
+
+* Support hydrometric queries when dataset's coordinates are lazy. (:pull:`46`)
+
 v0.3.2 (2024-01-10)
 -------------------
 
