@@ -45,9 +45,11 @@ dependencies = [
   "cftime>=1.4.1",
   "clisops>=0.9.2",
   "dask[array]>=2.6",
+  "dask-geopandas",
   "geopandas",
   "intake",
   "intake-xarray>=0.6.1",
+  "intake-geopandas",
   "ipython",
   "jsonpickle",
   "numba",
@@ -134,7 +136,7 @@ target-version = [
 ]
 
 [tool.bumpversion]
-current_version = "0.3.1"
+current_version = "0.3.3"
 commit = true
 tag = false
 tag_name = "v{new_version}"

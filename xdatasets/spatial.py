@@ -4,7 +4,7 @@ import warnings
 import pandas as pd
 import xarray as xr
 from clisops.core.subset import shape_bbox_indexer, subset_gridpoint
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 from .utils import HiddenPrints
 
@@ -58,14 +58,14 @@ def aggregate(ds_in, ds_weights):
 
 
 def clip_by_polygon(ds, space, dataset_name):
-    # We are not using clisops for weighted averages because it is too unstable for now and requires conda environment.
-    # We use a modified version of the xagg package from which we have removed the xesmf/esmpy dependency
+    # We are not using clisops for weighted averages because it is too unstable for now.
+    # We use the xagg package instead.
 
     indexer = shape_bbox_indexer(ds, space["geometry"])
     ds_copy = ds.isel(indexer).copy()
 
     arrays = []
-    pbar = tqdm(space["geometry"].iterrows())
+    pbar = tqdm(space["geometry"].iterrows(), position=0, leave=True)
     for idx, row in pbar:
         item = (
             row[space["unique_id"]]
@@ -84,7 +84,10 @@ def clip_by_polygon(ds, space, dataset_name):
         with HiddenPrints():
             ds_weights = create_weights_mask(da.isel(time=0), geom)
         if space["averaging"] is True:
-            da = aggregate(da, ds_weights)
+            da_tmp = aggregate(da, ds_weights)
+            for var in da_tmp.variables:
+                da_tmp[var].attrs = da[var].attrs
+            da = da_tmp
         else:
             da = xr.merge([da, ds_weights])
             da = da.where(da.weights.notnull(), drop=True)
@@ -107,6 +110,7 @@ def clip_by_polygon(ds, space, dataset_name):
                         )
                     }
                 )
+            data[space["unique_id"]].attrs["cf_role"] = "timeseries_id"
         except KeyError:
             pass
     return data
@@ -124,4 +128,7 @@ def clip_by_point(ds, space, dataset_name):
     data = data.rename({"lat": "latitude", "lon": "longitude"})
 
     data = data.assign_coords({"site": ("site", list(space["geometry"].keys()))})
+
+    data["site"].attrs["cf_role"] = "timeseries_id"
+
     return data

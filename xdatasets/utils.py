@@ -2,6 +2,7 @@ import os
 import sys
 import tempfile
 import urllib.request
+import warnings
 from functools import reduce
 from pathlib import Path
 
@@ -35,37 +36,40 @@ def open_dataset(
     --------
     xarray.open_dataset
     """
-    try:
-        import intake  # noqa: F401
-    except ImportError as e:
-        raise ImportError(
-            "tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets."
-            " To proceed please install intake and intake-xarray."
-        ) from e
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
 
-    cat = catalog
-    dataset_info = [
-        (category, dataset_name)
-        for category in cat._entries.keys()
-        for dataset_name in cat[category]._entries.keys()
-        if dataset_name == name
-    ]
+        try:
+            import intake  # noqa: F401
+        except ImportError as e:
+            raise ImportError(
+                "tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets."
+                " To proceed please install intake and intake-xarray."
+            ) from e
 
-    data = reduce(lambda array, index: array[index], dataset_info, cat)
+        cat = catalog
+        dataset_info = [
+            (category, dataset_name)
+            for category in cat._entries.keys()
+            for dataset_name in cat[category]._entries.keys()
+            if dataset_name == name
+        ]
 
-    # add proxy infos
-    proxies = urllib.request.getproxies()
-    storage_options = data.storage_options
-    storage_options["config_kwargs"]["proxies"] = proxies
+        data = reduce(lambda array, index: array[index], dataset_info, cat)
 
-    if data.describe()["driver"][0] == "geopandasfile":
-        data = data(storage_options=storage_options).read()
-    elif data.describe()["driver"][0] == "zarr":
-        data = data(storage_options=storage_options).to_dask()
-    else:
-        raise NotImplementedError(
-            f"Dataset {name} is not available. Please request further datasets to our github issues pages"
-        )
+        # add proxy infos
+        proxies = urllib.request.getproxies()
+        storage_options = data.storage_options
+        storage_options["config_kwargs"]["proxies"] = proxies
+
+        if data.describe()["driver"][0] == "geopandasfile":
+            data = data(storage_options=storage_options).read()
+        elif data.describe()["driver"][0] == "zarr":
+            data = data(storage_options=storage_options).to_dask()
+        else:
+            raise NotImplementedError(
+                f"Dataset {name} is not available. Please request further datasets to our github issues pages"
+            )
     return data
 
 

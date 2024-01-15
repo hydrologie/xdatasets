@@ -2,6 +2,17 @@
 Changelog
 =========
 
+v0.3.3 (2024-01-11)
+-------------------
+
+* Support hydrometric queries when dataset's coordinates are lazy. (:pull:`46`)
+
+v0.3.2 (2024-01-10)
+-------------------
+
+* Update documentation. (:pull:`42`)
+* Added a functionality to extract geometries to a `geopandas.GeoDataFrame` format. (:pull:`42`)
+
 v0.3.1 (2023-12-01)
 -------------------
 
