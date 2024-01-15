@@ -30,9 +30,15 @@ on:
       - tox.ini
       - xdatasets/__init__.py
 
+permissions:
+  contents: read
+
 jobs:
   bump_patch_version:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
     steps:
       - uses: actions/checkout@v4.1.1
         with:
@@ -56,5 +62,5 @@ jobs:
         uses: ad-m/github-push-action@v0.8.0
         with:
           force: false
-          github_token: ${{ secrets.BUMPVERSION_TOKEN }}
+          github_token: ${{ secrets.BUMP_VERSION_TOKEN }}
           branch: ${{ github.ref }}
