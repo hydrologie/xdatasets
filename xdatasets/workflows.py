@@ -176,7 +176,8 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
         if pd.Timedelta(1, unit=time["timestep"]) > pd.Timedelta(
             1, unit=xr.infer_freq(ds.time)
         ):
-            ds = temporal_aggregation(ds, time, dataset_name)
+            spatial_agg = "polygon"
+            ds = temporal_aggregation(ds, time, dataset_name, spatial_agg)
 
     # Remove all dimension values that are not required anymore after previous filetring
     # This returns a cleaner dataset at the cost of a compute
@@ -223,19 +224,22 @@ def user_provided_dataset(dataset_name, variables, space, time, ds):
 
     # Spatial operations
     if space["clip"] == "polygon":
+        spatial_agg = "polygon"
         ds = clip_by_polygon(ds, space, dataset_name).load()
 
     elif space["clip"] == "point":
+        spatial_agg = "point"
         ds = clip_by_point(ds, space, dataset_name).load()
 
     elif space["clip"] == "bbox":
+        spatial_agg = "polygon"
         ds = clip_by_bbox(ds, space, dataset_name).load()
 
     if time["timestep"] is not None and time["aggregation"] is not None:
         if pd.Timedelta(1, unit=time["timestep"]) > pd.Timedelta(
             1, unit=xr.infer_freq(ds.time)
         ):
-            ds = temporal_aggregation(ds, time, dataset_name)
+            ds = temporal_aggregation(ds, time, dataset_name, spatial_agg)
     # Add source name to dataset
     # np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
     ds = ds.assign_coords(source=("source", [dataset_name]))
