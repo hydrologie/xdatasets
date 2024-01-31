@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
         <title>xdatasets.workflows - Xdatasets 0.3.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
@@ -388,7 +388,8 @@
         <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span>
             <span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">xr</span><span class="o">.</span><span class="n">infer_freq</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
         <span class="p">):</span>
-            <span class="n">ds</span> <span class="o">=</span> <span class="n">temporal_aggregation</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span>
+            <span class="n">spatial_agg</span> <span class="o">=</span> <span class="s2">&quot;polygon&quot;</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="n">temporal_aggregation</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">spatial_agg</span><span class="p">)</span>
 
     <span class="c1"># Remove all dimension values that are not required anymore after previous filetring</span>
     <span class="c1"># This returns a cleaner dataset at the cost of a compute</span>
@@ -438,19 +439,22 @@
 
     <span class="c1"># Spatial operations</span>
     <span class="k">if</span> <span class="n">space</span><span class="p">[</span><span class="s2">&quot;clip&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;polygon&quot;</span><span class="p">:</span>
+        <span class="n">spatial_agg</span> <span class="o">=</span> <span class="s2">&quot;polygon&quot;</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">clip_by_polygon</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
     <span class="k">elif</span> <span class="n">space</span><span class="p">[</span><span class="s2">&quot;clip&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;point&quot;</span><span class="p">:</span>
+        <span class="n">spatial_agg</span> <span class="o">=</span> <span class="s2">&quot;point&quot;</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">clip_by_point</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
     <span class="k">elif</span> <span class="n">space</span><span class="p">[</span><span class="s2">&quot;clip&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;bbox&quot;</span><span class="p">:</span>
+        <span class="n">spatial_agg</span> <span class="o">=</span> <span class="s2">&quot;polygon&quot;</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">clip_by_bbox</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span><span class="p">[</span><span class="s2">&quot;aggregation&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">time</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span>
             <span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">xr</span><span class="o">.</span><span class="n">infer_freq</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
         <span class="p">):</span>
-            <span class="n">ds</span> <span class="o">=</span> <span class="n">temporal_aggregation</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="n">temporal_aggregation</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">spatial_agg</span><span class="p">)</span>
     <span class="c1"># Add source name to dataset</span>
     <span class="c1"># np.warnings.filterwarnings(&#39;ignore&#39;, category=np.VisibleDeprecationWarning)</span>
     <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">dataset_name</span><span class="p">]))</span>
