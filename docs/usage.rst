@@ -7,3 +7,9 @@ In this user guide, you will find detailed descriptions and examples that descri
 .. note::
 
     This user guide is a work in progress. If you have any questions or suggestions, please feel free to open an issue on the `xdatasets GitHub Issues page <https://github.com/hydrologie/xdatasets/issues>`_.
+
+To use xdatasets in a project:
+
+.. code-block:: python
+
+    import xdatasets
