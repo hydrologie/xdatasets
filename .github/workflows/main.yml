@@ -91,64 +91,64 @@ jobs:
           COVERALLS_PARALLEL: true
           COVERALLS_SERVICE_NAME: github
 
-#  test-conda:
-#    name: Test with Python${{ matrix.python-version }} (Anaconda)
-#    needs: lint
-#    runs-on: ubuntu-latest
-#    strategy:
-#      matrix:
-#        python-version: ["3.9", "3.10", "3.11"]
-#    defaults:
-#      run:
-#        shell: bash -l {0}
-#    steps:
-#      - uses: actions/checkout@v4.1.1
-#      - name: Setup Conda (Micromamba) with Python${{ matrix.python-version }}
-#        uses: mamba-org/setup-micromamba@v1
-#        with:
-#          cache-downloads: true
-#          environment-file: environment-dev.yml
-#          create-args: >-
-#            mamba
-#            python=${{ matrix.python-version }}
-#      - name: Conda and Mamba versions
-#        run: |
-#          mamba --version
-#          echo "micromamba $(micromamba --version)"
-#      - name: Install xdatasets
-#        run: |
-#          python -m pip install --no-deps .
-#      - name: Check versions
-#        run: |
-#          conda list
-#          python -m pip check || true
-#      - name: Test with pytest
-#        run: |
-#          python -m pytest --cov xdatasets
-#      - name: Report coverage
-#        run: |
-#          python -m coveralls
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          COVERALLS_FLAG_NAME: run-Python${{ matrix.python-version }}-conda
-#          COVERALLS_PARALLEL: true
-#          COVERALLS_SERVICE_NAME: github
+  test-conda:
+    name: Test with Python${{ matrix.python-version }} (Anaconda)
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v4.1.1
+      - name: Setup Conda (Micromamba) with Python${{ matrix.python-version }}
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          cache-downloads: true
+          environment-file: environment-dev.yml
+          create-args: >-
+            mamba
+            python=${{ matrix.python-version }}
+      - name: Conda and Mamba versions
+        run: |
+          mamba --version
+          echo "micromamba $(micromamba --version)"
+      - name: Install xdatasets
+        run: |
+          python -m pip install --no-deps .
+      - name: Check versions
+        run: |
+          conda list
+          python -m pip check || true
+      - name: Test with pytest
+        run: |
+          python -m pytest --cov xdatasets
+      - name: Report coverage
+        run: |
+          python -m coveralls
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERALLS_FLAG_NAME: run-Python${{ matrix.python-version }}-conda
+          COVERALLS_PARALLEL: true
+          COVERALLS_SERVICE_NAME: github
 
-#  finish:
-#    needs:
-#      - test-pypi
-#      - test-conda
-#    runs-on: ubuntu-latest
-#    container: python:3-slim
-#    steps:
-#      - name: Harden Runner
-#        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
-#        with:
-#          egress-policy: audit
-#      - name: Coveralls Finished
-#        run: |
-#          pip install --upgrade coveralls
-#          coveralls --finish
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          COVERALLS_SERVICE_NAME: github
+  finish:
+    needs:
+      - test-pypi
+      - test-conda
+    runs-on: ubuntu-latest
+    container: python:3-slim
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        with:
+          egress-policy: audit
+      - name: Coveralls Finished
+        run: |
+          python -m pip install --upgrade coveralls
+          coveralls --finish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERALLS_SERVICE_NAME: github
