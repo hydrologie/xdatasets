@@ -42,7 +42,7 @@ jobs:
         run: |
           python -m tox -e lint
 
-  test:
+  test-pypi:
     name: test-${{ matrix.tox-env }} (Python${{ matrix.python-version }})
     needs: lint
     runs-on: ubuntu-latest
