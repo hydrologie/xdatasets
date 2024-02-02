@@ -2,7 +2,7 @@ name: xdatasets
 channels:
   - conda-forge
 dependencies:
-  - python >=3.9,<3.12
+  - python >=3.9,<3.13
   - bottleneck
   - clisops
   - dask
@@ -34,7 +34,7 @@ dependencies:
   - pip >=23.3.0
   - pre-commit >=3.3.2
   - pytest >=7.3.1
-  - pytest-cov>=4.0.0
-  - tokenize-rt>=3.2.0
+  - pytest-cov >=4.0.0
+  - tokenize-rt >=3.2.0
   - tox >=4.5.1
   - watchdog >=3.0.0
