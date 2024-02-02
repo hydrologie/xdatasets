@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
     defaults:
       run:
         shell: bash -l {0}
@@ -109,11 +109,9 @@ jobs:
           cache-downloads: true
           environment-file: environment-dev.yml
           create-args: >-
-            mamba
             python=${{ matrix.python-version }}
-      - name: Conda and Mamba versions
+      - name: Micromamba version
         run: |
-          mamba --version
           echo "micromamba $(micromamba --version)"
       - name: Install xdatasets
         run: |
