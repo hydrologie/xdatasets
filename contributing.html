@@ -1,0 +1,587 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Credits" href="authors.html" /><link rel="prev" title="Getting started" href="notebooks/getting_started.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+        <title>Contributing - Xdatasets 0.3.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-codeautolink.css?v=125d5c1c" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Xdatasets 0.3.4 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Xdatasets 0.3.4 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Xdatasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">All Modules</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="apidoc/modules.html">xdatasets</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of xdatasets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="apidoc/xdatasets.html">xdatasets package</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h1>
+<p>Contributions are welcome, and they are greatly appreciated! Every little bit helps, and credit will always be given.</p>
+<p>You can contribute in many ways:</p>
+<section id="types-of-contributions">
+<h2>Types of Contributions<a class="headerlink" href="#types-of-contributions" title="Link to this heading">#</a></h2>
+<section id="report-bugs">
+<h3>Report Bugs<a class="headerlink" href="#report-bugs" title="Link to this heading">#</a></h3>
+<p>Report bugs at <a class="reference external" href="https://github.com/hydrologie/xdatasets/issues">https://github.com/hydrologie/xdatasets/issues</a>.</p>
+<p>If you are reporting a bug, please include:</p>
+<ul class="simple">
+<li><p>Your operating system name and version.</p></li>
+<li><p>Any details about your local setup that might be helpful in troubleshooting.</p></li>
+<li><p>Detailed steps to reproduce the bug.</p></li>
+</ul>
+</section>
+<section id="fix-bugs">
+<h3>Fix Bugs<a class="headerlink" href="#fix-bugs" title="Link to this heading">#</a></h3>
+<p>Look through the GitHub issues for bugs. Anything tagged with “bug” and “help wanted” is open to whoever wants to implement it.</p>
+</section>
+<section id="implement-features">
+<h3>Implement Features<a class="headerlink" href="#implement-features" title="Link to this heading">#</a></h3>
+<p>Look through the GitHub issues for features. Anything tagged with “enhancement” and “help wanted” is open to whoever wants to implement it.</p>
+</section>
+<section id="write-documentation">
+<h3>Write Documentation<a class="headerlink" href="#write-documentation" title="Link to this heading">#</a></h3>
+<p>xdatasets could always use more documentation, whether as part of the official xdatasets docs, in docstrings, or even on the web in blog posts, articles, and such.</p>
+</section>
+<section id="submit-feedback">
+<h3>Submit Feedback<a class="headerlink" href="#submit-feedback" title="Link to this heading">#</a></h3>
+<p>The best way to send feedback is to file an issue at <a class="reference external" href="https://github.com/hydrologie/xdatasets/issues">https://github.com/hydrologie/xdatasets/issues</a>.</p>
+<p>If you are proposing a feature:</p>
+<ul class="simple">
+<li><p>Explain in detail how it would work.</p></li>
+<li><p>Keep the scope as narrow as possible, to make it easier to implement.</p></li>
+<li><p>Remember that this is a volunteer-driven project, and that contributions
+are welcome :)</p></li>
+</ul>
+</section>
+</section>
+<section id="get-started">
+<h2>Get Started!<a class="headerlink" href="#get-started" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are new to using GitHub and <cite>git</cite>, please read <a class="reference external" href="https://guides.github.com/activities/hello-world/">this guide</a> first.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Anaconda Python users: Due to the complexity of some packages, the default dependency solver can take a long time to resolve the environment. Consider running the following commands in order to speed up the process:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>install<span class="w"> </span>-n<span class="w"> </span>base<span class="w"> </span>conda-libmamba-solver
+$<span class="w"> </span>conda<span class="w"> </span>config<span class="w"> </span>--set<span class="w"> </span>solver<span class="w"> </span>libmamba
+</pre></div>
+</div>
+<p>For more information, please see the following link: <a class="reference external" href="https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community">https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community</a></p>
+<p>Alternatively, you can use the <a class="reference external" href="https://mamba.readthedocs.io/en/latest/index.html">mamba</a> package manager, which is a drop-in replacement for <code class="docutils literal notranslate"><span class="pre">conda</span></code>. If you are already using <cite>mamba</cite>, replace the following commands with <code class="docutils literal notranslate"><span class="pre">mamba</span></code> instead of <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
+</div>
+<p>Ready to contribute? Here’s how to set up <code class="docutils literal notranslate"><span class="pre">xdatasets</span></code> for local development.</p>
+<ol class="arabic">
+<li><p>Fork the <code class="docutils literal notranslate"><span class="pre">xdatasets</span></code> repo on GitHub.</p></li>
+<li><p>Clone your fork locally:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:your_name_here/xdatasets.git
+</pre></div>
+</div>
+</li>
+<li><p>Install your local copy into a development environment. You can create a new Anaconda development environment with:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment-dev.yml
+$<span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>xdatasets
+$<span class="w"> </span>flit<span class="w"> </span>install<span class="w"> </span>--symlink
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>This installs <code class="docutils literal notranslate"><span class="pre">xdatasets</span></code> in an “editable” state, meaning that changes to the code are immediately seen by the environment.</p>
+</div></blockquote>
+<ol class="arabic">
+<li><p>To ensure a consistent coding style, install the <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> hooks to your local clone:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pre-commit<span class="w"> </span>install
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>On commit, <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> will check that <code class="docutils literal notranslate"><span class="pre">black</span></code>, <code class="docutils literal notranslate"><span class="pre">blackdoc</span></code>, <code class="docutils literal notranslate"><span class="pre">isort</span></code>, <code class="docutils literal notranslate"><span class="pre">flake8</span></code>, and <code class="docutils literal notranslate"><span class="pre">ruff</span></code> checks are passing, perform automatic fixes if possible, and warn of violations that require intervention. If your commit fails the checks initially, simply fix the errors, re-add the files, and re-commit.</p>
+<p>You can also run the hooks manually with:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pre-commit<span class="w"> </span>run<span class="w"> </span>-a
+</pre></div>
+</div>
+<p>If you want to skip the <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> hooks temporarily, you can pass the <code class="docutils literal notranslate"><span class="pre">--no-verify</span></code> flag to <cite>$ git commit</cite>.</p>
+</div></blockquote>
+<ol class="arabic">
+<li><p>Create a branch for local development:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>name-of-your-bugfix-or-feature
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>Now you can make your changes locally.</p>
+</div></blockquote>
+<ol class="arabic">
+<li><p>When you’re done making changes, we <strong>strongly</strong> suggest running the tests in your environment or with the help of <code class="docutils literal notranslate"><span class="pre">tox</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>pytest
+<span class="c1"># Or, to run multiple build tests</span>
+$<span class="w"> </span>tox
+</pre></div>
+</div>
+</li>
+<li><p>Commit your changes and push your branch to GitHub:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>.
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Your detailed description of your changes.&quot;</span>
+$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>name-of-your-bugfix-or-feature
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>If <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> hooks fail, try re-committing your changes (or, if need be, you can skip them with <cite>$ git commit –no-verify</cite>).</p>
+</div></blockquote>
+<ol class="arabic">
+<li><p>Submit a <a class="reference external" href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request">Pull Request</a> through the GitHub website.</p></li>
+<li><p>When pushing your changes to your branch on GitHub, the documentation will automatically be tested to reflect the changes in your Pull Request. This build process can take several minutes at times. If you are actively making changes that affect the documentation and wish to save time, you can compile and test your changes beforehand locally with:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># To generate the html and open it in your browser</span>
+$<span class="w"> </span>make<span class="w"> </span>docs
+<span class="c1"># To only generate the html</span>
+$<span class="w"> </span>make<span class="w"> </span>autodoc
+$<span class="w"> </span>make<span class="w"> </span>-C<span class="w"> </span>docs<span class="w"> </span>html
+<span class="c1"># To simply test that the docs pass build checks</span>
+$<span class="w"> </span>tox<span class="w"> </span>-e<span class="w"> </span>docs
+</pre></div>
+</div>
+</li>
+<li><p>Once your Pull Request has been accepted and merged to the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch, several automated workflows will be triggered:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">bump-version.yml</span></code> workflow will automatically bump the patch version when pull requests are pushed to the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch on GitHub. <strong>It is not recommended to manually bump the version in your branch when merging (non-release) pull requests (this will cause the version to be bumped twice).</strong></p></li>
+<li><p><cite>ReadTheDocs</cite> will automatically build the documentation and publish it to the <cite>latest</cite> branch of <cite>xdatasets</cite> documentation website.</p></li>
+<li><p>If your branch is not a fork (ie: you are a maintainer), your branch will be automatically deleted.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<blockquote>
+<div><p>You will have contributed your first changes to <code class="docutils literal notranslate"><span class="pre">xdatasets</span></code>!</p>
+</div></blockquote>
+</section>
+<section id="pull-request-guidelines">
+<h2>Pull Request Guidelines<a class="headerlink" href="#pull-request-guidelines" title="Link to this heading">#</a></h2>
+<p>Before you submit a pull request, check that it meets these guidelines:</p>
+<ol class="arabic simple">
+<li><p>The pull request should include tests and should aim to provide <a class="reference external" href="https://en.wikipedia.org/wiki/Code_coverage">code coverage</a> for all new lines of code. You can use the <code class="docutils literal notranslate"><span class="pre">--cov-report</span> <span class="pre">html</span> <span class="pre">--cov</span> <span class="pre">xdatasets</span></code> flags during the call to <code class="docutils literal notranslate"><span class="pre">pytest</span></code> to generate an HTML report and analyse the current test coverage.</p></li>
+<li><p>If the pull request adds functionality, the docs should also be updated. Put your new functionality into a function with a docstring, and add the feature to the list in <code class="docutils literal notranslate"><span class="pre">README.rst</span></code>.</p></li>
+<li><p>The pull request should work for Python 3.8, 3.9, 3.10, and 3.11. Check that the tests pass for all supported Python versions.</p></li>
+</ol>
+</section>
+<section id="tips">
+<h2>Tips<a class="headerlink" href="#tips" title="Link to this heading">#</a></h2>
+<p>To run a subset of tests:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pytest<span class="w"> </span>tests.test_xdatasets
+</pre></div>
+</div>
+<p>To run specific code style checks:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>black<span class="w"> </span>--check<span class="w"> </span>xdatasets<span class="w"> </span>tests
+$<span class="w"> </span>isort<span class="w"> </span>--check<span class="w"> </span>xdatasets<span class="w"> </span>tests
+$<span class="w"> </span>blackdoc<span class="w"> </span>--check<span class="w"> </span>xdatasets<span class="w"> </span>docs
+$<span class="w"> </span>ruff<span class="w"> </span>xdatasets<span class="w"> </span>tests
+$<span class="w"> </span>flake8<span class="w"> </span>xdatasets<span class="w"> </span>tests
+</pre></div>
+</div>
+<p>To get <code class="docutils literal notranslate"><span class="pre">black</span></code>, <code class="docutils literal notranslate"><span class="pre">isort</span></code>, <code class="docutils literal notranslate"><span class="pre">blackdoc</span></code>, <code class="docutils literal notranslate"><span class="pre">ruff</span></code>, and <code class="docutils literal notranslate"><span class="pre">flake8</span></code> (with plugins <code class="docutils literal notranslate"><span class="pre">flake8-alphabetize</span></code> and <code class="docutils literal notranslate"><span class="pre">flake8-rst-docstrings</span></code>) simply install them with <cite>pip</cite> (or <cite>conda</cite>) into your environment.</p>
+</section>
+<section id="versioning-tagging">
+<h2>Versioning/Tagging<a class="headerlink" href="#versioning-tagging" title="Link to this heading">#</a></h2>
+<p>A reminder for the <strong>maintainers</strong> on how to deploy. This section is only relevant when producing a new point release for the package.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is important to be aware that any changes to files found within the <code class="docutils literal notranslate"><span class="pre">xdatasets</span></code> folder (with the exception of <code class="docutils literal notranslate"><span class="pre">xdatasets/__init__.py</span></code>) will trigger the <code class="docutils literal notranslate"><span class="pre">bump-version.yml</span></code> workflow. Be careful not to commit changes to files in this folder when preparing a new release.</p>
+</div>
+<ol class="arabic">
+<li><p>Create a new branch from <cite>main</cite> (e.g. <cite>release-0.2.0</cite>).</p></li>
+<li><p>Update the <cite>CHANGES.rst</cite> file to change the <cite>Unreleased</cite> section to the current date.</p></li>
+<li><p>Bump the version in your branch to the next version (e.g. <cite>v0.1.0 -&gt; v0.2.0</cite>):</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>bump-my-version<span class="w"> </span>bump<span class="w"> </span>minor<span class="w"> </span><span class="c1"># In most cases, we will be releasing a minor version</span>
+$<span class="w"> </span>git<span class="w"> </span>push
+</pre></div>
+</div>
+</li>
+<li><p>Create a pull request from your branch to <cite>main</cite>.</p></li>
+<li><p>Once the pull request is merged, create a new release on GitHub. On the main branch, run:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>tag<span class="w"> </span>v0.2.0
+$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>--tags
+</pre></div>
+</div>
+<p>This will trigger a GitHub workflow to build the package and upload it to TestPyPI. At the same time, the GitHub workflow will create a draft release on GitHub. Assuming that the workflow passes, the final release can then be published on GitHub by finalizing the draft release.</p>
+</li>
+<li><p>Once the release is published, the <cite>publish-pypi.yml</cite> workflow will go into an <cite>awaiting approval</cite> mode on Github Actions. Only authorized users may approve this workflow (notifications will be sent) to trigger the upload to PyPI.</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Uploads to PyPI can <strong>never</strong> be overwritten. If you make a mistake, you will need to bump the version and re-release the package. If the package uploaded to PyPI is broken, you should modify the GitHub release to mark the package as broken, as well as yank the package (mark the version  “broken”) on PyPI.</p>
+</div>
+</section>
+<section id="packaging">
+<h2>Packaging<a class="headerlink" href="#packaging" title="Link to this heading">#</a></h2>
+<p>When a new version has been minted (features have been successfully integrated test coverage and stability is adequate), maintainers should update the pip-installable package (wheel and source release) on PyPI as well as the binary on conda-forge.</p>
+<section id="the-simple-approach">
+<h3>The simple approach<a class="headerlink" href="#the-simple-approach" title="Link to this heading">#</a></h3>
+<p>The simplest approach to packaging for general support (pip wheels) requires that <code class="docutils literal notranslate"><span class="pre">flit</span></code> be installed:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>flit
+</pre></div>
+</div>
+<p>From the command line on your Linux distribution, simply run the following from the clone’s main dev branch:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># To build the packages (sources and wheel)</span>
+$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>flit<span class="w"> </span>build
+
+<span class="c1"># To upload to PyPI</span>
+$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>flit<span class="w"> </span>publish<span class="w"> </span>dist/*
+</pre></div>
+</div>
+<p>The new version based off of the version checked out will now be available via <cite>pip</cite> (<cite>$ pip install xdatasets</cite>).</p>
+</section>
+<section id="releasing-on-conda-forge">
+<h3>Releasing on conda-forge<a class="headerlink" href="#releasing-on-conda-forge" title="Link to this heading">#</a></h3>
+<section id="initial-release">
+<h4>Initial Release<a class="headerlink" href="#initial-release" title="Link to this heading">#</a></h4>
+<dl class="simple">
+<dt>Before preparing an initial release on conda-forge, we <em>strongly</em> suggest consulting the following links:</dt><dd><ul class="simple">
+<li><p><a class="reference external" href="https://conda-forge.org/docs/maintainer/adding_pkgs.html">https://conda-forge.org/docs/maintainer/adding_pkgs.html</a></p></li>
+<li><p><a class="reference external" href="https://github.com/conda-forge/staged-recipes">https://github.com/conda-forge/staged-recipes</a></p></li>
+</ul>
+</dd>
+</dl>
+<p>In order to create a new conda build recipe, to be used when proposing packages to the conda-forge repository, we strongly suggest using the <code class="docutils literal notranslate"><span class="pre">grayskull</span></code> tool:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>grayskull
+$<span class="w"> </span>grayskull<span class="w"> </span>pypi<span class="w"> </span>xdatasets
+</pre></div>
+</div>
+<p>For more information on <code class="docutils literal notranslate"><span class="pre">grayskull</span></code>, please see the following link: <a class="reference external" href="https://github.com/conda/grayskull">https://github.com/conda/grayskull</a></p>
+<dl class="simple">
+<dt>Before updating the main conda-forge recipe, we echo the conda-forge documentation and <em>strongly</em> suggest performing the following checks:</dt><dd><ul class="simple">
+<li><p>Ensure that dependencies and dependency versions correspond with those of the tagged version, with open or pinned versions for the <cite>host</cite> requirements.</p></li>
+<li><p>If possible, configure tests within the conda-forge build CI (e.g. <cite>imports: xdatasets</cite>, <cite>commands: pytest xdatasets</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="subsequent-releases">
+<h4>Subsequent releases<a class="headerlink" href="#subsequent-releases" title="Link to this heading">#</a></h4>
+<p>If the conda-forge feedstock recipe is built from PyPI, then when a new release is published on PyPI, <cite>regro-cf-autotick-bot</cite> will open Pull Requests automatically on the conda-forge feedstock. It is up to the conda-forge feedstock maintainers to verify that the package is building properly before merging the Pull Request to the main branch.</p>
+</section>
+</section>
+<section id="building-sources-for-wide-support-with-manylinux-image">
+<h3>Building sources for wide support with <cite>manylinux</cite> image<a class="headerlink" href="#building-sources-for-wide-support-with-manylinux-image" title="Link to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This section is for building source files that link to or provide links to C/C++ dependencies.
+It is not necessary to perform the following when building pure Python packages.</p>
+</div>
+<p>In order to do ensure best compatibility across architectures, we suggest building wheels using the <cite>PyPA</cite>’s <cite>manylinux</cite>
+docker images (at time of writing, we endorse using <cite>manylinux_2_24_x86_64</cite>).</p>
+<p>With <cite>docker</cite> installed and running, begin by pulling the image:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>docker<span class="w"> </span>pull<span class="w"> </span>quay.io/pypa/manylinux_2_24_x86_64
+</pre></div>
+</div>
+<p>From the xdatasets source folder we can enter into the docker container, providing access to the <cite>xdatasets</cite> source files by linking them to the running image:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-ti<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/xdatasets<span class="w"> </span>-w<span class="w"> </span>/xdatasets<span class="w"> </span>quay.io/pypa/manylinux_2_24_x86_64<span class="w"> </span>bash
+</pre></div>
+</div>
+<p>Finally, to build the wheel, we run it against the provided Python3.9 binary:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>/opt/python/cp39-cp39m/bin/python<span class="w"> </span>-m<span class="w"> </span>build<span class="w"> </span>--sdist<span class="w"> </span>--wheel
+</pre></div>
+</div>
+<p>This will then place two files in <cite>xdatasets/dist/</cite> (“xdatasets-1.2.3-py3-none-any.whl” and “xdatasets-1.2.3.tar.gz”).
+We can now leave our docker container (<cite>$ exit</cite>) and continue with uploading the files to PyPI:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>twine<span class="w"> </span>upload<span class="w"> </span>dist/*
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="authors.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Credits</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="notebooks/getting_started.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Getting started</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Sebastien Langlois
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Contributing</a><ul>
+<li><a class="reference internal" href="#types-of-contributions">Types of Contributions</a><ul>
+<li><a class="reference internal" href="#report-bugs">Report Bugs</a></li>
+<li><a class="reference internal" href="#fix-bugs">Fix Bugs</a></li>
+<li><a class="reference internal" href="#implement-features">Implement Features</a></li>
+<li><a class="reference internal" href="#write-documentation">Write Documentation</a></li>
+<li><a class="reference internal" href="#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-started">Get Started!</a></li>
+<li><a class="reference internal" href="#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li><a class="reference internal" href="#tips">Tips</a></li>
+<li><a class="reference internal" href="#versioning-tagging">Versioning/Tagging</a></li>
+<li><a class="reference internal" href="#packaging">Packaging</a><ul>
+<li><a class="reference internal" href="#the-simple-approach">The simple approach</a></li>
+<li><a class="reference internal" href="#releasing-on-conda-forge">Releasing on conda-forge</a><ul>
+<li><a class="reference internal" href="#initial-release">Initial Release</a></li>
+<li><a class="reference internal" href="#subsequent-releases">Subsequent releases</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-sources-for-wide-support-with-manylinux-image">Building sources for wide support with <cite>manylinux</cite> image</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=1e28cc32"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    </body>
+</html>
