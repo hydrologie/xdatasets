@@ -2,6 +2,18 @@
 Changelog
 =========
 
+v0.3.5 (unreleased)
+-------------------
+
+* The `cookiecutter` template has been updated to the latest commit via `cruft`. (:pull:`52`):
+    * `xdatasets` is now `Semantic Version v2.0.0 <https://semver.org/spec/v2.0.0.html>`_-compliant
+    * Added a few workflows (Changed file labelling, Cache cleaning, Dependency Scanning, OpenSSF Scorecard)
+    * Workflows now use the `tep-security/harden-runner` action to security harden the runner environment
+    * Reorganized README and added a few badges
+    * Updated pre-commit hook versions
+    * Formatting tools (`black`, `blackdoc`, `isort`) are now pinned to their pre-commit version equivalents
+    * `actions-version-updater.yml` has been replaced by `dependabot`
+
 v0.3.4 (2024-01-31)
 -------------------
 

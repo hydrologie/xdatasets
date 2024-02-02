@@ -19,10 +19,15 @@ The genesis of this project can be traced back to a crucial requirement of effor
    installation
    usage
    notebooks/getting_started
-   apidoc/modules
    contributing
    authors
    changes
+
+.. toctree::
+   :maxdepth: 1
+   :caption: All Modules
+
+   apidoc/modules
 
 .. Indices and tables
 .. ==================
