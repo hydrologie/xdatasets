@@ -93,13 +93,13 @@ linkcheck: autodoc ## run checks over all external links found throughout the do
 	$(MAKE) -C docs linkcheck
 
 docs: autodoc ## generate Sphinx HTML documentation, including API docs
-	$(MAKE) -C docs html BUILDDIR="_build/html/en"
+	$(MAKE) -C docs html BUILDDIR="_build/en"
 ifneq ("$(wildcard $(LOCALES))","")
 	${MAKE} -C docs gettext
-	$(MAKE) -C docs html BUILDDIR="_build/html/fr" SPHINXOPTS="-D language='fr'"
+	$(MAKE) -C docs html BUILDDIR="_build/fr" SPHINXOPTS="-D language='fr'"
 endif
 ifndef READTHEDOCS
-	$(BROWSER) docs/_build/html/en/html/index.html
+	$(BROWSER) docs/_build/en/html/index.html
 endif
 
 servedocs: docs ## compile the docs watching for changes
