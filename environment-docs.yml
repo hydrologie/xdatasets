@@ -10,7 +10,7 @@ dependencies:
   - furo
   - geoviews
   - hvplot
-  - intake
+  - intake <2.0.0
   - intake-geopandas
   - intake-xarray >=0.6.1
   - ipykernel
