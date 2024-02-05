@@ -48,7 +48,7 @@ dependencies = [
   "dask[array]>=2.6",
   "dask-geopandas",
   "geopandas",
-  "intake<2.0.0",
+  "intake<3.0.0",
   "intake-xarray>=0.6.1",
   "intake-geopandas",
   "ipython",
