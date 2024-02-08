@@ -48,7 +48,7 @@ dependencies = [
   "dask[array]>=2.6",
   "dask-geopandas",
   "geopandas",
-  "intake<2.0.0",
+  "intake",
   "intake-xarray>=0.6.1",
   "intake-geopandas",
   "ipython",
@@ -77,7 +77,7 @@ dev = [
   "flake8-rst-docstrings>=0.3.0",
   "flake8>=6.1.0",
   "flit>=3.9.0",
-  "ipython<8.0", # this needed when testing see #1005
+  "ipython",
   "isort==5.13.2",
   "mypy",
   "nbval",

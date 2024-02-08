@@ -13,6 +13,9 @@ v0.3.5 (unreleased)
     * Updated pre-commit hook versions
     * Formatting tools (`black`, `blackdoc`, `isort`) are now pinned to their pre-commit version equivalents
     * `actions-version-updater.yml` has been replaced by `dependabot`
+* Enabled the `labeler.yml` workflow to mark changed files in Pull Requests as "CI". (:pull:`63`).
+* Enabled the Anaconda build tests and coverage reporting to `Coveralls.io <https://coveralls.io>`_. (:pull:`63`).
+* Removed the version pin on `ipython`. (:pull:`63`).
 
 v0.3.4 (2024-01-31)
 -------------------
