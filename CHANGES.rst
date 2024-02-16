@@ -16,6 +16,7 @@ v0.3.5 (unreleased)
 * Enabled the `labeler.yml` workflow to mark changed files in Pull Requests as "CI". (:pull:`63`).
 * Enabled the Anaconda build tests and coverage reporting to `Coveralls.io <https://coveralls.io>`_. (:pull:`63`).
 * Removed the version pin on `ipython`. (:pull:`63`).
+* Migrated the documentation from GitHub Pages to ReadTheDocs. (:issue:`32`, :pull:`67`).
 
 v0.3.4 (2024-01-31)
 -------------------
