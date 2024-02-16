@@ -14,23 +14,20 @@ on:
       - .editorconfig
       - .github/**.yml
       - .gitignore
-      - .gitlab-ci.yml
-      - .gitmodules
+      - .gitattributes
+      - .nojekyll
       - .pre-commit-config.yaml
       - .yamllint.yaml
       - AUTHORS.rst
       - CHANGES.rst
       - CONTRIBUTING.rst
-      - doc/notebooks
-      - doc/*.py
-      - doc/*.rst
+      - docs/notebooks/**.ipynb
+      - docs/*.py
+      - docs/*.rst
       - environment-dev.yml
-      - environment.yml
+      - environment-docs.yml
       - Makefile
-      - MANIFEST.in
       - pyproject.toml
-      - requirements_upstream.txt
-      - setup.py
       - tests/**.py
       - tox.ini
       - xdatasets/__init__.py
