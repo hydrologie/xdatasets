@@ -86,6 +86,7 @@ dev = [
   "pylint",
   "pytest-cov>=4.0.0",
   "pytest>=7.3.1",
+  "ruff>=0.2.0",
   "tokenize-rt",
   "tox>=4.5.1",
   "watchdog>=3.0.0",
@@ -122,8 +123,8 @@ extra = [
 ]
 
 [project.urls]
-"Homepage" = "https://hydrologie.github.io/xdatasets/"
-"Changelog" = "https://xdatasets.readthedocs.io/en/stable/Changes.html"
+"Homepage" = "https://xdatasets.readthedocs.io/"
+"Changelog" = "https://xdatasets.readthedocs.io/en/stable/changes.html"
 "Source" = "https://github.com/hydrologie/xdatasets"
 "Issue tracker" = "https://github.com/hydrologie/xdatasets/issues"
 
@@ -255,6 +256,11 @@ exclude = [
   "docs",
   "tests"
 ]
+
+[tool.ruff.format]
+line-ending = "auto"
+
+[tool.ruff.lint]
 ignore = [
   "D100", # Missing docstring in public module
   "D101", # Missing docstring in public class
@@ -274,27 +280,24 @@ select = [
   "W"
 ]
 
-[tool.ruff.flake8-bandit]
+[tool.ruff.lint.flake8-bandit]
 check-typed-exception = true
 
-[tool.ruff.format]
-line-ending = "auto"
-
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["xdatasets"]
 case-sensitive = true
 detect-same-package = false
 lines-after-imports = 1
 no-lines-before = ["future", "standard-library"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 15
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "xdatasets/**/__init__.py" = ["F401", "F403"]
 
-[tool.ruff.pycodestyle]
+[tool.ruff.lint.pycodestyle]
 max-doc-length = 180
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"
