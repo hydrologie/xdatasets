@@ -2,7 +2,7 @@
 Changelog
 =========
 
-v0.3.5 (unreleased)
+v0.3.5 (2024-02-19)
 -------------------
 
 * The `cookiecutter` template has been updated to the latest commit via `cruft`. (:pull:`52`):
