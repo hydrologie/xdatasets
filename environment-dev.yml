@@ -24,7 +24,7 @@ dependencies:
   # Dev tools and testing
   - black ==24.1.1
   - blackdoc ==0.3.9
-  - bump-my-version >=0.17.1
+  - bump-my-version >=0.18.3
   - coverage >=6.2.0,<8.0.0
 #  - coveralls >=3.3.1  # newest coveralls binary is not compatible with latest coverage binary
   - flake8 >=6.1.0
