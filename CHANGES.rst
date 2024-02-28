@@ -2,6 +2,11 @@
 Changelog
 =========
 
+v0.3.6 (unreleased)
+-------------------
+
+* `intake` has been pinned below v2.0.0 until data catalogues are updated to support the new version.
+
 v0.3.5 (2024-02-19)
 -------------------
 
