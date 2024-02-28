@@ -48,7 +48,7 @@ dependencies = [
   "dask[array] >=2.6",
   "dask-geopandas",
   "geopandas",
-  "intake",
+  "intake <2.0.0",  # Pinned until catalogs support v2.0 conventions. See: https://github.com/hydrologie/xdatasets/issues/82",
   "intake-xarray >=0.6.1",
   "intake-geopandas",
   "ipython",
