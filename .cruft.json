@@ -11,7 +11,7 @@
       "project_slug": "xdatasets",
       "project_short_description": "Easy access to Earth observation datasets with xarray.",
       "pypi_username": "sebastienlanglois",
-      "version": "0.3.5",
+      "version": "0.3.6-dev.0",
       "use_pytest": "y",
       "use_black": "y",
       "use_conda": "y",
