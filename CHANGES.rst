@@ -2,7 +2,7 @@
 Changelog
 =========
 
-v0.3.6 (unreleased)
+v0.3.6 (2024-02-29)
 -------------------
 
 * Updated the cookiecutter template to the latest commit. (:pull:`83`):
