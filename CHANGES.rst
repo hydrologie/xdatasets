@@ -5,7 +5,10 @@ Changelog
 v0.3.6 (unreleased)
 -------------------
 
-* `intake` has been pinned below v2.0.0 until data catalogues are updated to support the new version.
+* Updated the cookiecutter template to the latest commit. (:pull:`83`):
+    * Addressed a handful of misconfigurations in the GitHub Workflows.
+    * Updated `ruff` to v0.2.0 and `black` to v24.2.0.
+* `intake` has been pinned below v2.0.0 until data catalogues are updated to support the new version. (:pull:`84`).
 
 v0.3.5 (2024-02-19)
 -------------------
