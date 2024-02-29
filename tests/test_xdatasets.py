@@ -7,7 +7,7 @@ import pkgutil
 
 import pytest
 
-# import xdatasets
+import xdatasets  # noqa: F401
 
 
 @pytest.fixture

@@ -278,7 +278,7 @@ class Query:
             elif len(dsets) == 1:
                 ds = dsets[0]
         except:
-            logging.warn("Couldn't merge datasets so we pass a list of datasets. ")
+            warnings.warn("Couldn't merge datasets so we pass a list of datasets.")
             # Look into passing a DataTree instead
             ds = dsets
             pass
