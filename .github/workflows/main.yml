@@ -30,7 +30,7 @@ jobs:
         python-version:
           - "3.x"
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: Set up Python${{ matrix.python-version }}
         uses: actions/setup-python@v5.1.0
         with:
@@ -62,7 +62,7 @@ jobs:
           - tox-env: "py312"
             python-version: "3.12"
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: Install NetCDF
         run: |
           sudo apt-get -y update
@@ -102,7 +102,7 @@ jobs:
       run:
         shell: bash -l {0}
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: Setup Conda (Micromamba) with Python${{ matrix.python-version }}
         uses: mamba-org/setup-micromamba@v1
         with:
