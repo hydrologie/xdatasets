@@ -20,8 +20,9 @@ The genesis of this project can be traced back to a crucial requirement of effor
    usage
    notebooks/getting_started
    contributing
+   releasing
    authors
-   changes
+   changelog
 
 .. toctree::
    :maxdepth: 1

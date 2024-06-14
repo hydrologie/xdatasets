@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/Ouranosinc/cookiecutter-pypackage",
-  "commit": "f391bbd6ee14ab2478c64a1f78b74bd9903cae81",
+  "commit": "1df55646038c82e2825ee0678f48778f4196484e",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -22,6 +22,7 @@
       "create_author_file": "y",
       "open_source_license": "MIT license",
       "generated_with_cruft": "y",
+      "__gh_slug": "https://github.com/sebastienlanglois/xdatasets",
       "_template": "https://github.com/Ouranosinc/cookiecutter-pypackage"
     }
   },
