@@ -23,7 +23,7 @@ dependencies:
   - zarr
   # Dev tools and testing
   - pip >=24.0
-  - bump-my-version >=0.23.0
+  - bump-my-version >=0.22.0 # pinned until bump-my-version 0.23.0 is released
   - black ==24.4.2
   - blackdoc ==0.3.9
   - coverage >=7.5.0
