@@ -8,7 +8,9 @@ Stable release
 --------------
 
 ..
-    We strongly recommend installing xdatasets, in an Anaconda Python environment. Furthermore, due to the complexity of some packages, the default dependency solver can take a long time to resolve the environment. If `mamba` is not already your default solver, consider running the following commands in order to speed up the process:
+    We strongly recommend installing xdatasets in an Anaconda Python environment.
+    Furthermore, due to the complexity of some packages, the default dependency solver can take a long time to resolve the environment.
+    If `mamba` is not already your default solver, consider running the following commands in order to speed up the process:
 
         .. code-block:: console
 
