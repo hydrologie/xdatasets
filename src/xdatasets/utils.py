@@ -120,10 +120,11 @@ def cache_catalog(url):
             "os.environ['https_proxy'] = proxy",
         ) from e
 
-    for value in intake.open_catalog(Path(tmp_dir) / Path(url).name)._entries.values():
-        path = Path(url).parent / Path(value.describe()["args"]["path"]).name
+    for value in intake.open_catalog(main_catalog_path)._entries.values():
+        # FIXME: entry_path only seems to work using os.path, and not pathlib.Path. Why is that?
+        entry_path = f"{os.path.dirname(url)}/{Path(value.describe()['args']['path']).name}"  # noqa: PTH120
         urllib.request.urlretrieve(  # noqa: S310
-            str(path),
-            str(Path(tmp_dir) / Path(path).name),
+            entry_path,
+            tmp_dir.joinpath(Path(entry_path).name),
         )
     return main_catalog_path
