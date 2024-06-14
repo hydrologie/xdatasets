@@ -168,6 +168,7 @@ Ready to contribute? Here's how to set up ``xdatasets`` for local development.
         git checkout name-of-your-bugfix-or-feature
         git fetch
         git pull origin main
+
     See the previous step for more information on resolving conflicts.
 
 #. Once your Pull Request has been accepted and merged to the `main` branch, several automated workflows will be triggered:
