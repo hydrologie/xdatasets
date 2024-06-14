@@ -33,7 +33,7 @@ def climate_request(dataset_name, variables, space, time, catalog):
 
     try:
         ds = ds[variables]
-    except:
+    except:  # noqa: S110
         pass
 
     # Ajust timezone and then slice time dimension before moving on with spatiotemporal operations
@@ -41,7 +41,7 @@ def climate_request(dataset_name, variables, space, time, catalog):
         try:
             # Assume UTC for now, will change when metadata database in up and running
             ds = change_timezone(ds, "UTC", time["timezone"])
-        except:
+        except:  # noqa: S110
             pass  # replace by error
 
     if time["start"] is not None or time["end"] is not None:
@@ -49,7 +49,7 @@ def climate_request(dataset_name, variables, space, time, catalog):
             start_time = time["start"] if "start" in time else None
             end_time = time["end"] if "end" in time else None
             ds = subset_time(ds, start_date=start_time, end_date=end_time)
-        except:
+        except:  # noqa: S110
             pass  # replace by error
 
     # Spatial operations
@@ -94,7 +94,7 @@ def gis_request(dataset_name, variables, space, time, catalog, **kwargs):
     else:
         filters = None
         warnings.warn(
-            "No filters fetches the complete dataset (few minutes). Use filters to expedite data retrieval."
+            "No filters fetches the complete dataset (few minutes). Use filters to expedite data retrieval.",
         )
 
     gdf = (
@@ -114,10 +114,11 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
     try:
         ds = ds.sel(variable=variables)
         ds = ds[variables]
-    except:
+    except:  # noqa: S110
         pass
 
     for key, value in kwargs.items():
+        # FIXME: PERF203 `try`-`except` within a loop incurs performance overhead
         try:
             if isinstance(value, str):
                 value = [value]
@@ -126,12 +127,12 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
             if any("*" in pattern or "?" in pattern for pattern in value):
                 value = list(
                     itertools.chain.from_iterable(
-                        [fnmatch.filter(ds[key].data, val) for val in value]
-                    )
+                        [fnmatch.filter(ds[key].data, val) for val in value],
+                    ),
                 )
 
             ds = ds.where(ds[key].isin(value).load(), drop=True)
-        except:
+        except:  # noqa: S110 PERF203
             # Add warning
             pass
 
@@ -150,7 +151,7 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
             start_time = time["start"] if "start" in time else None
             end_time = time["end"] if "end" in time else None
             ds = subset_time(ds, start_date=start_time, end_date=end_time)
-        except:
+        except:  # noqa: S110
             pass  # replace by error
 
     # # Spatial operations
@@ -174,7 +175,8 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
 
     if time["timestep"] is not None and time["aggregation"] is not None:
         if pd.Timedelta(1, unit=time["timestep"]) > pd.Timedelta(
-            1, unit=xr.infer_freq(ds.time)
+            1,
+            unit=xr.infer_freq(ds.time),
         ):
             spatial_agg = "polygon"
             ds = temporal_aggregation(ds, time, dataset_name, spatial_agg)
@@ -188,7 +190,7 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
     # print('stack')
     # ds = ds.stack(stacked=_to_stack)
 
-    ## Drop the pixels that only have NA values.
+    # Drop the pixels that only have NA values.
     # print('dropna')
     # ds = ds.dropna("stacked", how="all")
 
@@ -201,7 +203,7 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
 def user_provided_dataset(dataset_name, variables, space, time, ds):
     try:
         ds = ds[variables]
-    except:
+    except:  # noqa: S110
         pass
 
     # TODO: to implement this feature, We will need the timezone as a coords for each id
@@ -219,7 +221,7 @@ def user_provided_dataset(dataset_name, variables, space, time, ds):
             start_time = time["start"] if "start" in time else None
             end_time = time["end"] if "end" in time else None
             ds = subset_time(ds, start_date=start_time, end_date=end_time)
-        except:
+        except:  # noqa: S110
             pass  # replace by error
 
     # Spatial operations
@@ -237,7 +239,8 @@ def user_provided_dataset(dataset_name, variables, space, time, ds):
 
     if time["timestep"] is not None and time["aggregation"] is not None:
         if pd.Timedelta(1, unit=time["timestep"]) > pd.Timedelta(
-            1, unit=xr.infer_freq(ds.time)
+            1,
+            unit=xr.infer_freq(ds.time),
         ):
             ds = temporal_aggregation(ds, time, dataset_name, spatial_agg)
     # Add source name to dataset

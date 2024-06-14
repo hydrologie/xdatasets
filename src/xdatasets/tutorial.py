@@ -35,7 +35,7 @@ def open_dataset(
     except ImportError as e:
         raise ImportError(
             "tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets."
-            " To proceed please install intake and intake-xarray."
+            " To proceed please install intake and intake-xarray.",
         ) from e
 
     cat = intake.open_catalog(catalog_path)
@@ -54,7 +54,7 @@ def open_dataset(
         data = data.to_dask()
     else:
         raise NotImplementedError(
-            f"Dataset {name} is not available. Please request further datasets to our github issues pages"
+            f"Dataset {name} is not available. Please request further datasets to our github issues pages",
         )
     return data
 
@@ -104,7 +104,7 @@ def list_available_datasets():
     except ImportError as e:
         raise ImportError(
             "tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets."
-            " To proceed please install intake and intake-xarray."
+            " To proceed please install intake and intake-xarray.",
         ) from e
 
     cat = intake.open_catalog(catalog_path)

@@ -44,7 +44,7 @@ def open_dataset(
         except ImportError as e:
             raise ImportError(
                 "tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets."
-                " To proceed please install intake and intake-xarray."
+                " To proceed please install intake and intake-xarray.",
             ) from e
 
         cat = catalog
@@ -68,7 +68,7 @@ def open_dataset(
             data = data(storage_options=storage_options).to_dask()
         else:
             raise NotImplementedError(
-                f"Dataset {name} is not available. Please request further datasets to our github issues pages"
+                f"Dataset {name} is not available. Please request further datasets to our github issues pages",
             )
     return data
 
@@ -76,7 +76,7 @@ def open_dataset(
 class HiddenPrints:
     def __enter__(self):
         self._original_stdout = sys.stdout
-        sys.stdout = open(os.devnull, "w")
+        sys.stdout = Path(os.devnull).open("w")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout.close()
@@ -103,12 +103,12 @@ def cache_catalog(url):
     opener = urllib.request.build_opener(proxy)
     urllib.request.install_opener(opener)
 
-    tmp_dir = os.path.join(tempfile.gettempdir(), "catalogs")
-    Path(tmp_dir).mkdir(parents=True, exist_ok=True)
-    main_catalog_path = os.path.join(tmp_dir, os.path.basename(url))
+    tmp_dir = Path(tempfile.gettempdir()).joinpath("catalogs")
+    tmp_dir.mkdir(parents=True, exist_ok=True)
+    main_catalog_path = tmp_dir.joinpath(Path(url).name)
 
     try:
-        urllib.request.urlretrieve(url, main_catalog_path)
+        urllib.request.urlretrieve(url, main_catalog_path)  # noqa: S310
     except urllib.error.URLError as e:
         raise urllib.error.URLError(
             "Could not reach the catalog, perhaps due to the presence of a proxy."
@@ -117,13 +117,13 @@ def cache_catalog(url):
             "import os"
             "proxy = 'http://<proxy>:<port>'"
             "os.environ['http_proxy'] = proxy"
-            "os.environ['https_proxy'] = proxy"
+            "os.environ['https_proxy'] = proxy",
         ) from e
 
-    for _, value in intake.open_catalog(
-        os.path.join(tmp_dir, os.path.basename(url))
-    )._entries.items():
-        path = f"{os.path.dirname(url)}/{os.path.basename(value.describe()['args']['path'])}"
-        urllib.request.urlretrieve(path, os.path.join(tmp_dir, os.path.basename(path)))
-
+    for value in intake.open_catalog(Path(tmp_dir) / Path(url).name)._entries.values():
+        path = Path(url).parent / Path(value.describe()["args"]["path"]).name
+        urllib.request.urlretrieve(  # noqa: S310
+            str(path),
+            str(Path(tmp_dir) / Path(path).name),
+        )
     return main_catalog_path

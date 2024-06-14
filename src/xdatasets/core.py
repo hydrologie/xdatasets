@@ -123,7 +123,7 @@ class Query:
 
     def _resolve_space_params(
         self,
-        clip: str = None,
+        clip: Optional[str] = None,
         geometry: Union[Dict[str, tuple], gpd.GeoDataFrame] = None,
         averaging: Optional[bool] = False,
         unique_id: Optional[str] = None,
@@ -145,7 +145,8 @@ class Query:
         space = locals()
         space.pop("self")
 
-        assert _validate_space_params(**space)
+        # FIXME: Assert should not be in the library, only for testing
+        assert _validate_space_params(**space)  # noqa: S101
 
         if isinstance(geometry, gpd.GeoDataFrame):
             geometry = geometry.reset_index(drop=True)
@@ -241,7 +242,7 @@ class Query:
                 variables_name = self.datasets[dataset_name]["variables"]
                 if isinstance(variables_name, str):
                     variables_name = [variables_name]
-            except:
+            except:  # noqa: S110
                 variables_name = None
                 pass
             try:
@@ -250,7 +251,7 @@ class Query:
                     for k, v in self.datasets[dataset_name].items()
                     if k not in ["variables"]
                 }
-            except:
+            except:  # noqa: S110
                 pass
 
             ds_one = self._process_one_dataset(
@@ -266,7 +267,7 @@ class Query:
             # Try naively merging datasets into single dataset
             ds = None
 
-            if type(dsets[0]) == xr.Dataset:
+            if isinstance(dsets[0], xr.Dataset):
                 # if more than one dataset, then we add source as a dimension
                 # so we can merge two or more datasets together
                 if len(dsets) > 1:
@@ -277,7 +278,7 @@ class Query:
                 ds = xr.merge(dsets)
             elif len(dsets) == 1:
                 ds = dsets[0]
-        except:
+        except:  # noqa: S110
             warnings.warn("Couldn't merge datasets so we pass a list of datasets.")
             # Look into passing a DataTree instead
             ds = dsets
@@ -312,13 +313,23 @@ class Query:
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", category=RuntimeWarning)
                 ds = hydrometric_request(
-                    dataset_name, variables, space, time, self.catalog, **kwargs
+                    dataset_name,
+                    variables,
+                    space,
+                    time,
+                    self.catalog,
+                    **kwargs,
                 )
         if dataset_category in ["geography"]:
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", category=RuntimeWarning)
                 ds = gis_request(
-                    dataset_name, variables, space, time, self.catalog, **kwargs
+                    dataset_name,
+                    variables,
+                    space,
+                    time,
+                    self.catalog,
+                    **kwargs,
                 )
 
         elif dataset_category in ["user-provided"]:
