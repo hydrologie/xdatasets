@@ -61,7 +61,7 @@ The sources for Xdatasets can be downloaded from the `Github repo`_.
         .. code-block:: console
 
             conda env create -f environment-dev.yml
-            conda activate xdatasets-dev
+            conda activate xdatasets
             make dev
 
         If you are on Windows, replace the ``make dev`` command with the following:
@@ -88,8 +88,8 @@ The sources for Xdatasets can be downloaded from the `Github repo`_.
             git fetch
             git checkout main
             git pull origin main
-            conda env update -n xdatasets-dev -f environment-dev.yml
-            conda activate xdatasets-dev
+            conda env update -n xdatasets -f environment-dev.yml
+            conda activate xdatasets
             make dev
 
     These commands should work most of the time, but if big changes are made to the repository, you might need to remove the environment and create it again.
