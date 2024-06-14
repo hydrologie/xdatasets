@@ -81,14 +81,14 @@ Ready to contribute? Here's how to set up ``xdatasets`` for local development.
 
         .. code-block:: console
 
-            git clone git@github.com:``sebastienlanglois``/xdatasets.git
+            git clone git@github.com:hydrologie/xdatasets.git
 
 #. Install your local copy into a development environment. You can create a new Anaconda development environment with:
 
     .. code-block:: console
 
         conda env create -f environment-dev.yml
-        conda activate xdatasets-dev
+        conda activate xdatasets
         make dev
 
     If you are on Windows, replace the ``make dev`` command with the following:
@@ -224,5 +224,5 @@ To get ``black``, ``isort``, ``blackdoc``, ``ruff``, and ``flake8`` (with plugin
 Code of Conduct
 ---------------
 
-Please note that this project is released with a `Contributor Code of Conduct <https://github.com/sebastienlanglois/xdatasets/blob/main/CODE_OF_CONDUCT.md>`_.
+Please note that this project is released with a `Contributor Code of Conduct <https://github.com/hydrologie/xdatasets/blob/main/CODE_OF_CONDUCT.md>`_.
 By participating in this project you agree to abide by its terms.
