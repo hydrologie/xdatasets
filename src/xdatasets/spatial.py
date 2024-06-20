@@ -23,7 +23,8 @@ def bbox_ds(ds_copy, geom):
 
 
 def clip_by_bbox(ds, space, dataset_name):
-    logging.info(f"Spatial operations: processing bbox with {dataset_name}")
+    msg = f"Spatial operations: processing bbox with {dataset_name}"
+    logging.info(msg)
     indexer = shape_bbox_indexer(ds, space["geometry"])
     ds_copy = ds.isel(indexer).copy()
     return ds_copy
@@ -32,7 +33,7 @@ def clip_by_bbox(ds, space, dataset_name):
 def create_weights_mask(da, poly):
     if xa is None:
         raise ImportError(
-            "xagg is not installed. Please install it with `pip install xagg`"
+            "xagg is not installed. Please install it with `pip install xagg`",
         )
 
     weightmap = xa.pixel_overlaps(da, poly, subset_bbox=True)
@@ -73,7 +74,7 @@ def clip_by_polygon(ds, space, dataset_name):
             else idx
         )
         pbar.set_description(
-            f"Spatial operations: processing polygon {item} with {dataset_name}"
+            f"Spatial operations: processing polygon {item} with {dataset_name}",
         )
 
         geom = space["geometry"].iloc[[idx]]
@@ -107,23 +108,25 @@ def clip_by_polygon(ds, space, dataset_name):
                         space["unique_id"]: (
                             space["unique_id"],
                             space["geometry"][space["unique_id"]],
-                        )
-                    }
+                        ),
+                    },
                 )
             data[space["unique_id"]].attrs["cf_role"] = "timeseries_id"
-        except KeyError:
+        except KeyError:  # noqa: S110
             pass
     return data
 
 
 def clip_by_point(ds, space, dataset_name):
     # TODO : adapt logic for coordinate names
-
-    logging.info(f"Spatial operations: processing points with {dataset_name}")
+    msg = f"Spatial operations: processing points with {dataset_name}"
+    logging.info(msg)
 
     lat, lon = zip(*space["geometry"].values())
     data = subset_gridpoint(
-        ds.rename({"latitude": "lat", "longitude": "lon"}), lon=list(lon), lat=list(lat)
+        ds.rename({"latitude": "lat", "longitude": "lon"}),
+        lon=list(lon),
+        lat=list(lat),
     )
     data = data.rename({"lat": "latitude", "lon": "longitude"})
 

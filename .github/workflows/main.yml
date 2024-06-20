@@ -6,7 +6,7 @@ on:
       - main
     paths-ignore:
       - .cruft.json
-      - CHANGES.rst
+      - CHANGELOG.rst
       - README.rst
       - pyproject.toml
       - tests/test_xdatasets.py
@@ -30,9 +30,14 @@ jobs:
         python-version:
           - "3.x"
     steps:
-      - uses: actions/checkout@v4.1.7
+      - name: Harden Runner
+        uses: step-security/harden-runner@a4aa98b93cab29d9b1101a6143fb8bce00e2eac4 # v2.7.1
+        with:
+          egress-policy: audit
+      - name: Checkout Repository
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Set up Python${{ matrix.python-version }}
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install tox
@@ -62,7 +67,12 @@ jobs:
           - tox-env: "py312"
             python-version: "3.12"
     steps:
-      - uses: actions/checkout@v4.1.7
+      - name: Harden Runner
+        uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
+        with:
+          egress-policy: audit
+      - name: Checkout Repository
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Install NetCDF
         run: |
           sudo apt-get -y update
@@ -75,7 +85,7 @@ jobs:
           cache: true
           version: ${{ env.ESMF_VERSION }}
       - name: Set up Python${{ matrix.python-version }}
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install tox
@@ -102,9 +112,14 @@ jobs:
       run:
         shell: bash -l {0}
     steps:
-      - uses: actions/checkout@v4.1.7
+      - name: Harden Runner
+        uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
+        with:
+          egress-policy: audit
+      - name: Checkout Repository
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Setup Conda (Micromamba) with Python${{ matrix.python-version }}
-        uses: mamba-org/setup-micromamba@v1
+        uses: mamba-org/setup-micromamba@422500192359a097648154e8db4e39bdb6c6eed7 # v1.8.1
         with:
           cache-downloads: true
           environment-file: environment-dev.yml
@@ -140,10 +155,6 @@ jobs:
     runs-on: ubuntu-latest
     container: python:3-slim
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
-        with:
-          egress-policy: audit
       - name: Coveralls Finished
         run: |
           python -m pip install --upgrade coveralls
