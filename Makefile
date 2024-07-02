@@ -60,7 +60,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint/flake8: ## check style with flake8
-	ruff xdatasets tests
+	ruff check xdatasets tests
 	flake8 --config=.flake8 xdatasets tests
 
 lint/black: ## check style with black
