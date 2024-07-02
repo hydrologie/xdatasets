@@ -266,7 +266,7 @@ class Query:
             # Try naively merging datasets into single dataset
             ds = None
 
-            if type(dsets[0]) == xr.Dataset:
+            if isinstance(dsets[0], xr.Dataset):
                 # if more than one dataset, then we add source as a dimension
                 # so we can merge two or more datasets together
                 if len(dsets) > 1:
