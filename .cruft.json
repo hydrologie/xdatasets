@@ -1,12 +1,12 @@
 {
   "template": "https://github.com/Ouranosinc/cookiecutter-pypackage",
-  "commit": "c93670163de030ccd7217faf47c71209a2e49754",
+  "commit": "3b3598ae9524e7eb495bcba91093fac3369e753a",
   "checkout": null,
   "context": {
     "cookiecutter": {
       "full_name": "Sebastien Langlois",
       "email": "sebastien.langlois62@gmail.com",
-      "github_username": "sebastienlanglois",
+      "github_username": "hydrologie",
       "project_name": "xdatasets",
       "project_slug": "xdatasets",
       "project_short_description": "Easy access to Earth observation datasets with xarray.",
