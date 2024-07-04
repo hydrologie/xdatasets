@@ -13,6 +13,12 @@ Changes
     * Addressed a handful of misconfigurations in the GitHub Workflows.
     * Updated `ruff` to v0.2.0 and `black` to v24.2.0.
 * `intake` has been pinned below v2.0.0 until data catalogues are updated to support the new version. (:pull:`84`).
+* Updated the cookiecutter template to the latest commit. (:pull:`126`):
+    * The structure of the package is slightly modified from a flat layout to a `src layout <https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/>`_.
+    * `CHANGES.rst` is now `CHANGELOG.rst`. See `keepachangelog <https://keepachangelog.com/en/1.1.0/#frequently-asked-questions>`_ for more information.
+    * Bumping a release version will trigger changes in the `CHANGELOG.rst` file. See `Ouranosinc/cookiecutter-pypackage #41 <https://github.com/Ouranosinc/cookiecutter-pypackage/issues/41>`_ for more information.
+    * The licensing text has been updated to conform with the suggested application directions.
+* Several `noqa` and `fixme` statements have been added to pass additional linting checks for now. (:pull:`126`).
 
 .. _changes_0.3.5:
 
