@@ -24,7 +24,7 @@ def temporal_aggregation(ds, time, dataset_name, spatial_agg):
     pbar = tqdm(ds.keys())
     for var in pbar:
         pbar.set_description(
-            f"Temporal operations: processing {var} with {dataset_name}"
+            f"Temporal operations: processing {var} with {dataset_name}",
         )
         # Verify if requested timestep is higher or lower or equal to dataset's native timestep
 
@@ -46,7 +46,7 @@ def temporal_aggregation(ds, time, dataset_name, spatial_agg):
                             # "time_agg": [oper.__name__],
                             "spatial_agg": [spatial_agg],
                             "timestep": [time["timestep"]],
-                        }
+                        },
                     )
                 )
                 # da = da.transpose('id','time', 'timestep','time_agg','spatial_agg')
@@ -58,7 +58,7 @@ def temporal_aggregation(ds, time, dataset_name, spatial_agg):
         else:
             try:
                 ds_new = ds_new.merge(ds[var])
-            except:
+            except:  # noqa: S110
                 pass
             # TODO: return error if cannot merge for inconstant query
 
@@ -104,7 +104,8 @@ def minimum_duration(ds, time):
     minimum_duration_value, unit = time["minimum_duration"]
 
     indexer = (ds.end_date - ds.start_date) > pd.to_timedelta(
-        minimum_duration_value, unit=unit
+        minimum_duration_value,
+        unit=unit,
     )
 
     if indexer.chunks is not None:

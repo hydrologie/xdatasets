@@ -25,8 +25,8 @@ jobs:
             api.github.com:443
             github.com:443
 
-      - name: 'Checkout Repository'
+      - name: Checkout Repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
-      - name: 'Dependency Review'
-        uses: actions/dependency-review-action@0659a74c94536054bfa5aeb92241f70d680cc78e
+      - name: Dependency Review
+        uses: actions/dependency-review-action@0c155c5e8556a497adf53f2c18edabf945ed8e70 # v4.3.2
