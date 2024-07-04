@@ -30,7 +30,9 @@ def temporal_aggregation(ds, time, dataset_name, spatial_agg):
 
         # if requested timestep is higher
         if "aggregation" in time and var in time["aggregation"].keys():
-            operation = time["aggregation"][var] if var in time["aggregation"].keys() else None
+            operation = (
+                time["aggregation"][var] if var in time["aggregation"].keys() else None
+            )
             operation = operation if isinstance(operation, list) else [operation]
             oper_list = []
             for oper in operation:

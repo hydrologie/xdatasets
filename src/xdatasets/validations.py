@@ -23,7 +23,10 @@ def _validate_space_params(
 
     if unique_id is not None:
         if isinstance(geometry, gpd.GeoDataFrame) and unique_id not in geometry.columns:
-            message = f"\nunique_id value '{unique_id}' was not found in gpd.GeoDataFrame \n" f"so a random index will be used instead."
+            message = (
+                f"\nunique_id value '{unique_id}' was not found in gpd.GeoDataFrame \n"
+                f"so a random index will be used instead."
+            )
             logging.warning(message)
 
     if averaging is True and not isinstance(geometry, gpd.GeoDataFrame):

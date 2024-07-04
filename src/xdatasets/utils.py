@@ -49,7 +49,10 @@ def open_dataset(
 
         cat = catalog
         dataset_info = [
-            (category, dataset_name) for category in cat._entries.keys() for dataset_name in cat[category]._entries.keys() if dataset_name == name
+            (category, dataset_name)
+            for category in cat._entries.keys()
+            for dataset_name in cat[category]._entries.keys()
+            if dataset_name == name
         ]
 
         data = reduce(lambda array, index: array[index], dataset_info, cat)

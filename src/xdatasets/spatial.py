@@ -68,7 +68,11 @@ def clip_by_polygon(ds, space, dataset_name):
     arrays = []
     pbar = tqdm(space["geometry"].iterrows(), position=0, leave=True)
     for idx, row in pbar:
-        item = row[space["unique_id"]] if space["unique_id"] is not None and space["unique_id"] in row else idx
+        item = (
+            row[space["unique_id"]]
+            if space["unique_id"] is not None and space["unique_id"] in row
+            else idx
+        )
         pbar.set_description(
             f"Spatial operations: processing polygon {item} with {dataset_name}",
         )
