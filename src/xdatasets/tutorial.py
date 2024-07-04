@@ -40,10 +40,7 @@ def open_dataset(
 
     cat = intake.open_catalog(catalog_path)
     dataset_info = [
-        (category, dataset_name)
-        for category in cat._entries.keys()
-        for dataset_name in cat[category]._entries.keys()
-        if dataset_name == name
+        (category, dataset_name) for category in cat._entries.keys() for dataset_name in cat[category]._entries.keys() if dataset_name == name
     ]
 
     data = reduce(lambda array, index: array[index], dataset_info, cat)
@@ -112,10 +109,7 @@ def list_available_datasets():
     # This will need refactor if the catalog has more than 2 levels
     # list(itertools.chain.from_iterable([list(cat[name].keys()) for name in cat._entries.keys()]))
 
-    datasets_catalog = {
-        field: list(sorted(cat[field]._entries.keys()))
-        for field in sorted(cat._entries.keys())
-    }
+    datasets_catalog = {field: list(sorted(cat[field]._entries.keys())) for field in sorted(cat._entries.keys())}
 
     def add_section(datasets_catalog):
         return [

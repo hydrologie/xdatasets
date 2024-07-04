@@ -165,9 +165,7 @@ class Query:
     def _resolve_time_params(
         self,
         timestep: Optional[str] = None,
-        aggregation: Optional[
-            Dict[str, Union[Callable[..., Any], List[Callable[..., Any]]]]
-        ] = None,
+        aggregation: Optional[Dict[str, Union[Callable[..., Any], List[Callable[..., Any]]]]] = None,
         start: Optional[bool] = None,
         end: Optional[str] = None,
         timezone: Optional[str] = None,
@@ -246,11 +244,7 @@ class Query:
                 variables_name = None
                 pass
             try:
-                kwargs = {
-                    k: v
-                    for k, v in self.datasets[dataset_name].items()
-                    if k not in ["variables"]
-                }
+                kwargs = {k: v for k, v in self.datasets[dataset_name].items() if k not in ["variables"]}
             except:  # noqa: S110
                 pass
 
@@ -298,10 +292,7 @@ class Query:
 
         elif isinstance(dataset_name, str):
             dataset_category = [
-                category
-                for category in self.catalog._entries.keys()
-                for name in self.catalog[category]._entries.keys()
-                if name == dataset_name
+                category for category in self.catalog._entries.keys() for name in self.catalog[category]._entries.keys() if name == dataset_name
             ][0]
 
         if dataset_category in ["atmosphere"]:

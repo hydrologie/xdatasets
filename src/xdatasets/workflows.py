@@ -97,12 +97,7 @@ def gis_request(dataset_name, variables, space, time, catalog, **kwargs):
             "No filters fetches the complete dataset (few minutes). Use filters to expedite data retrieval.",
         )
 
-    gdf = (
-        catalog["geography"][dataset_name](geopandas_kwargs=filters)
-        .read()
-        .infer_objects()
-        .set_index(unique_id)
-    )
+    gdf = catalog["geography"][dataset_name](geopandas_kwargs=filters).read().infer_objects().set_index(unique_id)
     gdf.index = gdf.index.astype("str")
 
     return gdf
