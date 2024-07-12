@@ -4,7 +4,7 @@ Changelog
 
 .. _changes_0.3.6:
 
-v0.3.5 (2024-07-12)
+v0.3.6 (2024-07-12)
 -------------------
 
 Contributors: Trevor James Smith (:user:`Zeitsperre`)
