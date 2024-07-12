@@ -19,6 +19,7 @@ Changes
     * Bumping a release version will trigger changes in the `CHANGELOG.rst` file. See `Ouranosinc/cookiecutter-pypackage #41 <https://github.com/Ouranosinc/cookiecutter-pypackage/issues/41>`_ for more information.
     * The licensing text has been updated to conform with the suggested application directions.
 * Several `noqa` and `fixme` statements have been added to pass additional linting checks for now. (:pull:`126`).
+* CI dependencies are now pinned to the latest version hashes available to Python3.8 using `pip-tools` (pip-compile). (:pull:`136`).
 
 .. _changes_0.3.5:
 

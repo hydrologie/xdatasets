@@ -41,8 +41,8 @@ This package was created with Cookiecutter_ and the `Ouranosinc/cookiecutter-pyp
         :target: https://github.com/hydrologie/xdatasets/actions
         :alt: Build Status
 
-.. |coveralls| image:: https://coveralls.io/repos/github/hydrologie/xdatasets/badge.svg
-        :target: https://coveralls.io/github/hydrologie/xdatasets
+.. |coveralls| image:: https://coveralls.io/repos/github/hydrologie/xdatasets/badge.svg?branch=main
+        :target: https://coveralls.io/github/hydrologie/xdatasets?branch=main
         :alt: Coveralls
 
 .. |docs| image:: https://readthedocs.org/projects/xdatasets/badge/?version=latest
