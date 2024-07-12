@@ -57,7 +57,7 @@ autodoc_default_options = {
 
 extlinks = {
     "issue": ("https://github.com/hydrologie/xdatasets/issues/%s", "GH/%s"),
-    "pull": ("https://github.com/hydrlologie/xdatasets/pull/%s", "PR/%s"),
+    "pull": ("https://github.com/hydrologie/xdatasets/pull/%s", "PR/%s"),
     "user": ("https://github.com/%s", "@%s"),
 }
 

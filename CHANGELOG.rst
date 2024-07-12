@@ -2,8 +2,10 @@
 Changelog
 =========
 
-`Unreleased <https://github.com/sebastienlanglois/xdatasets>`_ (latest)
------------------------------------------------------------------------
+.. _changes_0.3.6:
+
+v0.3.6 (2024-07-12)
+-------------------
 
 Contributors: Trevor James Smith (:user:`Zeitsperre`)
 
