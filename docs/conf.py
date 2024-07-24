@@ -130,7 +130,7 @@ html_theme = "furo"
 # so a file named "default.css" will overwrite the builtin "default.css".
 if not os.path.exists("_static"):
     os.makedirs("_static")
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 
 # -- Options for HTMLHelp output ---------------------------------------

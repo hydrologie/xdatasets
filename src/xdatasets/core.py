@@ -26,25 +26,27 @@ url_path = "https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/c
 __all__ = ["Query"]
 
 
-class Query:
-    """The Query class.
+class Query:  # numpydoc ignore=PR09
+    """
+    The Query class.
 
     The Query interface facilitates access to analysis-ready earth observation datasets and allows for
     spatiotemporal operations to be performed based on user queries.
 
-    Attributes
+    Parameters
     ----------
     datasets : str, list, dict-like
         If a str, a dataset name, i.e.: era5_land_reanalysis.
         If a list, a list of dataset names, i.e.: [era5_single_levels_reanalysis, era5_land_reanalysis].
         If a dictionary, it should map dataset names to their corresponding requested
-        content such as some desired variables. See the notes below for more details. The list of available datasets in this library is coming soon!
+        content such as some desired variables. See the notes below for more details.
+        The list of available datasets in this library is coming soon!
     space : dict-like
         A dictionary that maps spatial parameters with their corresponding value.
-        More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_space_params`
+        More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_space_params`.
     time : dict-like
         A dictionary that maps temporal parameters with their corresponding value.
-        More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_time_params`
+        More information on accepted key/value pairs : :py:meth:`~xdatasets.Query._resolve_time_params`.
     catalog_path : str
         URL for the intake catalog which provides access to the datasets. While this library provides its own
         intake catalog, users have the option to provide their own catalog, which can be particularly beneficial for
@@ -101,7 +103,6 @@ class Query:
         pangeo-forge:inputs_hash:  1622c0abe9326bfa4d6ee6cdf817fccb1ef1661046f30f...
         pangeo-forge:recipe_hash:  f2b6c75f28693bbae820161d5b71ebdb9d740dcdde0666...
         pangeo-forge:version:      0.9.4
-
     """
 
     def __init__(
@@ -128,7 +129,8 @@ class Query:
         averaging: Optional[bool] = False,
         unique_id: Optional[str] = None,
     ) -> Dict:
-        """Resolves and validates user-provided space params.
+        """
+        Resolve and validate user-provided space params.
 
         Parameters
         ----------
@@ -136,11 +138,11 @@ class Query:
             Which kind of clip operation to perform on geometry.
             Possible values are one of "polygon", "point" or "bbox".
         geometry : gdf.DataFrame, Dict[str, Tuple]
-            Geometry/geometries on which to perform spatial operations
+            Geometry/geometries on which to perform spatial operations.
         averaging : bool, optional
-            Whether to spatially average the arrays within a geometry or not
+            Whether to spatially average the arrays within a geometry or not.
         unique_id : str, optional
-            a column name, if gdf.DataFrame is provided, to identify each unique geometry
+            A column name, if gdf.DataFrame is provided, to identify each unique geometry.
         """
         space = locals()
         space.pop("self")
@@ -173,34 +175,30 @@ class Query:
         timezone: Optional[str] = None,
         minimum_duration: Optional[str] = None,
     ) -> Dict:
-        """Resolves and validates user-provided time params.
+        """
+        Resolve and validate user-provided time params.
 
         Parameters
         ----------
         timestep : str, optional
-            In which time step should the data be returned
-            Possible values: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases
+            In which time step should the data be returned.
+            Possible values: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases.
         aggregation : Dict[str, callable], optional
-            Mapping that associates a variable name with the aggregation function
-            to be applied to it. Function which can be called in the form
-            `f(x, axis=axis, **kwargs)` to return the result of reducing an
-            np.ndarray over an integer valued axis. This parameter is required
-            should the `timestep` argument be passed.
+            Mapping that associates a variable name with the aggregation function to be applied to it.
+            Function which can be called in the form `f(x, axis=axis, **kwargs)` to return the result of reducing an
+            np.ndarray over an integer valued axis. This parameter is required should the `timestep` argument be passed.
         start : str, optional
             Start date of the selected time period.
-            String format – can be year (“%Y”), year-month (“%Y-%m”) or
-            year-month-day(“%Y-%m-%d”)
+            String format – can be year (“%Y”), year-month (“%Y-%m”) or year-month-day(“%Y-%m-%d”).
         end : str, optional
             End date of the selected time period.
-            String format – can be year (“%Y”), year-month (“%Y-%m”) or
-            year-month-day(“%Y-%m-%d”)
+            String format – can be year (“%Y”), year-month (“%Y-%m”) or year-month-day(“%Y-%m-%d”).
         timezone : str, optional
-            Timezone to be used for the returned datasets
-            Possible values are listed here:
-            https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
+            Timezone to be used for the returned datasets.
+            Possible values are listed here: https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568.
         minimum_duration : str, optional
-            Minimum duration of a time series (id) in order to be kept
-            Possible values: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases
+            Minimum duration of a time series (id) in order to be kept.
+            Possible values: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases.
         """
         space = locals()
         space.pop("self")
