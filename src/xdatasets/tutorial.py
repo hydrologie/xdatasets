@@ -12,7 +12,8 @@ def open_dataset(
     name: str,
     **kws,
 ):
-    r"""Open a dataset from the online public repository (requires internet).
+    r"""
+    Open a dataset from the online public repository (requires internet).
 
     Available datasets:
     * ``"era5_reanalysis_single_levels"``: ERA5 reanalysis subset (t2m and tp)
@@ -22,9 +23,9 @@ def open_dataset(
     ----------
     name : str
         Name of the file containing the dataset.
-        e.g. 'era5_reanalysis_single_levels'
+        e.g. 'era5_reanalysis_single_levels'.
     \*\*kws : dict, optional
-        Passed to xarray.open_dataset
+        Passed to xarray.open_dataset.
 
     See Also
     --------
@@ -93,7 +94,8 @@ def summarize_variable(name, is_index=False, dtype=None):
 
 
 def list_available_datasets():
-    """Open, load lazily, and close a dataset from the public online repository (requires internet).
+    """
+    Open, load lazily, and close a dataset from the public online repository (requires internet).
 
     See Also
     --------
@@ -139,7 +141,15 @@ def list_available_datasets():
 
 
 def load_dataset(*args, **kwargs):
-    """Open, load lazily, and close a dataset from the online repository (requires internet).
+    r"""
+    Open, load lazily, and close a dataset from the online repository (requires internet).
+
+    Parameters
+    ----------
+    \*args : sequence
+        A sequence of positional arguments passed to `open_dataset`.
+    \*\*kwargs : dict
+        A dictionary of keyword arguments passed to `open_dataset`.
 
     See Also
     --------

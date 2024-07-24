@@ -10,7 +10,7 @@ on:
       - README.rst
       - pyproject.toml
       - tests/test_xdatasets.py
-      - xdatasets/__init__.py
+      - src/xdatasets/__init__.py
   pull_request:
 
 concurrency:
@@ -31,16 +31,16 @@ jobs:
           - "3.x"
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
+        uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
         with:
           egress-policy: audit
       - name: Checkout Repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Set up Python${{ matrix.python-version }}
-        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install tox
+      - name: Install CI libraries
         run: |
           python -m pip install --require-hashes -r CI/requirements_ci.txt
       - name: Run linting suite
@@ -56,19 +56,19 @@ jobs:
     strategy:
       matrix:
         include:
-          - tox-env: "py38"
+          - tox-env: "py38-coveralls"
             python-version: "3.8"
-          - tox-env: "py39"
+          - tox-env: "py39-coveralls"
             python-version: "3.9"
-          - tox-env: "py310"
+          - tox-env: "py310-coveralls"
             python-version: "3.10"
-          - tox-env: "py311"
+          - tox-env: "py311-coveralls"
             python-version: "3.11"
-          - tox-env: "py312"
+          - tox-env: "py312-coveralls"
             python-version: "3.12"
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
+        uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
         with:
           egress-policy: audit
       - name: Checkout Repository
@@ -85,7 +85,7 @@ jobs:
           cache: true
           version: ${{ env.ESMF_VERSION }}
       - name: Set up Python${{ matrix.python-version }}
-        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5.1.0
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5.1.1
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install tox
@@ -107,13 +107,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: [ "3.9", "3.10", "3.11", "3.12" ]
     defaults:
       run:
         shell: bash -l {0}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
+        uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
         with:
           egress-policy: audit
       - name: Checkout Repository
@@ -155,14 +155,16 @@ jobs:
     runs-on: ubuntu-latest
     container: python:3-slim
     steps:
-      - name: Checkout Repository (sparse-checkout)
+      - name: Checkout Repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           sparse-checkout: |
             CI/requirements_ci.txt
-      - name: Coveralls Finished
+      - name: Install CI libraries
         run: |
           python -m pip install --require-hashes -r CI/requirements_ci.txt
+      - name: Coveralls Finished
+        run: |
           coveralls --finish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -62,6 +62,7 @@ clean-test: ## remove test and coverage artifacts
 lint/flake8: ## check style with flake8
 	python -m ruff check src/xdatasets tests
 	python -m flake8 --config=.flake8 src/xdatasets tests
+	validate-docstrings src/xdatasets/**.py
 
 lint/black: ## check style with black
 	python -m black --check src/xdatasets tests
@@ -74,7 +75,7 @@ test: ## run tests quickly with the default Python
 	python -m pytest
 
 test-all: ## run tests on every Python version with tox
-	tox
+	python -m tox
 
 coverage: ## check code coverage quickly with the default Python
 	python -m coverage run --source src/xdatasets -m pytest

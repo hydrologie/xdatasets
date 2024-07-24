@@ -16,25 +16,28 @@ def open_dataset(
     catalog,
     **kws,
 ):
-    r"""Open a dataset from the online public repository (requires internet).
-
-    Notes
-    -----
-    Available datasets:
-        `"era5_reanalysis_single_levels"`: ERA5 reanalysis subset (t2m and tp)
-        `"cehq"`: CEHQ flow and water levels observations
+    r"""
+    Open a dataset from the online public repository (requires internet).
 
     Parameters
     ----------
     name : str
         Name of the file containing the dataset.
-        e.g. 'era5_reanalysis_single_levels'
+        e.g. 'era5_reanalysis_single_levels'.
+    catalog : str
+        URL for the intake catalog which provides access to the datasets.
     \*\*kws : dict, optional
-        Passed to xarray.open_dataset
+        Passed to xarray.open_dataset.
 
     See Also
     --------
     xarray.open_dataset
+
+    Notes
+    -----
+    Available datasets:
+        `"era5_reanalysis_single_levels"`: ERA5 reanalysis subset (t2m and tp).
+        `"cehq"`: CEHQ flow and water levels observations.
     """
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -84,19 +87,18 @@ class HiddenPrints:
 
 
 def cache_catalog(url):
-    """Cache the catalog in the system's temporary folder for easier access.
+    """
+    Cache the catalog in the system's temporary folder for easier access.
 
-    This is especially useful when working behind firewalls or if the remote server
-    containing the yaml files is down. Looks for http_proxy/https_proxy environment variable
-    if the request goes through a proxy.
+    This is especially useful when working behind firewalls or if the remote server containing the yaml files is down.
+    Looks for http_proxy/https_proxy environment variable if the request goes through a proxy.
 
     Parameters
     ----------
     url : str
-        URL for the intake catalog which provides access to the datasets. While
-        this library provides its own intake catalog, users have the option to
-        provide their own catalog, which can be particularly beneficial for
-        private datasets or if different configurations are needed.
+        URL for the intake catalog which provides access to the datasets.
+        While this library provides its own intake catalog, users have the option to provide their own catalog,
+        which can be particularly beneficial for private datasets or if different configurations are needed.
     """
     proxies = urllib.request.getproxies()
     proxy = urllib.request.ProxyHandler(proxies)

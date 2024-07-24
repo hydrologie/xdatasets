@@ -68,26 +68,26 @@ dev = [
   # Dev tools and testing
   "black ==24.4.2",
   "blackdoc ==0.3.9",
-  "bump-my-version >=0.23.0",
-  "coverage",
+  "bump-my-version >=0.24.3",
   "coverage >=7.5.0",
   "coveralls >=4.0.0",
-  "flake8 >=7.0.0",
+  "flake8 >=7.1.0",
   "flake8-rst-docstrings >=0.3.0",
-  "flit >=3.9.0",
+  "flit >=3.9.0,<4.0",
   "ipython",
   "isort ==5.13.2",
   "mypy",
   "nbval",
+  "numpydoc >=1.7.0",
   "pip >=24.0",
-  "pre-commit >=3.3.2",
+  "pre-commit >=3.5.0",
   "pylint",
-  "pytest-cov >=4.0.0",
-  "pytest >=7.3.1",
-  "ruff >=0.4.0",
+  "pytest-cov >=5.0.0",
+  "pytest >=8.2.2",
+  "ruff >=0.5.0",
   "tokenize-rt",
-  "tox >=4.15.1",
-  "watchdog >=3.0.0",
+  "tox >=4.16.0",
+  "watchdog >=4.0.0",
   "xdoctest"
 ]
 docs = [
@@ -128,8 +128,8 @@ all = [
 [project.urls]
 "Homepage" = "https://xdatasets.readthedocs.io/"
 "Changelog" = "https://xdatasets.readthedocs.io/en/stable/changelog.html"
-"Source" = "https://github.com/hydrologie/xdatasets"
 "Issue tracker" = "https://github.com/hydrologie/xdatasets/issues"
+"Source" = "https://github.com/hydrologie/xdatasets"
 
 [tool]
 
@@ -208,9 +208,9 @@ values = [
 ]
 
 [tool.coverage.run]
-relative_files = true
-include = ["src/xdatasets/*"]
 omit = ["tests/*.py"]
+relative_files = true
+source = ["xdatasets"]
 
 [tool.flit.sdist]
 include = [
@@ -274,6 +274,29 @@ module = [
 allow_untyped_defs = true
 disable_error_code = "attr-defined"
 ignore_missing_imports = true
+
+[tool.numpydoc_validation]
+checks = [
+  "all", # report on all checks, except the below
+  "ES01",
+  "EX01",
+  "GL08",
+  "RT01",
+  "SA01",
+  "SA04"
+]
+# remember to use single quotes for regex in TOML
+exclude = [
+  # don't report on objects that match any of these regex
+  '\.undocumented_method$',
+  '\.__repr__$'
+]
+override_SS05 = [
+  # override SS05 to allow docstrings starting with these words
+  '^Process ',
+  '^Assess ',
+  '^Access '
+]
 
 [tool.pytest.ini_options]
 addopts = [
@@ -351,7 +374,7 @@ max-complexity = 15
 [tool.ruff.lint.per-file-ignores]
 "docs/**" = ["E402"]
 "src/xdatasets/**/__init__.py" = ["F401", "F403"]
-"tests/**" = ["S101"]
+"tests/**" = ["D100", "D101", "D102", "D103", "S101"]
 
 [tool.ruff.lint.pycodestyle]
 max-doc-length = 180
