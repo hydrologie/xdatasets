@@ -2,6 +2,23 @@
 Changelog
 =========
 
+.. _changes_0.3.7:
+
+v0.3.7 (unreleased)
+-------------------
+
+Contributors: Trevor James Smith (:user:`Zeitsperre`)
+
+Changes
+^^^^^^^
+* Updated the cookiecutter template to the latest commit. (:pull:`136`):
+    * Actions have been updated and synchronized. Security hardening has been added to all relevant runner environments.
+    * Warnings in Pull Requests from forks are now less buggy.
+    * The yamllint configuration is a bit stricter but is now consistent for all YAML files in the repository, including the GitHub Workflows.
+    * A new pre-commit hook and linting step for validating numpy docstrings has been added (`numpydoc`).
+    * All `pip`-based dependencies used to run in CI are now managed by a CI/requirements_ci.txt that uses hashes of packages for security.
+    * Documentation has been added for ``$ make initialize-translations``.
+
 .. _changes_0.3.6:
 
 v0.3.6 (2024-07-12)
