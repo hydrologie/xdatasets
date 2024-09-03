@@ -11,7 +11,7 @@ maintainers = [
   {name = "Trevor James Smith", email = "smith.trevorj@ouranos.ca"}
 ]
 readme = {file = "README.rst", content-type = "text/x-rst"}
-requires-python = ">=3.8.0"
+requires-python = ">=3.9.0"
 keywords = [
   "xdatasets",
   "hydrology",
@@ -30,7 +30,6 @@ classifiers = [
   "Natural Language :: English",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -92,7 +91,7 @@ dev = [
 ]
 docs = [
   # Documentation and examples
-  "cartopy",
+  "cartopy >=0.23",
   "distributed >=2.0",
   "furo",
   "geoviews",
@@ -105,7 +104,6 @@ docs = [
   "nbsphinx",
   "nc-time-axis",
   "netCDF4",
-  "pandoc",
   "panel",
   "pooch",
   "s3fs",
@@ -135,7 +133,6 @@ all = [
 
 [tool.black]
 target-version = [
-  "py38",
   "py39",
   "py310",
   "py311",
@@ -254,7 +251,7 @@ exclude = [
 
 [tool.isort]
 profile = "black"
-py_version = 38
+py_version = 39
 
 [tool.mypy]
 files = "."
