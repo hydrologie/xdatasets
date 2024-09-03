@@ -11,6 +11,11 @@ Contributors: Trevor James Smith (:user:`Zeitsperre`)
 
 Changes
 ^^^^^^^
+* Dropped support for Python 3.8. (:pull:`154`).
+* Updated the cookiecutter template to the latest commit. (:pull:`154`):
+    * Updated coding style conventions to Python3.9+.
+    * Added the `tox-gh` package to the CI requirements.
+    * Various dependency updates.
 * Updated the cookiecutter template to the latest commit. (:pull:`136`):
     * Actions have been updated and synchronized. Security hardening has been added to all relevant runner environments.
     * Warnings in Pull Requests from forks are now less buggy.
