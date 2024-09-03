@@ -7,7 +7,7 @@ Changelog
 v0.3.7 (unreleased)
 -------------------
 
-Contributors: Trevor James Smith (:user:`Zeitsperre`)
+Contributors: Trevor James Smith (:user:`Zeitsperre`), Gabriel Rondeau-Genesse (:user:`RondeauG`)
 
 Changes
 ^^^^^^^
@@ -23,6 +23,7 @@ Changes
     * A new pre-commit hook and linting step for validating numpy docstrings has been added (`numpydoc`).
     * All `pip`-based dependencies used to run in CI are now managed by a CI/requirements_ci.txt that uses hashes of packages for security.
     * Documentation has been added for ``$ make initialize-translations``.
+* Fixed a bug where `clip_polygon` would not work if not given a `unique_id` during a `Query`. (:pull:`143`).
 
 .. _changes_0.3.6:
 

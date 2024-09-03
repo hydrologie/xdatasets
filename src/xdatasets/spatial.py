@@ -97,7 +97,7 @@ def clip_by_polygon(ds, space, dataset_name):
 
     data = xr.concat(arrays, dim="geom")
 
-    if "unique_id" in space:
+    if space.get("unique_id") is not None:
         try:
             data = data.swap_dims({"geom": space["unique_id"]})
             data = data.drop_vars("geom")
