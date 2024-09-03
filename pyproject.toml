@@ -11,7 +11,7 @@ maintainers = [
   {name = "Trevor James Smith", email = "smith.trevorj@ouranos.ca"}
 ]
 readme = {file = "README.rst", content-type = "text/x-rst"}
-requires-python = ">=3.8.0"
+requires-python = ">=3.9.0"
 keywords = [
   "xdatasets",
   "hydrology",
@@ -30,7 +30,6 @@ classifiers = [
   "Natural Language :: English",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -66,33 +65,33 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   # Dev tools and testing
-  "black ==24.4.2",
+  "black ==24.8.0",
   "blackdoc ==0.3.9",
-  "bump-my-version >=0.24.3",
+  "bump-my-version >=0.25.1",
   "coverage >=7.5.0",
-  "coveralls >=4.0.0",
-  "flake8 >=7.1.0",
+  "coveralls >=4.0.1",
+  "flake8 >=7.1.1",
   "flake8-rst-docstrings >=0.3.0",
   "flit >=3.9.0,<4.0",
   "ipython",
   "isort ==5.13.2",
   "mypy",
   "nbval",
-  "numpydoc >=1.7.0",
-  "pip >=24.0",
+  "numpydoc >=1.8.0",
+  "pip >=24.2.0",
   "pre-commit >=3.5.0",
   "pylint",
   "pytest-cov >=5.0.0",
-  "pytest >=8.2.2",
-  "ruff >=0.5.0",
+  "pytest >=8.3.2",
+  "ruff >=0.5.7",
   "tokenize-rt",
-  "tox >=4.16.0",
+  "tox >=4.17.1",
   "watchdog >=4.0.0",
   "xdoctest"
 ]
 docs = [
   # Documentation and examples
-  "cartopy",
+  "cartopy >=0.23",
   "distributed >=2.0",
   "furo",
   "geoviews",
@@ -105,7 +104,6 @@ docs = [
   "nbsphinx",
   "nc-time-axis",
   "netCDF4",
-  "pandoc",
   "panel",
   "pooch",
   "s3fs",
@@ -135,7 +133,6 @@ all = [
 
 [tool.black]
 target-version = [
-  "py38",
   "py39",
   "py310",
   "py311",
@@ -254,7 +251,7 @@ exclude = [
 
 [tool.isort]
 profile = "black"
-py_version = 38
+py_version = 39
 
 [tool.mypy]
 files = "."
