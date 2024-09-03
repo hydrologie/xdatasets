@@ -1,7 +1,7 @@
-import logging
 import logging.config
 import warnings
-from typing import Any, Callable, Dict, List, Optional, Union
+from logging import getLogger
+from typing import Any, Callable, List, Optional, Union
 
 import geopandas as gpd
 import intake
@@ -18,7 +18,7 @@ from .workflows import (
 )
 
 logging.config.dictConfig(LOGGING_CONFIG)
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
 
 url_path = "https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml"
 
@@ -107,9 +107,9 @@ class Query:  # numpydoc ignore=PR09
 
     def __init__(
         self,
-        datasets: Union[str, List[str], Dict[str, Union[str, List[str]]]],
-        space: Dict[str, Union[str, List[str]]] = dict(),
-        time: Dict[str, Union[str, List[str]]] = dict(),
+        datasets: Union[str, list[str], dict[str, Union[str, list[str]]]],
+        space: dict[str, Union[str, list[str]]] = dict(),
+        time: dict[str, Union[str, list[str]]] = dict(),
         catalog_path: str = url_path,
     ) -> None:
         # We cache the catalog's yaml files for easier access behind corporate firewalls
@@ -125,10 +125,10 @@ class Query:  # numpydoc ignore=PR09
     def _resolve_space_params(
         self,
         clip: Optional[str] = None,
-        geometry: Union[Dict[str, tuple], gpd.GeoDataFrame] = None,
+        geometry: Union[dict[str, tuple], gpd.GeoDataFrame] = None,
         averaging: Optional[bool] = False,
         unique_id: Optional[str] = None,
-    ) -> Dict:
+    ) -> dict:
         """
         Resolve and validate user-provided space params.
 
@@ -168,13 +168,13 @@ class Query:  # numpydoc ignore=PR09
         self,
         timestep: Optional[str] = None,
         aggregation: Optional[
-            Dict[str, Union[Callable[..., Any], List[Callable[..., Any]]]]
+            dict[str, Union[Callable[..., Any], list[Callable[..., Any]]]]
         ] = None,
         start: Optional[bool] = None,
         end: Optional[str] = None,
         timezone: Optional[str] = None,
         minimum_duration: Optional[str] = None,
-    ) -> Dict:
+    ) -> dict:
         """
         Resolve and validate user-provided time params.
 
@@ -220,8 +220,8 @@ class Query:  # numpydoc ignore=PR09
 
     def load_query(
         self,
-        datasets: Union[str, Dict[str, Union[str, List[str]]]],
-        space: Dict[str, Union[str, List[str]]],
+        datasets: Union[str, dict[str, Union[str, list[str]]]],
+        space: dict[str, Union[str, list[str]]],
         time,
     ):
         # Get all datasets in query
@@ -230,6 +230,10 @@ class Query:  # numpydoc ignore=PR09
 
         elif isinstance(datasets, dict):
             datasets_name = list(datasets.keys())
+        else:
+            raise ValueError(
+                "Datasets should be a string, a list of strings, or a dictionary."
+            )
 
         # Load data for each dataset
         dsets = []

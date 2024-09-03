@@ -1,12 +1,12 @@
 import logging
-from typing import Dict, Optional, Union
+from typing import Optional, Union
 
 import geopandas as gpd
 
 
 def _validate_space_params(
     clip: str,
-    geometry: Union[Dict[str, tuple], gpd.GeoDataFrame],
+    geometry: Union[dict[str, tuple], gpd.GeoDataFrame],
     averaging: bool = False,
     unique_id: Optional[str] = None,
 ):
