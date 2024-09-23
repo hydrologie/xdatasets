@@ -49,13 +49,12 @@ jobs:
           python -m tox -e lint
 
   test-pypi:
-    name: Test with Python${{ matrix.python-version }} (tox, ${{ matrix.os }}, ESMF ${{ env.ESMF_VERSION }})
+    name: Test with Python${{ matrix.python-version }} (tox, ${{ matrix.os }}, ESMF ${{ matrix.esmf-version }})
     needs: lint
     runs-on: ${{ matrix.os }}
-    env:
-      ESMF_VERSION: "v8.5.0"
     strategy:
       matrix:
+        esmf-version: [ "v8.5.0" ]
         os: [ 'ubuntu-latest' ]
         python-version:
           - "3.9"
@@ -80,7 +79,7 @@ jobs:
           ESMF_NETCDF: nc-config
         with:
           cache: true
-          version: ${{ env.ESMF_VERSION }}
+          version: ${{ matrix.esmf-version }}
       - name: Set up Python${{ matrix.python-version }}
         uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
         with:
@@ -98,7 +97,7 @@ jobs:
         run: |
           tox
         env:
-          ESMF_VERSION: ${{ env.ESMF_VERSION }}
+          ESMF_VERSION: ${{ matrix.esmf-version }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_FLAG_NAME: run-${{ matrix.python-version }}
           COVERALLS_PARALLEL: true
