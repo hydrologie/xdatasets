@@ -34,6 +34,7 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  # "Programming Language :: Python :: 3.13",
   "Topic :: Scientific/Engineering :: Hydrology",
   "Programming Language :: Python :: Implementation :: CPython"
 ]
@@ -45,18 +46,17 @@ dependencies = [
   "cftime >=1.4.1",
   "clisops >=0.9.2",
   "dask[array] >=2.6",
-  "dask-geopandas",
-  "geopandas",
+  "dask-geopandas >=0.4.1",
+  "geopandas >=1.0",
   "intake <2.0.0", # Pinned until catalogs support v2.0 conventions. See: https://github.com/hydrologie/xdatasets/issues/82",
   "intake-xarray >=0.6.1",
   "intake-geopandas",
-  "ipython",
+  "ipython >=8.5.0",
   "jsonpickle",
-  "numpy >=1.16",
-  "pandas >=0.23",
-  "pint >=0.10",
+  "numpy >=1.23",
+  "pandas >=1.5",
   "s3fs",
-  "scipy >=1.2",
+  "scipy >=1.9.0",
   "tqdm",
   "xarray >=2023.1",
   "zarr >=2.11.1"
@@ -67,13 +67,12 @@ dev = [
   # Dev tools and testing
   "black ==24.8.0",
   "blackdoc ==0.3.9",
-  "bump-my-version >=0.25.1",
+  "bump-my-version >=0.26.0",
   "coverage >=7.5.0",
   "coveralls >=4.0.1",
   "flake8 >=7.1.1",
   "flake8-rst-docstrings >=0.3.0",
   "flit >=3.9.0,<4.0",
-  "ipython",
   "isort ==5.13.2",
   "mypy",
   "nbval",
@@ -84,8 +83,8 @@ dev = [
   "pytest-cov >=5.0.0",
   "pytest >=8.3.2",
   "ruff >=0.5.7",
-  "tokenize-rt",
-  "tox >=4.17.1",
+  "tokenize-rt >=3.2.0",
+  "tox >=4.18.0",
   "watchdog >=4.0.0",
   "xdoctest"
 ]
@@ -93,23 +92,22 @@ docs = [
   # Documentation and examples
   "cartopy >=0.23",
   "distributed >=2.0",
-  "furo",
+  "furo >=2024.8.6",
   "geoviews",
   "hvplot",
   "ipykernel",
-  "ipython",
   "jupyter_client",
-  "matplotlib",
-  "nbsphinx",
-  "nbsphinx",
+  "matplotlib >=3.5.0",
+  "nbconvert <7.14",
+  "nbsphinx >=0.9.5",
   "nc-time-axis",
   "netCDF4",
   "panel",
   "pooch",
   "s3fs",
-  "sphinx-codeautolink",
-  "sphinx-copybutton",
-  "sphinx-intl",
+  "sphinx-codeautolink >=0.15.2",
+  "sphinx-copybutton >=0.5.2",
+  "sphinx-intl >=0.2.2",
   "sphinx >=7.0",
   "sphinxcontrib-confluencebuilder"
 ]
@@ -136,7 +134,8 @@ target-version = [
   "py39",
   "py310",
   "py311",
-  "py312"
+  "py312",
+  "py313"
 ]
 
 [tool.bumpversion]
@@ -204,10 +203,12 @@ values = [
   "release"
 ]
 
+[tool.coverage.paths]
+source = ["src/xdatasets/", "*/site-packages/xdatasets/"]
+
 [tool.coverage.run]
 omit = ["tests/*.py"]
 relative_files = true
-source = ["xdatasets"]
 
 [tool.flit.sdist]
 include = [
@@ -306,7 +307,6 @@ testpaths = "tests"
 [tool.ruff]
 src = ["xdatasets"]
 line-length = 150
-target-version = "py38"
 exclude = [
   ".eggs",
   ".git",

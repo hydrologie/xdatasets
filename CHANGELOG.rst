@@ -24,6 +24,11 @@ Changes
     * All `pip`-based dependencies used to run in CI are now managed by a CI/requirements_ci.txt that uses hashes of packages for security.
     * Documentation has been added for ``$ make initialize-translations``.
 * Fixed a bug where `clip_polygon` would not work if not given a `unique_id` during a `Query`. (:pull:`143`).
+* The bumpversion workflow now uses the Hydrologie Helper Bot to make signed commits. (:pull:`156`).
+* Updated the cookiecutter template to the latest commit. (:pull:`156`):
+    * Updated development dependencies to the latest versions.
+    * Staged support for Python3.13.
+    * Added environment caching to existing workflows.
 
 .. _changes_0.3.6:
 

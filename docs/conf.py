@@ -17,6 +17,7 @@
 # relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
 #
+import datetime
 import os
 import sys
 
@@ -62,22 +63,23 @@ extlinks = {
 }
 
 nbsphinx_execute = "always"
+# The `getting_started` notebook is dependent on Amazon S3 servers that are not guaranteed available.
+# Therefore, we allow errors when building the documentation.
+nbsphinx_allow_errors = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
 # The suffix(es) of source filenames.
-# You can specify multiple suffix as a list of string:
-#
-# source_suffix = ['.rst', '.md']
-source_suffix = [".rst"]
+# You can specify multiple suffix as a dictionary of suffix: filetype
+source_suffix = {".rst": "restructuredtext"}
 
 # The master toctree document.
 master_doc = "index"
 
 # General information about the project.
 project = "Xdatasets"
-copyright = "2023, Sebastien Langlois"
+copyright = f"2023-{datetime.datetime.now().year}, Sebastien Langlois"
 author = "Sebastien Langlois"
 
 # The version info for the project you're documenting, acts as replacement
