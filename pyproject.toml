@@ -98,7 +98,7 @@ docs = [
   "ipykernel",
   "jupyter_client",
   "matplotlib >=3.5.0",
-  "nbconvert <7.14",
+  "nbconvert <7.17",
   "nbsphinx >=0.9.5",
   "nc-time-axis",
   "netCDF4",
