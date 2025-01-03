@@ -1,7 +1,8 @@
 import logging.config
 import warnings
+from collections.abc import Callable
 from logging import getLogger
-from typing import Any, Callable, Optional, Union
+from typing import Any, Optional, Union
 
 import geopandas as gpd
 import intake
