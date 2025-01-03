@@ -29,6 +29,7 @@ Changes
     * Updated development dependencies to the latest versions.
     * Staged support for Python3.13.
     * Added environment caching to existing workflows.
+* Small adjustment to typing import for Python3.12+ support. (:pull:`180`).
 
 .. _changes_0.3.6:
 
