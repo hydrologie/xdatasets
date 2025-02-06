@@ -30,6 +30,11 @@ Changes
     * Staged support for Python3.13.
     * Added environment caching to existing workflows.
 * Small adjustment to typing import for Python3.12+ support. (:pull:`180`).
+* Updated the cookiecutter template. (:pull:`188`):
+    * GitHub Actions and Python dependency versions updated.
+    * New `pre-commit` hooks for `vulture` (find dead code), `codespell` (spelling errors), `zizmor` (workflow security), and `gitleaks` (token commit prevention).
+    * Disabled coveralls for Python3.13.
+    * Addressed a handful of small issues.
 
 .. _changes_0.3.6:
 
