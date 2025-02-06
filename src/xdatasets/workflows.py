@@ -36,7 +36,7 @@ def climate_request(dataset_name, variables, space, time, catalog):
     except:  # noqa: S110
         pass
 
-    # Ajust timezone and then slice time dimension before moving on with spatiotemporal operations
+    # Adjust timezone and then slice time dimension before moving on with spatiotemporal operations
     if time["timezone"] is not None:
         try:
             # Assume UTC for now, will change when metadata database in up and running
@@ -138,7 +138,7 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
 
     # TODO: to implement this feature, We will need the timezone as a coords for each id
 
-    # # Ajust timezone and then slice time dimension before moving on with spatiotemporal operations
+    # # Adjust timezone and then slice time dimension before moving on with spatiotemporal operations
     # if time["timezone"] != None:
     #     try:
     #         # Assume UTC for now, will change when metadata database in up and running
@@ -208,7 +208,7 @@ def user_provided_dataset(dataset_name, variables, space, time, ds):
 
     # TODO: to implement this feature, We will need the timezone as a coords for each id
 
-    # # Ajust timezone and then slice time dimension before moving on with spatiotemporal operations
+    # # Adjust timezone and then slice time dimension before moving on with spatiotemporal operations
     # if time["timezone"] != None:
     #     try:
     #         # Assume UTC for now, will change when metadata database in up and running
