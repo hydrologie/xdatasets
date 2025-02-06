@@ -7,9 +7,9 @@ Xdatasets
 +----------------------------+-----------------------------------------------------+
 | Documentation and Support  | |docs|                                              |
 +----------------------------+-----------------------------------------------------+
-| Open Source                | |license| |ossf|                                    |
+| Open Source                | |license| |ossf-score|                              |
 +----------------------------+-----------------------------------------------------+
-| Coding Standards           | |black| |ruff| |pre-commit|                         |
+| Coding Standards           | |black| |isort| |ruff| |pre-commit|                 |
 +----------------------------+-----------------------------------------------------+
 | Development Status         | |status| |build| |coveralls|                        |
 +----------------------------+-----------------------------------------------------+
@@ -32,7 +32,6 @@ This package was created with Cookiecutter_ and the `Ouranosinc/cookiecutter-pyp
 .. _Cookiecutter: https://github.com/cookiecutter/cookiecutter
 .. _`Ouranosinc/cookiecutter-pypackage`: https://github.com/Ouranosinc/cookiecutter-pypackage
 
-
 .. |black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
         :target: https://github.com/psf/black
         :alt: Python Black
@@ -49,11 +48,20 @@ This package was created with Cookiecutter_ and the `Ouranosinc/cookiecutter-pyp
         :target: https://xdatasets.readthedocs.io/en/latest/?version=latest
         :alt: Documentation Status
 
+.. |isort| image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
+        :target: https://pycqa.github.io/isort/
+        :alt: Isort
+
 .. |license| image:: https://img.shields.io/github/license/hydrologie/xdatasets.svg
         :target: https://github.com/hydrologie/xdatasets/blob/main/LICENSE
         :alt: License
 
-.. |ossf| image:: https://api.securityscorecards.dev/projects/github.com/hydrologie/xdatasets/badge
+..
+    .. |ossf-bp| image:: https://bestpractices.coreinfrastructure.org/projects/9945/badge
+            :target: https://bestpractices.coreinfrastructure.org/projects/9945
+            :alt: Open Source Security Foundation Best Practices
+
+.. |ossf-score| image:: https://api.securityscorecards.dev/projects/github.com/hydrologie/xdatasets/badge
         :target: https://securityscorecards.dev/viewer/?uri=github.com/hydrologie/xdatasets
         :alt: OpenSSF Scorecard
 
