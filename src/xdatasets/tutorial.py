@@ -10,7 +10,7 @@ catalog_path = "https://raw.githubusercontent.com/hydrocloudservices/catalogs/ma
 
 def open_dataset(
     name: str,
-    **kws,
+    **kws,  # noqa: F841
 ):
     r"""
     Open a dataset from the online public repository (requires internet).
@@ -25,7 +25,7 @@ def open_dataset(
         Name of the file containing the dataset.
         e.g. 'era5_reanalysis_single_levels'.
     \*\*kws : dict, optional
-        Passed to xarray.open_dataset.
+        Currently not used.
 
     See Also
     --------
@@ -71,7 +71,7 @@ def summarize_coords(variables):
     return f"<ul class='xr-var-list'>{vars_li}</ul>"
 
 
-def summarize_variable(name, is_index=False, dtype=None):
+def summarize_variable(name, is_index=False, dtype=None):  # noqa: F841
     cssclass_idx = " class='xr-has-index'" if is_index else ""
     name = escape(str(name))
 

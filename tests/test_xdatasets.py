@@ -4,9 +4,9 @@
 import pathlib
 from importlib.util import find_spec
 
-# import pytest
-
 import xdatasets  # noqa: F401
+
+# import pytest
 
 
 # @pytest.fixture
