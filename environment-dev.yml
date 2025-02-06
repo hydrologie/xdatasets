@@ -11,7 +11,7 @@ dependencies:
   - geopandas >=1.0
   - intake <2.0.0  # Pinned until catalogs support v2.0 conventions. See: https://github.com/hydrologie/xdatasets/issues/82
   - intake-geopandas
-  - intake-xarray >=0.6.1
+  - intake-xarray >=0.6.1,<2.0.0
   - ipykernel
   - ipython >=8.5.0
   - jsonpickle
