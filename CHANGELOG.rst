@@ -4,7 +4,7 @@ Changelog
 
 .. _changes_0.3.7:
 
-v0.3.7 (2025-02-05)
+v0.3.7 (2025-02-10)
 -------------------
 
 Contributors: Trevor James Smith (:user:`Zeitsperre`), Gabriel Rondeau-Genesse (:user:`RondeauG`), Sebastien Langlois (:user:`sebastienlanglois`)
