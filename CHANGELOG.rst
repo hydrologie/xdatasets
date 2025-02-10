@@ -4,10 +4,10 @@ Changelog
 
 .. _changes_0.3.7:
 
-v0.3.7 (unreleased)
+v0.3.7 (2025-02-05)
 -------------------
 
-Contributors: Trevor James Smith (:user:`Zeitsperre`), Gabriel Rondeau-Genesse (:user:`RondeauG`)
+Contributors: Trevor James Smith (:user:`Zeitsperre`), Gabriel Rondeau-Genesse (:user:`RondeauG`), Sebastien Langlois (:user:`sebastienlanglois`)
 
 Changes
 ^^^^^^^
@@ -30,6 +30,7 @@ Changes
     * Staged support for Python3.13.
     * Added environment caching to existing workflows.
 * Small adjustment to typing import for Python3.12+ support. (:pull:`180`).
+* Pin Xarray . (:pull:`187`).
 
 .. _changes_0.3.6:
 
