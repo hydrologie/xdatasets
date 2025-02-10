@@ -14,7 +14,7 @@ catalog_path = "https://raw.githubusercontent.com/hydrocloudservices/catalogs/ma
 def open_dataset(
     name: str,
     catalog,
-    **kws,
+    **kws,  # noqa: F841
 ):
     r"""
     Open a dataset from the online public repository (requires internet).
@@ -27,7 +27,7 @@ def open_dataset(
     catalog : str
         URL for the intake catalog which provides access to the datasets.
     \*\*kws : dict, optional
-        Passed to xarray.open_dataset.
+        Currently not used.
 
     See Also
     --------
@@ -81,7 +81,7 @@ class HiddenPrints:
         self._original_stdout = sys.stdout
         sys.stdout = Path(os.devnull).open("w")
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb):  # noqa: F841
         sys.stdout.close()
         sys.stdout = self._original_stdout
 

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["flit_core >=3.9,<4"]
+requires = ["flit_core >=3.10.1,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -65,26 +65,25 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   # Dev tools and testing
-  "black ==24.8.0",
+  "black ==25.1.0",
   "blackdoc ==0.3.9",
-  "bump-my-version >=0.26.0",
+  "bump-my-version >=0.30.1",
   "coverage >=7.5.0",
-  "coveralls >=4.0.1",
   "flake8 >=7.1.1",
   "flake8-rst-docstrings >=0.3.0",
-  "flit >=3.9.0,<4.0",
-  "isort ==5.13.2",
-  "mypy",
+  "flit >=3.10.1,<4.0",
+  "isort ==6.0.0",
+  "mypy >=1.14.1",
   "nbval",
   "numpydoc >=1.8.0",
-  "pip >=24.2.0",
+  "pip >=25.0",
   "pre-commit >=3.5.0",
   "pylint",
   "pytest-cov >=5.0.0",
   "pytest >=8.3.2",
-  "ruff >=0.5.7",
+  "ruff >=0.9.0",
   "tokenize-rt >=3.2.0",
-  "tox >=4.18.0",
+  "tox >=4.24.1",
   "watchdog >=4.0.0",
   "xdoctest"
 ]
@@ -105,10 +104,10 @@ docs = [
   "panel",
   "pooch",
   "s3fs",
-  "sphinx-codeautolink >=0.15.2",
+  "sphinx-codeautolink >=0.16.2",
   "sphinx-copybutton >=0.5.2",
   "sphinx-intl >=0.2.2",
-  "sphinx >=7.0",
+  "sphinx >=7.1.0",
   "sphinxcontrib-confluencebuilder"
 ]
 extra = [
@@ -203,6 +202,9 @@ values = [
   "release"
 ]
 
+[tool.codespell]
+ignore-words-list = "astroid,socio-economic"
+
 [tool.coverage.paths]
 source = ["src/xdatasets/", "*/site-packages/xdatasets/"]
 
@@ -244,6 +246,7 @@ exclude = [
   ".pre-commit-config.yaml",
   ".readthedocs.yml",
   ".yamllint.yaml",
+  ".zizmor.yml",
   "docs/_*",
   "docs/apidoc/modules.rst",
   "docs/apidoc/xdatasets*.rst",
@@ -378,3 +381,11 @@ max-doc-length = 180
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
+
+[tool.vulture]
+exclude = []
+ignore_decorators = ["@pytest.fixture"]
+ignore_names = []
+min_confidence = 90
+paths = ["src/xdatasets", "tests"]
+sort_by_size = true
