@@ -4,10 +4,10 @@ Changelog
 
 .. _changes_0.3.7:
 
-v0.3.7 (unreleased)
+v0.3.7 (2025-02-10)
 -------------------
 
-Contributors: Trevor James Smith (:user:`Zeitsperre`), Gabriel Rondeau-Genesse (:user:`RondeauG`)
+Contributors: Trevor James Smith (:user:`Zeitsperre`), Gabriel Rondeau-Genesse (:user:`RondeauG`), Sebastien Langlois (:user:`sebastienlanglois`)
 
 Changes
 ^^^^^^^
@@ -35,6 +35,7 @@ Changes
     * New `pre-commit` hooks for `vulture` (find dead code), `codespell` (spelling errors), `zizmor` (workflow security), and `gitleaks` (token commit prevention).
     * Disabled coveralls for Python3.13.
     * Addressed a handful of small issues.
+* Pin Xarray . (:pull:`187`).
 
 .. _changes_0.3.6:
 
