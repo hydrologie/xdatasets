@@ -167,6 +167,9 @@ def hydrometric_request(dataset_name, variables, space, time, catalog, **kwargs)
     # elif space['clip'] == 'bbox':
     #     ds = clip_by_bbox(ds, space, dataset_name).load()
 
+    # Load all coordinates
+    [ds[c].load() for c in ds.coords]
+
     if time["start"] is not None or time["end"] is not None:
         ds = ajust_dates(ds, time)
 
