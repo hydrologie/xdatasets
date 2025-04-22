@@ -108,9 +108,9 @@ class Query:  # numpydoc ignore=PR09
 
     def __init__(
         self,
-        datasets: Union[str, list[str], dict[str, Union[str, list[str]]]],
-        space: dict[str, Union[str, list[str]]] = dict(),
-        time: dict[str, Union[str, list[str]]] = dict(),
+        datasets: str | list[str] | dict[str, str | list[str]],
+        space: dict[str, str | list[str]] = dict(),
+        time: dict[str, str | list[str]] = dict(),
         catalog_path: str = url_path,
     ) -> None:
         # We cache the catalog's yaml files for easier access behind corporate firewalls
@@ -125,10 +125,10 @@ class Query:  # numpydoc ignore=PR09
 
     def _resolve_space_params(
         self,
-        clip: Optional[str] = None,
-        geometry: Union[dict[str, tuple], gpd.GeoDataFrame] = None,
-        averaging: Optional[bool] = False,
-        unique_id: Optional[str] = None,
+        clip: str | None = None,
+        geometry: dict[str, tuple] | gpd.GeoDataFrame = None,
+        averaging: bool | None = False,
+        unique_id: str | None = None,
     ) -> dict:
         """
         Resolve and validate user-provided space params.
@@ -167,14 +167,14 @@ class Query:  # numpydoc ignore=PR09
 
     def _resolve_time_params(
         self,
-        timestep: Optional[str] = None,
-        aggregation: Optional[
-            dict[str, Union[Callable[..., Any], list[Callable[..., Any]]]]
-        ] = None,
-        start: Optional[bool] = None,
-        end: Optional[str] = None,
-        timezone: Optional[str] = None,
-        minimum_duration: Optional[str] = None,
+        timestep: str | None = None,
+        aggregation: None | (
+            dict[str, Callable[..., Any] | list[Callable[..., Any]]]
+        ) = None,
+        start: bool | None = None,
+        end: str | None = None,
+        timezone: str | None = None,
+        minimum_duration: str | None = None,
     ) -> dict:
         """
         Resolve and validate user-provided time params.
@@ -221,8 +221,8 @@ class Query:  # numpydoc ignore=PR09
 
     def load_query(
         self,
-        datasets: Union[str, dict[str, Union[str, list[str]]]],
-        space: dict[str, Union[str, list[str]]],
+        datasets: str | dict[str, str | list[str]],
+        space: dict[str, str | list[str]],
         time,
     ):
         # Get all datasets in query
