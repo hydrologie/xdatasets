@@ -1,14 +1,13 @@
 import logging
-from typing import Optional, Union
 
 import geopandas as gpd
 
 
 def _validate_space_params(
     clip: str,
-    geometry: Union[dict[str, tuple], gpd.GeoDataFrame],
+    geometry: dict[str, tuple] | gpd.GeoDataFrame,
     averaging: bool = False,
-    unique_id: Optional[str] = None,
+    unique_id: str | None = None,
 ):
     _clip_available_methods = ["bbox", "point", "polygon", None]
 
