@@ -2,7 +2,7 @@ name: xdatasets
 channels:
   - conda-forge
 dependencies:
-  - python >=3.9,<3.13
+  - python >=3.10,<3.13
   # Main packages
   - bottleneck >=1.3.1
 #  - cf-xarray >=0.6.1  # Was not included here, but appears in pyproject.toml
