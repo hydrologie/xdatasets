@@ -11,7 +11,7 @@ Contributors: Gabriel Rondeau-Genesse (:user:`RondeauG`)
 
 Changes
 ^^^^^^^
-* Removed the upper pin on `intake`, fixed a minor issue with the latest `dask. (:pull:`214`).
+* Removed the upper pin on `intake`, fixed a minor issue with the latest `dask`. (:pull:`214`).
 * Added temporary dependencies to `setuptools` and `wheel` to the `pyproject.toml` file to avoid issues with `intake-xarray<=2.0.0` in Python 3.12. (:pull:`214`).
 * Removed support for Python 3.9. (:pull:`214`).
 
