@@ -2,7 +2,7 @@ import logging.config
 import warnings
 from collections.abc import Callable
 from logging import getLogger
-from typing import Any, Optional, Union
+from typing import Any
 
 import geopandas as gpd
 import intake
@@ -64,7 +64,7 @@ class Query:  # numpydoc ignore=PR09
 
     Currently, accepted key, value pairs for a mapping argument include the following:
 
-        >>> {"variables": Union[str, list[str]]}
+        >>> {"variables": str | list[str]}
 
     Examples
     --------

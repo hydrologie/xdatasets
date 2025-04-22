@@ -1,5 +1,4 @@
 import logging
-from typing import Optional, Union
 
 import geopandas as gpd
 
