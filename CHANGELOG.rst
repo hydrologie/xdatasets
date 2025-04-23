@@ -2,20 +2,21 @@
 Changelog
 =========
 
-.. _changes_0.3.9:
+..
+  .. _changes_0.3.9:
 
-`Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
-----------------------------------------------------------------
+  `Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
+  ----------------------------------------------------------------
 
-Contributors:
+  Contributors:
 
-Changes
-^^^^^^^
-* No change.
+  Changes
+  ^^^^^^^
+  * No change.
 
-Fixes
-^^^^^
-* No change.
+  Fixes
+  ^^^^^
+  * No change.
 
 .. _changes_0.3.8:
 
