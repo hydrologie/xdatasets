@@ -4,8 +4,8 @@ Changelog
 
 .. _changes_0.3.8:
 
-Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
----------------------------------------------------------------
+`Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
+----------------------------------------------------------------
 
 Contributors: Gabriel Rondeau-Genesse (:user:`RondeauG`)
 
