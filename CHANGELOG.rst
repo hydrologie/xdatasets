@@ -20,7 +20,7 @@ Fixes
 .. _changes_0.3.8:
 
 `v0.3.8 <https://github.com/hydrologie/xdatasets/tree/0.3.8>`_
-------------------------------------------------------------------------------
+--------------------------------------------------------------
 
 Contributors: Gabriel Rondeau-Genesse (:user:`RondeauG`)
 
