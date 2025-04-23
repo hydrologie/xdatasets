@@ -154,12 +154,12 @@ serialize = [
 filename = "CHANGELOG.rst"
 include_bumps = ["release"]
 search = """\
-`Unreleased <https://github.com/sebastienlanglois/xdatasets>`_ (latest)
------------------------------------------------------------------------
+`Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
+----------------------------------------------------------------
 """
 replace = """\
-`Unreleased <https://github.com/sebastienlanglois/xdatasets>`_ (latest)
------------------------------------------------------------------------
+`Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
+----------------------------------------------------------------
 
 Contributors:
 
@@ -173,8 +173,8 @@ Fixes
 
 .. _changes_{new_version}:
 
-`v{new_version} <https://github.com/sebastienlanglois/xdatasets/tree/{new_version}>`_
----------------------------------------------------------------------
+`v{new_version} <https://github.com/hydrologie/xdatasets/tree/{new_version}>`_
+------------------------------------------------------------------------------
 """
 
 [[tool.bumpversion.files]]
