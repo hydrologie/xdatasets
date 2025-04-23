@@ -4,8 +4,8 @@ Changelog
 
 .. _changes_0.3.8:
 
-v0.3.8 (unreleased)
--------------------
+Unreleased <https://github.com/sebastienlanglois/xdatasets>`_ (latest)
+----------------------------------------------------------------------
 
 Contributors: Gabriel Rondeau-Genesse (:user:`RondeauG`)
 
