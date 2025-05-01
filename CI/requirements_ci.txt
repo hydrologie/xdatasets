@@ -464,7 +464,6 @@ typing-extensions==4.12.2 \
     #   astroid
     #   pydantic
     #   pydantic-core
-    #   pylint
     #   rich-click
     #   tox
 urllib3==2.2.2 \
