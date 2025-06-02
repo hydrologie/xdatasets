@@ -9,8 +9,8 @@ dependencies:
   - cftime >=1.4.1  # Is it needed? It's not used in the code.
   - clisops >=0.9.2
   - dask >=2.6
-  - dask-geopandas >=0.4.1
-  - geopandas >=1.0
+  - dask-geopandas >=0.4.1,<0.4.4
+  - geopandas >=1.0.0,<1.1.0
   - intake
   - intake-geopandas
   - intake-xarray >=0.6.1,<2.0.0
@@ -18,10 +18,10 @@ dependencies:
   - ipython >=8.5.0  # This should probably not be in the environment-dev.yml
   - jsonpickle
   - matplotlib-base >=3.5.0  # This should probably not be in the environment-dev.yml
-  - numpy >=1.23
-#  - pandas >=1.5.0  # Appears in pyproject.toml, but not in environment-dev.yml
+  - numpy >=1.25
+  - pandas >=1.5.0
   - s3fs
-  - scipy >=1.9.0
+  - scipy >=1.10.0
   - tqdm
   - xagg
   - xarray >=2023.1
