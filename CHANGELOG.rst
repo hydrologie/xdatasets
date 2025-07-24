@@ -8,7 +8,7 @@ Changelog
   `Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
   ----------------------------------------------------------------
 
-  Contributors:
+  Contributors: Juliette Lavoie (:user:`juliettelavoie`)
 
   Changes
   ^^^^^^^
@@ -16,7 +16,7 @@ Changelog
 
   Fixes
   ^^^^^
-  * No change.
+  * Put the cache catalog in a unique temporary directory. (:pull:`236`).
 
 .. _changes_0.3.8:
 
