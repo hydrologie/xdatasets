@@ -15,4 +15,4 @@ Co-Developers
 Contributors
 ------------
 
-* Juliette Lavoie  <lavoie.juliette@ouranos.ca> `@juliettelavoie <https://github.com/juliettelavoie>`_
+* Juliette Lavoie <lavoie.juliette@ouranos.ca> `@juliettelavoie <https://github.com/juliettelavoie>`_
