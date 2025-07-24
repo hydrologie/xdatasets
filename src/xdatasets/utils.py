@@ -105,7 +105,9 @@ def cache_catalog(url):
     opener = urllib.request.build_opener(proxy)
     urllib.request.install_opener(opener)
 
-    tmp_dir =  Path(tempfile.gettempdir()).joinpath(getpass.getuser()).joinpath("catalogs")
+    tmp_dir = (
+        Path(tempfile.gettempdir()).joinpath(getpass.getuser()).joinpath("catalogs")
+    )
     tmp_dir.mkdir(parents=True, exist_ok=True)
     main_catalog_path = tmp_dir.joinpath(Path(url).name)
 
