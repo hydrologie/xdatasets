@@ -2,21 +2,22 @@
 Changelog
 =========
 
-..
-  .. _changes_0.3.9:
+`Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
+----------------------------------------------------------------
 
-  `Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
-  ----------------------------------------------------------------
+Contributors: Juliette Lavoie (:user:`juliettelavoie`), Trevor James Smith (:user:`Zeitsperre`)
 
-  Contributors: Juliette Lavoie (:user:`juliettelavoie`)
+Changes
+^^^^^^^
+* No change.
 
-  Changes
-  ^^^^^^^
-  * No change.
+Fixes
+^^^^^
+* Put the cache catalog in a unique temporary directory. (:pull:`236`).
 
-  Fixes
-  ^^^^^
-  * Put the cache catalog in a unique temporary directory. (:pull:`236`).
+Internal Changes
+^^^^^^^^^^^^^^^^
+* Added a ``SECURITY.md`` file to the repository. (:pull:`244`).
 
 .. _changes_0.3.8:
 
