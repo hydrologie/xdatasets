@@ -21,6 +21,7 @@ on:
       - CI/**/*.txt
       - CODE_OF_CONDUCT.md
       - CONTRIBUTING.rst
+      - SECURITY.md
       - Makefile
       - docs/*.py
       - docs/*.rst
