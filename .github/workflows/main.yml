@@ -28,7 +28,7 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.x"
+          - "3.13"
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a # v2.13.1
@@ -64,11 +64,7 @@ jobs:
       matrix:
         esmf-version: [ "v8.5.0" ]
         os: [ 'ubuntu-latest' ]
-        python-version:
-          - "3.10"
-          - "3.11"
-          - "3.12"
-#          - "3.13"
+        python-version: [ "3.10", "3.11", "3.12" ] # "3.13" ]
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a # v2.13.1
@@ -119,7 +115,7 @@ jobs:
     strategy:
       matrix:
         os: [ 'ubuntu-latest' ]
-        python-version: [ "3.10", "3.11", "3.12" ]
+        python-version: [ "3.10", "3.11", "3.12" ] # "3.13" ]
     defaults:
       run:
         shell: bash -l {0}
@@ -149,16 +145,12 @@ jobs:
           python -m pip check || true
       - name: Test with pytest
         run: |
-          python -m pytest --cov xdatasets
+          python -m pytest --cov xdatasets --cov-report=lcov
       - name: Report Coverage
-        run: |
-          python -m pip install coveralls
-          python -m coveralls
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_FLAG_NAME: run-Python${{ matrix.python-version }}-conda
-          COVERALLS_PARALLEL: true
-          COVERALLS_SERVICE_NAME: github
+        uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b # v2.3.6
+        with:
+          flag-name: run-${{ matrix.python-version }}-conda
+          parallel: true
 
   finish:
     needs:
