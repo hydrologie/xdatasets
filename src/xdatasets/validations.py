@@ -22,33 +22,24 @@ def _validate_space_params(
 
     if unique_id is not None:
         if isinstance(geometry, gpd.GeoDataFrame) and unique_id not in geometry.columns:
-            message = (
-                f"\nunique_id value '{unique_id}' was not found in gpd.GeoDataFrame \n"
-                f"so a random index will be used instead."
-            )
+            message = f"\nunique_id value '{unique_id}' was not found in gpd.GeoDataFrame \nso a random index will be used instead."
             logging.warning(message)
 
     if averaging is True and not isinstance(geometry, gpd.GeoDataFrame):
         message = (
-            f"\naveraging value '{averaging}' is not necessary \n"
-            f"because geometry is not a GeoPandas GeoDataFrame.\n"
-            f"averaging value will be ignored."
+            f"\naveraging value '{averaging}' is not necessary \nbecause geometry is not a GeoPandas GeoDataFrame.\naveraging value will be ignored."
         )
         logging.warning(message)
 
     if averaging is True and clip in ["point"]:
         message = (
-            f"\naveraging value '{averaging}' is not necessary \n"
-            f"because clip operation requested is on a {clip}.\n"
-            f"averaging value will be ignored."
+            f"\naveraging value '{averaging}' is not necessary \nbecause clip operation requested is on a {clip}.\naveraging value will be ignored."
         )
         logging.warning(message)
 
     if unique_id is not None and not isinstance(geometry, gpd.GeoDataFrame):
         message = (
-            f"\nunique_id value '{unique_id}' is not necessary \n"
-            f"because geometry is not a GeoPandas GeoDataFrame.\n"
-            f"unique_id value will be ignored."
+            f"\nunique_id value '{unique_id}' is not necessary \nbecause geometry is not a GeoPandas GeoDataFrame.\nunique_id value will be ignored."
         )
         logging.warning(message)
 
