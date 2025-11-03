@@ -3,7 +3,7 @@ default_language_version:
 
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
+    rev: v3.21.0
     hooks:
       - id: pyupgrade
         args: [ '--py310-plus' ]
@@ -45,11 +45,11 @@ repos:
     hooks:
       - id: black
   - repo: https://github.com/PyCQA/isort
-    rev: 6.1.0
+    rev: 7.0.0
     hooks:
       - id: isort
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.13.3
+    rev: v0.14.3
     hooks:
       - id: ruff
         args: [ '--fix' ]
@@ -79,7 +79,7 @@ repos:
       - id: nbqa-isort
         additional_dependencies: [ 'isort==6.0.0' ]
   - repo: https://github.com/keewis/blackdoc
-    rev: v0.4.3
+    rev: v0.4.5
     hooks:
       - id: blackdoc
         additional_dependencies: [ 'black==25.9.0' ]
@@ -102,12 +102,12 @@ repos:
       - id: numpydoc-validation
         exclude: ^docs/|^tests/
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.34.0
+    rev: 0.34.1
     hooks:
       - id: check-github-workflows
       - id: check-readthedocs
   - repo: https://github.com/woodruffw/zizmor-pre-commit
-    rev: v1.14.2
+    rev: v1.16.2
     hooks:
       - id: zizmor
         args: [ '--config=.zizmor.yml' ]
