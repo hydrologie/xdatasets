@@ -8,10 +8,11 @@ from tqdm.auto import tqdm
 
 from .utils import HiddenPrints
 
+
 try:
     import xagg as xa
 except ImportError:
-    warnings.warn("xagg is not installed. Please install it with `pip install xagg`")
+    warnings.warn("xagg is not installed. Please install it with `pip install xagg`", stacklevel=2)
     xa = None
 
 
@@ -68,11 +69,7 @@ def clip_by_polygon(ds, space, dataset_name):
     arrays = []
     pbar = tqdm(space["geometry"].iterrows(), position=0, leave=True)
     for idx, row in pbar:
-        item = (
-            row[space["unique_id"]]
-            if space["unique_id"] is not None and space["unique_id"] in row
-            else idx
-        )
+        item = row[space["unique_id"]] if space["unique_id"] is not None and space["unique_id"] in row else idx
         pbar.set_description(
             f"Spatial operations: processing polygon {item} with {dataset_name}",
         )
@@ -122,7 +119,7 @@ def clip_by_point(ds, space, dataset_name):
     msg = f"Spatial operations: processing points with {dataset_name}"
     logging.info(msg)
 
-    lat, lon = zip(*space["geometry"].values())
+    lat, lon = zip(*space["geometry"].values(), strict=False)
     data = subset_gridpoint(
         ds.rename({"latitude": "lat", "longitude": "lon"}),
         lon=list(lon),

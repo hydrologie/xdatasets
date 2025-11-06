@@ -9,6 +9,7 @@ from pathlib import Path
 
 import intake
 
+
 catalog_path = "https://raw.githubusercontent.com/hydrocloudservices/catalogs/main/catalogs/main.yaml"
 
 
@@ -53,10 +54,7 @@ def open_dataset(
 
         cat = catalog
         dataset_info = [
-            (category, dataset_name)
-            for category in cat._entries.keys()
-            for dataset_name in cat[category]._entries.keys()
-            if dataset_name == name
+            (category, dataset_name) for category in cat._entries.keys() for dataset_name in cat[category]._entries.keys() if dataset_name == name
         ]
 
         data = reduce(lambda array, index: array[index], dataset_info, cat)
@@ -106,9 +104,7 @@ def cache_catalog(url):
     opener = urllib.request.build_opener(proxy)
     urllib.request.install_opener(opener)
 
-    tmp_dir = (
-        Path(tempfile.gettempdir()).joinpath(getpass.getuser()).joinpath("catalogs")
-    )
+    tmp_dir = Path(tempfile.gettempdir()).joinpath(getpass.getuser()).joinpath("catalogs")
     tmp_dir.mkdir(parents=True, exist_ok=True)
     main_catalog_path = tmp_dir.joinpath(Path(url).name)
 
