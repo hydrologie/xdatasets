@@ -18,6 +18,7 @@ from .workflows import (
     user_provided_dataset,
 )
 
+
 logging.config.dictConfig(LOGGING_CONFIG)
 logger = getLogger(__name__)
 
@@ -109,11 +110,16 @@ class Query:  # numpydoc ignore=PR09
     def __init__(
         self,
         datasets: str | list[str] | dict[str, str | list[str]],
-        space: dict[str, str | list[str]] = dict(),
-        time: dict[str, str | list[str]] = dict(),
+        space: dict[str, str | list[str]] | None = None,
+        time: dict[str, str | list[str]] | None = None,
         catalog_path: str = url_path,
     ) -> None:
         # We cache the catalog's yaml files for easier access behind corporate firewalls
+        if space is None:
+            space = dict()
+        if time is None:
+            time = dict()
+
         catalog_path = cache_catalog(catalog_path)
 
         self.catalog = intake.open_catalog(catalog_path)
@@ -168,9 +174,7 @@ class Query:  # numpydoc ignore=PR09
     def _resolve_time_params(
         self,
         timestep: str | None = None,
-        aggregation: None | (
-            dict[str, Callable[..., Any] | list[Callable[..., Any]]]
-        ) = None,
+        aggregation: None | (dict[str, Callable[..., Any] | list[Callable[..., Any]]]) = None,
         start: bool | None = None,
         end: str | None = None,
         timezone: str | None = None,
@@ -232,9 +236,7 @@ class Query:  # numpydoc ignore=PR09
         elif isinstance(datasets, dict):
             datasets_name = list(datasets.keys())
         else:
-            raise ValueError(
-                "Datasets should be a string, a list of strings, or a dictionary."
-            )
+            raise ValueError("Datasets should be a string, a list of strings, or a dictionary.")
 
         # Load data for each dataset
         dsets = []
@@ -249,11 +251,7 @@ class Query:  # numpydoc ignore=PR09
                 variables_name = None
                 pass
             try:
-                kwargs = {
-                    k: v
-                    for k, v in self.datasets[dataset_name].items()
-                    if k not in ["variables"]
-                }
+                kwargs = {k: v for k, v in self.datasets[dataset_name].items() if k not in ["variables"]}
             except:  # noqa: S110
                 pass
 
@@ -282,7 +280,7 @@ class Query:  # numpydoc ignore=PR09
             elif len(dsets) == 1:
                 ds = dsets[0]
         except:  # noqa: S110
-            warnings.warn("Couldn't merge datasets so we pass a list of datasets.")
+            warnings.warn("Couldn't merge datasets so we pass a list of datasets.", stacklevel=2)
             # Look into passing a DataTree instead
             ds = dsets
             pass
@@ -301,10 +299,7 @@ class Query:  # numpydoc ignore=PR09
 
         elif isinstance(dataset_name, str):
             dataset_category = [
-                category
-                for category in self.catalog._entries.keys()
-                for name in self.catalog[category]._entries.keys()
-                if name == dataset_name
+                category for category in self.catalog._entries.keys() for name in self.catalog[category]._entries.keys() if name == dataset_name
             ][0]
 
         if dataset_category in ["atmosphere"]:

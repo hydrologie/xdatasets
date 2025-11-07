@@ -1,0 +1,21 @@
+# This CITATION.cff file was generated with cffinit and templated with cookiecutter.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: "1.2.0"
+title: "xdatasets"
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: "software"
+authors:
+  - given-names: 'Sebastien'
+    family-names: 'Langlois'
+    email: 'sebastien.langlois62@gmail.com'
+contact:
+  - given-names: 'Sebastien'
+    family-names: 'Langlois'
+    email: 'sebastien.langlois62@gmail.com'
+repository-code: "https://github.com/hydrologie/xdatasets"
+abstract: "Easy access to Earth observation datasets with xarray."
+license: "MIT"
+version: "0.3.8"

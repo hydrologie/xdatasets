@@ -1,4 +1,4 @@
-.PHONY: clean clean-build clean-pyc clean-test coverage dist docs help install lint lint/flake8 lint/black
+.PHONY: clean clean-build clean-pyc clean-test coverage dist docs help install lint lint/flake8
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -64,12 +64,7 @@ lint/flake8: ## check style with flake8
 	python -m flake8 --config=.flake8 src/xdatasets tests
 	python -m numpydoc lint src/xdatasets/**.py
 
-lint/black: ## check style with black
-	python -m black --check src/xdatasets tests
-	python -m blackdoc --check src/xdatasets docs
-	python -m isort --check src/xdatasets tests
-
-lint: lint/flake8 lint/black ## check style
+lint: lint/flake8 ## check style
 
 test: ## run tests quickly with the default Python
 	python -m pytest
