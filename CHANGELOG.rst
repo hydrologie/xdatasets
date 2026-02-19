@@ -2,8 +2,24 @@
 Changelog
 =========
 
-`Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
-----------------------------------------------------------------
+..
+    `Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
+    ----------------------------------------------------------------
+
+    Contributors:
+
+    Changes
+    ^^^^^^^
+    * No change.
+
+    Fixes
+    ^^^^^
+    * No change.
+
+.. _changes_0.3.9:
+
+`v0.3.9 <https://github.com/hydrologie/xdatasets/tree/0.3.9>`_
+------------------------------------------------------------------------------
 
 Contributors: Juliette Lavoie (:user:`juliettelavoie`), Trevor James Smith (:user:`Zeitsperre`)
 

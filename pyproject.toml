@@ -127,7 +127,7 @@ all = [
 [tool]
 
 [tool.bumpversion]
-current_version = "0.3.9-dev.3"
+current_version = "0.3.9"
 commit = true
 commit_args = "--no-verify"
 tag = false
