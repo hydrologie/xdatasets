@@ -24,6 +24,7 @@ description = "Run code quality compliance tests under {basepython}"
 labels = ["lint"]
 skip_install = true
 dependency_groups = ["lint"]
+deps = []
 commands = [
   ["make", "lint"]
 ]
