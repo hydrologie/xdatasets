@@ -39,7 +39,7 @@ download = true
 dependency_groups = ["test"]
 install_command = ["python", "-m", "pip", "install", "--no-user", "{opts}", "{packages}"]
 deps = [
-  "git+https://github.com/esmf-org/esmf.git@{env:ESMF_VERSION}#subdirectory=src/addon/esmpy"
+  "git+https://github.com/esmf-org/esmf.git@v{env:ESMF_VERSION}#subdirectory=src/addon/esmpy"
 ]
 commands_pre = [["pip", "list"], ["pip", "check"]]
 commands = [
