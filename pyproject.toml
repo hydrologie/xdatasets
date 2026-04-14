@@ -1,5 +1,5 @@
 [build-system]
-requires = ["flit_core >=3.12.0,<4", "setuptools >=80.0", "wheel>=0.45"]# setuptools and wheel needed for Python 3.12 until intake-xarray is updated
+requires = ["flit_core >=3.12.0,<4", "setuptools >=80.0", "wheel>=0.45"] # setuptools and wheel needed for Python 3.12 until intake-xarray is updated
 build-backend = "flit_core.buildapi"
 
 [dependency-groups]
@@ -206,7 +206,7 @@ values = [
 
 [tool.codespell]
 ignore-words-list = "astroid,socio-economic,thirdparty,bu,ue,fpr,mke,fro,te,ot,fo,ded"
-skip="docs/_build"
+skip = "docs/_build"
 
 [tool.coverage.paths]
 source = ["src/xdatasets/", "*/site-packages/xdatasets/"]
@@ -215,11 +215,11 @@ source = ["src/xdatasets/", "*/site-packages/xdatasets/"]
 omit = ["tests/*.py"]
 relative_files = true
 
-[tool.deptry.per_rule_ignores]
-DEP002 = ["dask", "dask-geopandas", "intake-geopandas", "intake-xarray", "s3fs", "zarr"]
-
 [tool.deptry.package_module_name_map]
 "ipython" = "IPython"
+
+[tool.deptry.per_rule_ignores]
+DEP002 = ["dask", "dask-geopandas", "intake-geopandas", "intake-xarray", "s3fs", "zarr"]
 
 [tool.flit.sdist]
 include = [
