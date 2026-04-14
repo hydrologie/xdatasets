@@ -2,19 +2,26 @@
 Changelog
 =========
 
-..
-    `Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
-    ----------------------------------------------------------------
+`Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
+----------------------------------------------------------------
 
-    Contributors:
+Contributors: Trevor James Smith (:user:`Zeitsperre`)
 
-    Changes
-    ^^^^^^^
-    * No change.
+Changes
+^^^^^^^
+* Updated the cookiecutter template to the latest commit. (:pull:`292`):
+    * Added support and CI builds for Python3.13.
+    * Removed several unnecessary dependencies listed in `pyproject.toml`.
+    * Migrated `optional-dependencies` to `dependency-groups`.
+    * Set token-based workflows to run within an `automation` environment.
+    * Updated dependencies.
+    * `pre-commit` has been replaced by `prek`.
+    * `Makefile` now handles some dependency installation logic.
+    * Configuration issues in `tox.toml` have been resolved.
 
-    Fixes
-    ^^^^^
-    * No change.
+Fixes
+^^^^^
+* No change.
 
 .. _changes_0.3.9:
 
