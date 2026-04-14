@@ -2,6 +2,7 @@ import getpass
 import os
 import sys
 import tempfile
+import urllib.error
 import urllib.request
 import warnings
 from functools import reduce
@@ -48,8 +49,8 @@ def open_dataset(
             import intake  # noqa: F401
         except ImportError as e:
             raise ImportError(
-                "tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets."
-                " To proceed please install intake and intake-xarray.",
+                "tutorial.open_dataset depends on intake and intake-xarray to download and manage datasets. "
+                "To proceed please install intake and intake-xarray.",
             ) from e
 
         cat = catalog

@@ -1,7 +1,7 @@
 name: xdatasets
 channels:
-- conda-forge
-- defaults
+  - conda-forge
+  - nodefaults
 dependencies:
   - python >=3.12,<3.13  # This should probably be >=3.10,<3.13
   # Main packages
@@ -34,13 +34,13 @@ dependencies:
   - hvplot
   - jupyter_client
   - matplotlib-base >=3.5.0
-  - nbconvert <7.14
+  - nbconvert
   - nbsphinx >=0.9.5
   - nc-time-axis
   - netCDF4
   - panel
-  - pooch
-  - sphinx >=7.1.0,<8.2
+  - pooch >=1.8.0
+  - sphinx >=8.2
   - sphinx-codeautolink >=0.16.2
   - sphinx-copybutton >=0.5.2
   - sphinx-intl >=2.2.0

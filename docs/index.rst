@@ -30,6 +30,11 @@ The genesis of this project can be traced back to a crucial requirement of effor
 
    apidoc/modules
 
+.. toctree::
+   :caption: GitHub Repository
+
+   hydrologie/xdatasets <https://github.com/hydrologie/xdatasets>
+
 .. Indices and tables
 .. ==================
 .. * :ref:`genindex`
