@@ -5,7 +5,7 @@ Changelog
 `Unreleased <https://github.com/hydrologie/xdatasets>`_ (latest)
 ----------------------------------------------------------------
 
-Contributors: Trevor James Smith (:user:`Zeitsperre`)
+Contributors: Trevor James Smith (:user:`Zeitsperre`).
 
 Changes
 ^^^^^^^
@@ -18,6 +18,15 @@ Changes
     * `pre-commit` has been replaced by `prek`.
     * `Makefile` now handles some dependency installation logic.
     * Configuration issues in `tox.toml` have been resolved.
+* `xdatasets` now has guidance documents on acceptable usages of AI and the expected methods of AI usage disclosure. See the documentation for more details.
+* Updated the cookiecutter template to use the latest commit. (:pull:`169`):
+    * Adjusted the permissions for some workflows to address security issues.
+    * Added the new "standard" AI disclosure guidance for code contributions.
+    * Updated the ReadTheDocs configuration to use newer OS and conda images.
+    * Modified ``make servedocs`` to use `sphinx-autobuild` (``make livehtml``).
+    * Added guidance for maintainers on git commit signing and immutable releases.
+    * Adjusted the source distribution inclusion/exclusion list.
+    * Set `bump-my-version` to sign tags by default.
 
 Fixes
 ^^^^^
@@ -25,10 +34,10 @@ Fixes
 
 .. _changes_0.3.9:
 
-`v0.3.9 <https://github.com/hydrologie/xdatasets/tree/0.3.9>`_
-------------------------------------------------------------------------------
+`v0.3.9 <https://github.com/hydrologie/xdatasets/tree/0.3.9>`_ (2026-02-19)
+---------------------------------------------------------------------------
 
-Contributors: Juliette Lavoie (:user:`juliettelavoie`), Trevor James Smith (:user:`Zeitsperre`)
+Contributors: Juliette Lavoie (:user:`juliettelavoie`), Trevor James Smith (:user:`Zeitsperre`).
 
 Changes
 ^^^^^^^
@@ -57,8 +66,8 @@ Changes
 
 .. _changes_0.3.7:
 
-v0.3.7 (2025-02-10)
--------------------
+`v0.3.7 <https://github.com/hydrologie/xdatasets/tree/0.3.7>`_ (2025-02-10)
+---------------------------------------------------------------------------
 
 Contributors: Trevor James Smith (:user:`Zeitsperre`), Gabriel Rondeau-Genesse (:user:`RondeauG`), Sebastien Langlois (:user:`sebastienlanglois`)
 
@@ -92,10 +101,10 @@ Changes
 
 .. _changes_0.3.6:
 
-v0.3.6 (2024-07-12)
--------------------
+`v0.3.6 <https://github.com/hydrologie/xdatasets/tree/0.3.6>`_ (2024-07-12)
+---------------------------------------------------------------------------
 
-Contributors: Trevor James Smith (:user:`Zeitsperre`)
+Contributors: Trevor James Smith (:user:`Zeitsperre`).
 
 Changes
 ^^^^^^^
@@ -113,10 +122,10 @@ Changes
 
 .. _changes_0.3.5:
 
-v0.3.5 (2024-02-19)
--------------------
+`v0.3.5 <https://github.com/hydrologie/xdatasets/tree/0.3.5>`_ (2024-02-19)
+---------------------------------------------------------------------------
 
-Contributors: Trevor James Smith (:user:`Zeitsperre`)
+Contributors: Trevor James Smith (:user:`Zeitsperre`).
 
 Changes
 ^^^^^^^
@@ -135,10 +144,10 @@ Changes
 
 .. _changes_0.3.4:
 
-v0.3.4 (2024-01-31)
--------------------
+`v0.3.4 <https://github.com/hydrologie/xdatasets/tree/0.3.4>`_ (2024-01-31)
+---------------------------------------------------------------------------
 
-Contributors: Sebastien Langlois (:user:`sebastienlanglois`)
+Contributors: Sebastien Langlois (:user:`sebastienlanglois`).
 
 Fixes
 ^^^^^
@@ -146,10 +155,10 @@ Fixes
 
 .. _changes_0.3.3:
 
-v0.3.3 (2024-01-11)
--------------------
+`v0.3.3 <https://github.com/hydrologie/xdatasets/tree/0.3.3>`_ (2024-01-11)
+---------------------------------------------------------------------------
 
-Contributors: Sebastien Langlois (:user:`sebastienlanglois`)
+Contributors: Sebastien Langlois (:user:`sebastienlanglois`).
 
 Changes
 ^^^^^^^
@@ -157,10 +166,10 @@ Changes
 
 .. _changes_0.3.2:
 
-v0.3.2 (2024-01-10)
--------------------
+`v0.3.2 <https://github.com/hydrologie/xdatasets/tree/0.3.2>`_ (2024-01-10)
+---------------------------------------------------------------------------
 
-Contributors: Sebastien Langlois (:user:`sebastienlanglois`)
+Contributors: Sebastien Langlois (:user:`sebastienlanglois`).
 
 Changes
 ^^^^^^^
@@ -169,10 +178,10 @@ Changes
 
 .. _changes_0.3.1:
 
-v0.3.1 (2023-12-01)
--------------------
+`v0.3.1 <https://github.com/hydrologie/xdatasets/tree/0.3.1>`_ (2023-12-01)
+---------------------------------------------------------------------------
 
-Contributors: Trevor James Smith (:user:`Zeitsperre`)
+Contributors: Trevor James Smith (:user:`Zeitsperre`).
 
 Fixes
 ^^^^^
@@ -180,10 +189,10 @@ Fixes
 
 .. _changes_0.3.0:
 
-v0.3.0 (2023-11-30)
--------------------
+`v0.3.0 <https://github.com/hydrologie/xdatasets/tree/0.3.0>`_ (2023-11-30)
+---------------------------------------------------------------------------
 
-Contributors: Trevor James Smith (:user:`Zeitsperre`)
+Contributors: Trevor James Smith (:user:`Zeitsperre`).
 
 Changes
 ^^^^^^^
@@ -200,6 +209,6 @@ Changes
 v0.1.2-alpha (2023-01-13)
 -------------------------
 
-Contributors: Sebastien Langlois (:user:`sebastienlanglois`)
+Contributors: Sebastien Langlois (:user:`sebastienlanglois`).
 
 First release on PyPI.
