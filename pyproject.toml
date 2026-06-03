@@ -170,8 +170,8 @@ replace = """\
 
 .. _changes_{new_version}:
 
-`v{new_version} <https://github.com/hydrologie/xdatasets/tree/{new_version}>`_
-------------------------------------------------------------------------------
+`v{new_version} <https://github.com/hydrologie/xdatasets/tree/{new_version}>`_ ({now:%Y-%m-%d})
+-----------------------------------------------------------------------------
 """
 
 [[tool.bumpversion.files]]
