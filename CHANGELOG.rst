@@ -19,7 +19,7 @@ Changes
     * `Makefile` now handles some dependency installation logic.
     * Configuration issues in `tox.toml` have been resolved.
 * `xdatasets` now has guidance documents on acceptable usages of AI and the expected methods of AI usage disclosure. See the documentation for more details.
-* Updated the cookiecutter template to use the latest commit. (:pull:`169`):
+* Updated the cookiecutter template to use the latest commit. (:pull:`300`):
     * Adjusted the permissions for some workflows to address security issues.
     * Added the new "standard" AI disclosure guidance for code contributions.
     * Updated the ReadTheDocs configuration to use newer OS and conda images.
