@@ -77,7 +77,7 @@ lint: install-lint ## check style
 	python -m numpydoc lint src/xdatasets/**.py
 	python -m vulture src/xdatasets tests
 	codespell src/xdatasets tests docs
-	python -m deptry src
+	python -m deptry src/xdatasets
 	python -m yamllint --config-file=.yamllint.yaml src/xdatasets
 
 test: install-test ## run tests quickly with the default Python
