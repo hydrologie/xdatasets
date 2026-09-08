@@ -161,7 +161,7 @@ Ready to contribute? Here's how to set up ``xdatasets`` for local development.
 
    If you have merge conflicts, you might need to replace `git pull` with `git merge` and resolve the conflicts manually.
    Resolving conflicts from the command line can be tricky. If you are not comfortable with this, you can ignore the last command and instead use a GUI like PyCharm or Visual Studio Code to merge the remote changes and resolve the conflicts.
- 
+
 #. Before merging, your Pull Request will need to be based on the `main` branch of the ``xdatasets`` repository. If your branch is not up-to-date with the `main` branch, you can perform similar steps as above to update your branch:
 
    .. code-block:: console
@@ -177,7 +177,7 @@ Ready to contribute? Here's how to set up ``xdatasets`` for local development.
    - The ``bump-version.yml`` workflow will automatically bump the patch version when pull requests are pushed to the `main` branch on GitHub. **It is not recommended to manually bump the version in your branch when merging (non-release) pull requests (this will cause the version to be bumped twice).**
    - `ReadTheDocs` will automatically build the documentation and publish it to the `latest` branch of `xdatasets` documentation website.
    - If your branch is not a fork (i.e. you are a maintainer), your branch will be automatically deleted.
- 
+
 You will have contributed to ``xdatasets``!
 
 Pull Request Guidelines
