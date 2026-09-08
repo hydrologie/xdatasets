@@ -133,7 +133,7 @@ Ready to contribute? Here's how to set up ``xdatasets`` for local development.
 
        $ git add .
        $ git commit -s -m "Your detailed description of your changes."
-       $ git push origin name-of-your-bugfix-or-featur
+       $ git push origin name-of-your-bugfix-or-feature
 
    If ``pre-commit`` hooks fail, try fixing the issues, re-staging the files to be committed, and re-committing your changes (or, if need be, you can skip them with `--no-verify` flag).
 
