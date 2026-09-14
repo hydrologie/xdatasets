@@ -70,113 +70,113 @@ Ready to contribute? Here's how to set up ``xdatasets`` for local development.
 
 #. First, clone the ``xdatasets`` repo locally.
 
-    * If you are not a ``xdatasets`` collaborator, first fork the ``xdatasets`` repo on GitHub, then clone your fork locally.
+   * If you are not a ``xdatasets`` collaborator, first fork the ``xdatasets`` repo on GitHub, then clone your fork locally.
 
-        .. code-block:: console
+   .. code-block:: console
 
-            git clone git@github.com:your_name_here/xdatasets.git
+       $ git clone git@github.com:your_name_here/xdatasets.git
 
-    * If you are a ``xdatasets`` collaborator, clone the ``xdatasets`` repo directly.
+   * If you are a ``xdatasets`` collaborator, clone the ``xdatasets`` repo directly.
 
-        .. code-block:: console
+   .. code-block:: console
 
-            git clone git@github.com:hydrologie/xdatasets.git
+       $ git clone git@github.com:hydrologie/xdatasets.git
 
 #. Install your local copy into a development environment. You can create a new Anaconda development environment with:
 
-    .. code-block:: console
+   .. code-block:: console
 
-        conda env create -f environment-dev.yml
-        conda activate xdatasets
-        make dev
+       $ conda env create -f environment-dev.yml
+       $ conda activate xdatasets-dev
+       $ make dev
 
-    If you are on Windows, replace the ``make dev`` command with the following:
+   If you are on Windows, replace the ``make dev`` command with the following:
 
-    .. code-block:: console
+   .. code-block:: console
 
-        python -m pip install --group dev
-        python -m pip install --editable .
-        prek install
+       $ python -m pip install --group dev
+       $ python -m pip install --editable .
+       $ prek install
 
-    This installs ``xdatasets`` in an "editable" state, meaning that changes to the code are immediately seen by the environment. To ensure a consistent coding style, `make dev` also installs the ``pre-commit`` hooks to your local clone.
+   This installs ``xdatasets`` in an "editable" state, meaning that changes to the code are immediately seen by the environment. To ensure a consistent coding style, `make dev` also installs the ``pre-commit`` hooks to your local clone.
 
-    On commit, ``prek`` will will run ``pre-commit`` checks that ensure code quality checks are passing, perform automatic fixes if possible, and warn of violations that require intervention. If your commit fails the checks initially, simply fix the errors, re-add the files, and re-commit.
+   On commit, ``prek`` will run ``pre-commit`` checks that ensure code quality checks are passing, perform automatic fixes if possible, and warn of violations that require intervention. If your commit fails the checks initially, simply fix the errors, re-add the files, and re-commit.
 
-    You can also run the hooks manually with:
+   You can also run the hooks manually with:
 
-    .. code-block:: console
+   .. code-block:: console
 
-        prek run -a
+       $ prek run -a
 
-    If you want to skip the ``pre-commit`` hooks temporarily, you can pass the `--no-verify` flag to `git commit`.
+   If you want to skip the ``pre-commit`` hooks temporarily, you can pass the `--no-verify` flag to `git commit`.
 
 #. Create a branch for local development:
 
-    .. code-block:: console
+   .. code-block:: console
 
-        git checkout -b name-of-your-bugfix-or-feature
+       $ git checkout -b name-of-your-bugfix-or-feature
 
-    Now you can make your changes locally.
+   Now you can make your changes locally.
 
 #. When you're done making changes, we **strongly** suggest running the tests in your environment or with the help of ``tox``:
 
-    .. code-block:: console
+   .. code-block:: console
 
-        make lint
-        python -m pytest
-        # Or, to run multiple build tests
-        python -m tox
+       $ make lint
+       $ python -m pytest
+       # Or, to run multiple build tests
+       $ python -m tox
 
 #. Commit your changes and push your branch to GitHub:
 
-    .. code-block:: console
+   .. code-block:: console
 
-        git add .
-        git commit -s -m "Your detailed description of your changes."
-        git push origin name-of-your-bugfix-or-feature
+       $ git add .
+       $ git commit -s -m "Your detailed description of your changes."
+       $ git push origin name-of-your-bugfix-or-feature
 
-    If ``pre-commit`` hooks fail, try fixing the issues, re-staging the files to be committed, and re-committing your changes (or, if need be, you can skip them with `--no-verify` flag).
+   If ``pre-commit`` hooks fail, try fixing the issues, re-staging the files to be committed, and re-committing your changes (or, if need be, you can skip them with `--no-verify` flag).
 
 #. Submit a `Pull Request <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request>`_ through the GitHub website.
 
 #. When pushing your changes to your branch on GitHub, the documentation will automatically be tested to reflect the changes in your Pull Request. This build process can take several minutes at times. If you are actively making changes that affect the documentation and wish to save time, you can compile and test your changes beforehand locally with:
 
-    .. code-block:: console
+   .. code-block:: console
 
-        # To generate the html and open it in your browser
-        make docs
-        # To only generate the html
-        make autodoc
-        make -C docs html
-        # To simply test that the docs pass build checks
-        python -m tox -e docs
+       # To generate the html and open it in your browser
+       $ make docs
+       # To only generate the html
+       $ make autodoc
+       $ make -C docs html
+       # To simply test that the docs pass build checks
+       $ python -m tox -e docs
 
 #. If changes to your branch are made on GitHub, you can update your local branch with:
 
-    .. code-block:: console
+   .. code-block:: console
 
-        git checkout name-of-your-bugfix-or-feature
-        git fetch
-        git pull origin name-of-your-bugfix-or-feature
+       $ git checkout name-of-your-bugfix-or-feature
+       $ git fetch
+       $ git pull origin name-of-your-bugfix-or-feature
 
-    If you have merge conflicts, you might need to replace `git pull` with `git merge` and resolve the conflicts manually.
-    Resolving conflicts from the command line can be tricky. If you are not comfortable with this, you can ignore the last command and instead use a GUI like PyCharm or Visual Studio Code to merge the remote changes and resolve the conflicts.
+   If you have merge conflicts, you might need to replace `git pull` with `git merge` and resolve the conflicts manually.
+   Resolving conflicts from the command line can be tricky. If you are not comfortable with this, you can ignore the last command and instead use a GUI like PyCharm or Visual Studio Code to merge the remote changes and resolve the conflicts.
 
 #. Before merging, your Pull Request will need to be based on the `main` branch of the ``xdatasets`` repository. If your branch is not up-to-date with the `main` branch, you can perform similar steps as above to update your branch:
 
-    .. code-block:: console
+   .. code-block:: console
 
-        git checkout name-of-your-bugfix-or-feature
-        git fetch
-        git pull origin main
+       $ git checkout name-of-your-bugfix-or-feature
+       $ git fetch
+       $ git pull origin main
 
-    See the previous step for more information on resolving conflicts.
+   See the previous step for more information on resolving conflicts.
 
 #. Once your Pull Request has been accepted and merged to the `main` branch, several automated workflows will be triggered:
 
-    - The ``bump-version.yml`` workflow will automatically bump the patch version when pull requests are pushed to the `main` branch on GitHub. **It is not recommended to manually bump the version in your branch when merging (non-release) pull requests (this will cause the version to be bumped twice).**
-    - `ReadTheDocs` will automatically build the documentation and publish it to the `latest` branch of `xdatasets` documentation website.
-    - If your branch is not a fork (i.e. you are a maintainer), your branch will be automatically deleted.
+   - The ``bump-version.yml`` workflow will automatically bump the patch version when pull requests are pushed to the `main` branch on GitHub. **It is not recommended to manually bump the version in your branch when merging (non-release) pull requests (this will cause the version to be bumped twice).**
+   - `ReadTheDocs` will automatically build the documentation and publish it to the `latest` branch of `xdatasets` documentation website.
+   - If your branch is not a fork (i.e. you are a maintainer), your branch will be automatically deleted.
 
 You will have contributed to ``xdatasets``!
 
@@ -191,15 +191,84 @@ Before you submit a pull request, check that it meets these guidelines:
 
 #. If the pull request adds functionality, either update the documentation or create a new notebook that demonstrates the feature. Library-defining features should also be listed in ``README.rst``.
 
-#. The pull request should work for all currently supported Python versions. Check the `pyproject.toml` or `tox.ini` files for the list of supported versions.
+#. The pull request should work for all currently supported Python versions. Check the `pyproject.toml` or `tox.toml` files for the list of supported versions.
 
-#. If you haven't already, ensure that you have read and agreed to the `Developer Certificate of Origin (DCO) <https://developercertificate.org/>`_, and that you have signed your commits using:
+#. If you haven't already, ensure that you have read and agreed to the `Developer Certificate of Origin (DCO) <https://developercertificate.org/>`_, and that you have signed off on your commits using:
 
-    .. code-block:: bash
+   .. code-block:: console
 
-          git commit -s/--signoff
+       $ git commit -s/--signoff
 
-    This will add a `Signed-off-by:` line to your commit message, which indicates that you agree to the DCO.
+This will add a `Signed-off-by:` line to your commit message, which indicates that you agree to the DCO.
+
+AI Assistance Notice
+--------------------
+
+.. note::
+
+    The following information has been adapted from AI assistance usage policies developed by `Avocado <https://avocado-framework.readthedocs.io/en/latest/guides/contributor/chapters/ai_policy.html>`_ and `ghostty <https://github.com/ghostty-org/ghostty/blob/main/AI_POLICY.md>`_
+    with suggestions from software developers and maintainers at Ouranos Inc.
+
+What is AI Assistance ?
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Within the context of xdatasets development, AI assistance constitutess any code, code snippets, configurations, documentation, or other programmatic assets produced, suggested, or significantly modified by an artificial intelligence model, tool, or service.
+
+AI assistance can also include code that is heavily adapted from or influenced by outputs from prompts made to generative artificial intelligence models, tools, or services.
+
+Usage Disclosure
+~~~~~~~~~~~~~~~~
+
+If you are using any kind of AI assistance while contributing to xdatasets, **this must be disclosed in the pull request**, along with the extent to which AI assistance was used (e.g. documentation, code generation, review comments).
+Using AI to help draft responses is allowed only if the contributor meaningfully reviews, edits, and takes full responsibility for the content.
+Submitting AI-generated replies without human verification or understanding is not permitted.
+Misrepresenting AI-generated content as purely human-authored is considered a violation of the contribution guidelines.
+
+Some example disclosures:
+
+.. admonition:: Pull Request Description
+
+    ### Other information:
+
+    * This PR was primarily written using a combination of OpenClaw (Kimi K2.5) and ChatGPT (GPT-o4-mini). After using these tools, I reviewed the content.
+
+    <!-- or -->
+
+    * This PR was primarily written by me with small code snippets copy-pasted from chats with Claude (Sonnet 4.6).
+
+    <!-- or -->
+
+    * I asked GitHub Copilot to clean up and improve code I had written. I then reviewed the final product.
+
+As a small exception, trivial tab-completion doesn't need to be disclosed, so long as it is limited to single keywords or short phrases.
+
+For commits originating exclusively from AI, we also ask that their commits are signed with "Assisted-by: <tool name>" disclosure (this demand is repeated in `AGENTS.md`):
+
+.. admonition:: Commit Message
+
+    Added new method that implements the ReallyCoolNewFeature algorithm.
+
+    Assisted-by: Claude Opus 4.5
+
+Failing to disclose the use of artificial intelligence models, tools, or services is disrespectful to the developers and maintainers of open source software projects.
+We ask that contributors are forthcoming with this information so that the effort and scrutiny applied to Pull Request reviews can be adjusted accordingly.
+
+Code Review
+~~~~~~~~~~~
+
+All AI-assisted code contributions should be reviewed by the contributor before opening a Pull Request, except for minor or marginal changes, which may not require that step.
+All contributions should still be reviewed by at least one human reviewer before approval and merging into the `main` branch.
+
+Low Effort Contributions
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+AI-generated low-effort contributions are unacceptable; Human contributors must be capable of explaining their changes, responding to review comments, and precisely adapting their contributions as requested.
+
+Disclaimer
+~~~~~~~~~~
+
+The xdatasets maintainers reserve the right to reject Pull Requests and contributions for many different reasons (functionality out-of-scope, code quality issues, non-adherence to code of conduct, etc.)
+and this extends to code that has not been adequately disclosed as being assisted by artificial intelligence models, tools, or services.
 
 Tips
 ----
@@ -208,13 +277,13 @@ To run a subset of tests:
 
 .. code-block:: console
 
-    python -m pytest tests/test_xdatasets.py
+    $ python -m pytest tests/test_xdatasets.py
 
 You can also directly call a specific test class or test function using:
 
 .. code-block:: console
 
-    python -m pytest tests/test_xdatasets.py::TestClassName::test_function_name
+    $ python -m pytest tests/test_xdatasets.py::TestClassName::test_function_name
 
 For more information on running tests, see the `pytest documentation <https://docs.pytest.org/en/latest/usage.html>`_.
 
@@ -222,20 +291,20 @@ To run specific code style checks:
 
 .. code-block:: console
 
-    python -m ruff check src/xdatasets tests
-    python -m flake8 src/xdatasets tests
-    validate-docstrings src/xdatasets/**.py
+    $ python -m ruff check src/xdatasets tests
+    $ python -m flake8 src/xdatasets tests
+    $ python -m numpydoc lint src/xdatasets/**.py
 
-To get ``ruff``, ``flake8`` (with the ``flake8-rst-docstrings`` plugin), and ``numpydoc`` (for ``validate-docstrings``), simply install them with ``pip`` (or ``conda``) into your environment.
+To get ``ruff``, ``flake8`` (with the ``flake8-rst-docstrings`` plugin), and ``numpydoc``, simply install them with ``pip`` (or ``conda``) into your environment.
 
 Translations
 ------------
 
 If you would like to contribute to the French translation of the documentation, you can do so by running the following command:
 
-    .. code-block:: console
+.. code-block:: console
 
-        make initialize-translations
+    $ make initialize-translations
 
 This will create or update the French translation files in the `docs/locales/fr/LC_MESSAGES` directory. You can then edit the `.po` files in this directory to provide translations for the documentation.
 
